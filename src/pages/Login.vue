@@ -13,7 +13,7 @@
                 </el-button>
             </el-form-item>
         </el-form>
-        <VueCanvasNest :config="{color:'0,0,0', count: 150}"/>
+        <VueCanvasNest :config="{color:'0,0,0', count: 100}"/>
     </div>
 </template>
 

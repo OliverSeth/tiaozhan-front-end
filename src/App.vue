@@ -12,6 +12,17 @@
 
 <style>
     /* common css */
+
+    /* css reset */
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: #fafafa;
+    }
+
     .center {
         margin: 0 auto;
     }
