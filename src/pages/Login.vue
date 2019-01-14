@@ -9,8 +9,7 @@
                 <el-input v-model="loginForm.passwd" placeholder="请输入密码" @keyup.enter.native="onSubmit"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" class="width50" @click="onSubmit" round>登录
-                </el-button>
+                <el-button type="primary" class="width50" @click="onSubmit" round>登录</el-button>
             </el-form-item>
         </el-form>
         <VueCanvasNest :config="{color:'0,0,0', count: 100}"/>
@@ -39,6 +38,7 @@
                     message: '登录成功',
                     type: 'success'
                 });
+                this.$router.push('/');
             }
         }
     }

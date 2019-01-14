@@ -1,89 +1,114 @@
 <template>
-    <el-container>
-        <el-header>
-            <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
-                <el-menu-item index="1">处理中心</el-menu-item>
-                <el-submenu index="2">
-                    <template slot="title">我的工作台</template>
-                    <el-menu-item index="2-1">选项1</el-menu-item>
-                    <el-menu-item index="2-2">选项2</el-menu-item>
-                    <el-menu-item index="2-3">选项3</el-menu-item>
-                    <el-submenu index="2-4">
-                        <template slot="title">选项4</template>
-                        <el-menu-item index="2-4-1">选项1</el-menu-item>
-                        <el-menu-item index="2-4-2">选项2</el-menu-item>
-                        <el-menu-item index="2-4-3">选项3</el-menu-item>
+    <el-container id="home">
+        <div class="sidebar-wrapper">
+            <el-aside class="sidebar" width="217px">
+                <el-menu default-active="dashboard" class="menubar" router>
+                    <el-menu-item index="dashboard">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title">仪表盘</span>
+                    </el-menu-item>
+                    <el-menu-item index="cloth-examine">
+                        <i class="el-icon-search"></i>
+                        <span slot="title">布料检测</span>
+                    </el-menu-item>
+                    <el-menu-item index="examine-report">
+                        <i class="el-icon-document"></i>
+                        <span slot="title">检测报告</span>
+                    </el-menu-item>
+                    <el-menu-item index="user-manage">
+                        <i class="el-icon-setting"></i>
+                        <span slot="title">用户管理</span>
+                    </el-menu-item>
+                </el-menu>
+            </el-aside>
+        </div>
+        <el-container style="margin-left: 200px">
+            <el-header style="height: auto;padding: 5px 20px;">
+                <div class="left title">{{$route.meta.title}}</div>
+                <el-menu :default-active="activeIndex" mode="horizontal" class="right">
+                    <el-submenu index="1">
+                        <template slot="title">
+                            <img src="../assets/logo.png" class="headpic" alt=""/>
+                            超级管理员 李鱼皮
+                        </template>
+                        <el-menu-item index="1-1">个人</el-menu-item>
+                        <el-menu-item index="1-2" @click="logout">注销</el-menu-item>
                     </el-submenu>
-                </el-submenu>
-                <el-menu-item index="3" disabled>消息中心</el-menu-item>
-                <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-            </el-menu>
-        </el-header>
-        <el-main>
-            <el-container>
-                <el-aside width="240px">
-                    <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-                             :collapse="isCollapse">
-                        <el-submenu index="1">
-                            <template slot="title">
-                                <i class="el-icon-location"></i>
-                                <span slot="title">导航一</span>
-                            </template>
-                            <el-menu-item-group>
-                                <span slot="title">分组一</span>
-                                <el-menu-item index="1-1">选项1</el-menu-item>
-                                <el-menu-item index="1-2">选项2</el-menu-item>
-                            </el-menu-item-group>
-                            <el-menu-item-group title="分组2">
-                                <el-menu-item index="1-3">选项3</el-menu-item>
-                            </el-menu-item-group>
-                            <el-submenu index="1-4">
-                                <span slot="title">选项4</span>
-                                <el-menu-item index="1-4-1">选项1</el-menu-item>
-                            </el-submenu>
-                        </el-submenu>
-                        <el-menu-item index="2">
-                            <i class="el-icon-menu"></i>
-                            <span slot="title">导航二</span>
-                        </el-menu-item>
-                        <el-menu-item index="3" disabled>
-                            <i class="el-icon-document"></i>
-                            <span slot="title">导航三</span>
-                        </el-menu-item>
-                        <el-menu-item index="4">
-                            <i class="el-icon-setting"></i>
-                            <span slot="title">导航四</span>
-                        </el-menu-item>
-                    </el-menu>
-                </el-aside>
-                <el-main>666</el-main>
-                <el-container>
-                    <el-footer>Footer</el-footer>
-                </el-container>
-            </el-container>
-        </el-main>
-
-
+                </el-menu>
+            </el-header>
+            <el-main>
+                <router-view/>
+            </el-main>
+        </el-container>
     </el-container>
 </template>
-
-<style>
-
-</style>
 
 <script>
     export default {
         name: "Home",
         data() {
             return {
-                isCollapse: false,
-                activeIndex: '1'
+                activeIndex: '1',
+                title: '仪表盘'
             }
         },
         methods: {
-            handleSelect(key, keyPath) {
-                console.log(key, keyPath);
+            logout() {
+                this.$message({
+                    message: '已注销',
+                    type: 'success'
+                });
+                this.$route.push('/login');
             }
         }
     };
 </script>
+
+<style scoped>
+    #home {
+        width: 100%;
+        height: 100%;
+    }
+
+    #home .el-menu {
+        border-bottom: none;
+    }
+
+    .sidebar-wrapper {
+        height: 100%;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 200px;
+        z-index: 1000;
+        background-color: white;
+        border-right: solid 1px #e6e6e6;
+    }
+
+    .sidebar {
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    .menubar {
+        height: 100%;
+        border: none;
+    }
+
+    #home .title {
+        margin-top: 20px;
+    }
+
+    .headpic {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1px solid #ddd;
+        padding: 3px;
+        margin-right: 10px;
+    }
+</style>
+

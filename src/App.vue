@@ -12,6 +12,22 @@
 
 <style>
     /* common css */
+    #app {
+        height: 100%;
+    }
+
+    .el-container {
+        background-color: #fff;
+    }
+
+    .el-header {
+        border-bottom: 1px solid #efefef;
+    }
+
+    .el-pagination {
+        margin-top: 30px;
+        text-align: center;
+    }
 
     /* css reset */
     * {
@@ -19,8 +35,20 @@
         padding: 0;
     }
 
+    html, body {
+        height: 100%;
+    }
+
     body {
         background: #fafafa;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .right {
+        float: right;
     }
 
     .center {
