@@ -8,6 +8,7 @@ import ExamineReport from './pages/ExamineReport'
 import Dashboard from './pages/Dashboard'
 import  DeviceControl from './pages/DeviceControl'
 import  DefectDistribution from './pages/DefectDistribution'
+import PictureClassify from './pages/PictureClassify'
 
 Vue.use(Router)
 
@@ -36,6 +37,13 @@ let router = new Router({
                 //         title: '用户管理'
                 //     }
                 // },
+                {
+                    path: '/classify',
+                    component: PictureClassify,
+                    meta: {
+                        title: '图片库'
+                    }
+                },
                 {
                     path: '/cloth-examine',
                     component: ClothExamine,

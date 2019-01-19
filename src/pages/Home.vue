@@ -15,6 +15,10 @@
                         <i class="el-icon-document"></i>
                         <span slot="title">布料检测</span>
                     </el-menu-item>
+                    <el-menu-item index="classify">
+                        <i class="el-icon-document"></i>
+                        <span slot="title">分类</span>
+                    </el-menu-item>
                     <!--<el-menu-item index="user-manage">-->
                         <!--<i class="el-icon-setting"></i>-->
                         <!--<span slot="title">用户管理</span>-->
