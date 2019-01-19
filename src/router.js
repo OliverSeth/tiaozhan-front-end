@@ -5,7 +5,9 @@ import Login from "./pages/Login"
 import UserManage from './pages/UserManage'
 import ClothExamine from './pages/ClothExamine'
 import ExamineReport from './pages/ExamineReport'
-import Dashboard from "./pages/Dashboard";
+import Dashboard from './pages/Dashboard'
+import  DeviceControl from './pages/DeviceControl'
+import  DefectDistribution from './pages/DefectDistribution'
 
 Vue.use(Router)
 
@@ -20,31 +22,41 @@ let router = new Router({
                 title: '控制台'
             },
             children: [
+                // {
+                //     path: '/dashboard',
+                //     component: Dashboard,
+                //     meta: {
+                //         title: '仪表盘'
+                //     }
+                // },
+                // {
+                //     path: '/user-manage',
+                //     component: UserManage,
+                //     meta: {
+                //         title: '用户管理'
+                //     }
+                // },
                 {
-                    path: '/dashboard',
-                    component: Dashboard,
-                    meta: {
-                        title: '仪表盘'
-                    }
-                },
-                {
-                    path: '/user-manage',
-                    component: UserManage,
-                    meta: {
-                        title: '用户管理'
-                    }
-                }, {
                     path: '/cloth-examine',
                     component: ClothExamine,
                     meta: {
-                        title: '布料检测'
+                        title: '图片库'
                     }
                 }, {
                     path: '/examine-report',
                     component: ExamineReport,
                     meta: {
-                        title: '检测报告'
+                        title: '布料检测'
                     }
+                },{
+                    path:'/device-control',
+                    component:DeviceControl,
+                    // meta{
+                    //
+                    // }
+                },{
+                    path:'/defect-distribution',
+                    component:DefectDistribution,
                 }
             ]
         }, {

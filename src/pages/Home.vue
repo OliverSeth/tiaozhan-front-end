@@ -3,22 +3,22 @@
         <div class="sidebar-wrapper">
             <el-aside class="sidebar" width="217px">
                 <el-menu default-active="dashboard" class="menubar" router>
-                    <el-menu-item index="dashboard">
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">仪表盘</span>
-                    </el-menu-item>
+                    <!--<el-menu-item index="dashboard">-->
+                        <!--<i class="el-icon-menu"></i>-->
+                        <!--<span slot="title">仪表盘</span>-->
+                    <!--</el-menu-item>-->
                     <el-menu-item index="cloth-examine">
                         <i class="el-icon-search"></i>
-                        <span slot="title">布料检测</span>
+                        <span slot="title">图片库</span>
                     </el-menu-item>
                     <el-menu-item index="examine-report">
                         <i class="el-icon-document"></i>
-                        <span slot="title">检测报告</span>
+                        <span slot="title">布料检测</span>
                     </el-menu-item>
-                    <el-menu-item index="user-manage">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">用户管理</span>
-                    </el-menu-item>
+                    <!--<el-menu-item index="user-manage">-->
+                        <!--<i class="el-icon-setting"></i>-->
+                        <!--<span slot="title">用户管理</span>-->
+                    <!--</el-menu-item>-->
                 </el-menu>
             </el-aside>
         </div>
