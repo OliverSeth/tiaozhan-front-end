@@ -1,11 +1,11 @@
 <template>
     <div style="width: 80%;height: 88%;position: absolute">
         <div style="margin-top: -75px">
-            <el-button type="primary">添加机器</el-button>
+            <el-button type="primary" @click="addMachine">添加机器</el-button>
         </div>
         <div style="margin-top: 30px">
             <el-table :data="examineTable" style="width: 100%;text-align: center">
-                <el-table-column prop="id" label="机器号" align="center"></el-table-column>
+                <el-table-column type="index" label="机器号" align="center"></el-table-column>
                 <el-table-column prop="image" label="机器图" align="center">
                     <template scope="scope">
                         <img :src="scope.row.image" width="100" height="100"/>
@@ -31,7 +31,7 @@
                 </el-table-column>
                 <!--<span v-model="this[0].models"></span>-->
                 <el-table-column prop="used" label="使用模型" align="center"></el-table-column>
-                <el-table-column label="操作" align="center" width="350">
+                <el-table-column label="设备操作" align="center" width="350">
                     <template slot-scope="scope1">
                         <el-button
                                 type="success"
@@ -55,22 +55,34 @@
                 </el-table-column>
             </el-table>
         </div>
+        <div class="block">
+            <span class="pages"></span>
+            <el-pagination
+                    layout="prev, pager, next"
+                    :total="50">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
         name: "DeviceControl",
+        mounted(){
+
+        },
         methods:{
             check(){
                 this.$router.push('/defect-distribution')
+            },
+            addMachine(){
+
             },
             addModels(){
                 this.$prompt('请输入想要添加的模型',  {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                 }).then(({ value }) => {
-
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -147,21 +159,24 @@
             //         url:'url('+require('../assets/logo.png')+')no-repeat'
             // },
                 examineTable: [{
-                    id: 1,
                     status: '关闭',
                     models: "1,2,3",
                     image:"../assets/logo.png",
                     used:1,
                     operate:0
                 }, {
-                    id: 1,
                     status: '使用中',
                     models: "1,2,3",
                     picture:"../assets/logo.png",
                     used:1,
                     operate:0
                 }, {
-                    id: 1,
+                    status: '使用中',
+                    models: "1,2,3",
+                    picture:"../assets/logo.png",
+                    used:1,
+                    operate:0
+                },  {
                     status: '维护',
                     models: "1,2,3",
                     picture:"../assets/logo.png",

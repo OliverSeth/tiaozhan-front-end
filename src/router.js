@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from './pages/Home.vue'
 import Login from "./pages/Login"
 import UserManage from './pages/UserManage'
-import ClothExamine from './pages/ClothExamine'
+import PhotoGallery from './pages/PhotoGallery'
 import ExamineReport from './pages/ExamineReport'
 import Dashboard from './pages/Dashboard'
 import  DeviceControl from './pages/DeviceControl'
@@ -45,8 +45,8 @@ let router = new Router({
                     }
                 },
                 {
-                    path: '/cloth-examine',
-                    component: ClothExamine,
+                    path: '/photo-gallery',
+                    component: PhotoGallery,
                     meta: {
                         title: '图片库'
                     }

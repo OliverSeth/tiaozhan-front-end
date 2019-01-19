@@ -31,7 +31,7 @@
                             prop="time"
                             label="检测时间">
                     </el-table-column>
-                    <el-table-column style="width: 300"
+                    <el-table-column
                             label="操作">
                         <template scope="scope">
                             <el-button
@@ -39,7 +39,7 @@
                                     size="small"
                                     @click="modify()">修改
                             </el-button>
-                            <el-button type="danger" size="small" disabled>
+                            <el-button type="danger" size="small">
                                 删除
                             </el-button>
                         </template>

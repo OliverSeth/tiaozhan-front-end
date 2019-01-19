@@ -7,7 +7,7 @@
                         <!--<i class="el-icon-menu"></i>-->
                         <!--<span slot="title">仪表盘</span>-->
                     <!--</el-menu-item>-->
-                    <el-menu-item index="cloth-examine">
+                    <el-menu-item index="photo-gallery">
                         <i class="el-icon-search"></i>
                         <span slot="title">图片库</span>
                     </el-menu-item>
