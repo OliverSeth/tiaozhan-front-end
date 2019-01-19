@@ -8,7 +8,7 @@
         </el-table-column>
         <el-table-column prop="status" label="状态" align="center"></el-table-column>
         <el-table-column prop="models" label="已有模型" align="center">
-            <template prop="models"></template>
+            <!--<span v-model="this[0].models"></span>-->
             <template slot-scope="scope2">
                 <el-button
                     type="primary"
