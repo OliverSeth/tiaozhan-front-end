@@ -54,11 +54,29 @@
         },
         methods: {
             logout() {
-                this.$message({
-                    message: '已注销',
-                    type: 'success'
-                });
-                this.$route.push('/login');
+                let api=this.$api.userApi.logout;
+                let token=this.$cookies.get("token")
+                console.log(token)
+                api.headers={
+                    token:token
+                }
+                this.axios(api).then(response=>{
+                    if(response.data.code===0){
+                        this.$message({
+                            message: '已注销',
+                            type: 'success'
+                        });
+                        this.$cookies.remove("token");
+                        this.$router.push('/login');
+                    }
+                    else{
+                        this.$message({
+                            message:'失败',
+                            type:'failed'
+                        })
+                    }
+                })
+
             }
         }
     };

@@ -29,16 +29,37 @@
                 loginForm: {
                     account: '',
                     passwd: ''
-                }
+                },
+                path:'http://106.12.123.92:8081/api/v1/users/login/'
             }
         },
         methods: {
             onSubmit() {
-                this.$message({
-                    message: '登录成功',
-                    type: 'success'
-                });
-                this.$router.push('/');
+                let api=this.$api.userApi.login;
+                api.data={
+                    account:this.loginForm.account,
+                    pwd:this.loginForm.passwd
+                };
+                this.axios(api).then(response=>{
+                    console.log(response);
+                    let data = response.data;
+                    if(data.code===0){
+                        let token=data.data.token;
+                        this.$cookies.set("token", token, 7200);
+                        console.log(token)
+                        this.$message({
+                            message: '登录成功',
+                            type: 'success'
+                        });
+                        this.$router.push('/');
+                    }
+                    else{
+                        this.$notify.error({
+                            message:'用户名或密码错误'
+                        })
+                    }
+                })
+
             }
         }
     }
