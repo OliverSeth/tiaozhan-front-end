@@ -1,15 +1,32 @@
-<template>
-    <div id="clothExamine">
-        检测报告
+<template style="padding-left: 217px">
+    <div id="clothExamine" :style="bg" style="background-size: cover">
+        <router-link to="Device-Control">上海</router-link>
     </div>
 </template>
 
 <script>
     export default {
-        name: "ExamineReport"
+        name: "ExamineReport",
+        data(){
+            return{
+                bg:{
+                    background:'url('+require('../assets/map.jpg')+')no-repeat',
+                    // backgroundsize:
+                }
+            }
+        }
     }
+
 </script>
 
 <style scoped>
 
+    #clothExamine{
+        width: 70%;
+        height: 88%;
+        position: absolute;
+
+        /*padding: 0;*/
+        /*margin: 0;*/
+    }
 </style>
