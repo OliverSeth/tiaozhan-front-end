@@ -75,7 +75,7 @@
             let params={
                 pageNum: this.currentPage,
                 pageSize:4
-            }
+            };
             this.axios.get(api, {params}).then(res => {
                 let data = res.data;
                 switch (data.code) {
@@ -83,8 +83,6 @@
                         for(let i=0;i<data.length;i++)
                             this.examineTable.push(data[i]);
                         break;
-                    default:
-                        this.$toast("未知错误");
                 }
             });
         },
