@@ -1,41 +1,52 @@
 <template>
     <div style="width: 80%;height: 88%;position: absolute">
-        <div style="margin-top: -80px">
+        <div style="margin-top: -75px">
             <el-button type="primary">
                 训练新模型
             </el-button>
         </div>
-        <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%" :style="bg1">
+        <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"
+             :style="bg1">
+            <span style="position:relative;top:60%;left: 33%">疵点位置：</span>
+            <span style="position:relative;top: 75%;left: 9%">疵点种类：</span>
+            <span style="position:relative;top: 90%;left: -15%">检测时间：</span>
             <el-checkbox v-model="checked1" style="position: relative;float: right" @change="setBorder(0)"></el-checkbox>
         </div>
         <div name="img_div" style="width: 30%;height: 30%; display: block; float: left; margin-left: 1%;margin-top: 1%"
-             :style="bg1">
+             :style="bg2">
+            <span style="position:relative;top:60%;left: 33%">疵点位置：</span>
+            <span style="position:relative;top: 75%;left: 9%">疵点种类：</span>
+            <span style="position:relative;top: 90%;left: -15%">检测时间：</span>
             <el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>
         </div>
-        <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%" :style="bg1">
+        <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"
+             :style="bg3">
             <el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>
         </div>
         <div style="height: 32%;width: 32%"></div>
-        <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%" :style="bg1">
+        <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"
+             :style="bg4">
             <el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>
         </div>
         <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;background-size: 100% 100%;margin-left: 1%;margin-top: 1%"
-             :style="bg1">
+             :style="bg5">
             <el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>
         </div>
-        <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%" :style="bg1">
+        <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"
+             :style="bg6">
             <el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>
         </div>
-        <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%" :style="bg1">
+        <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"
+             :style="bg7">
             <el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>
         </div>
-        <div  name="img_div" style="width: 30%;height: 30%; display: block; float: left;background-size: 100% 100%;margin-left: 1%;margin-top: 1%"
-             :style="bg1">
-            <el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>
-        </div>
-        <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%" :style="bg1">
-            <el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>
-        </div>
+        <!--<div  name="img_div" style="width: 30%;height: 30%; display: block; float: left;background-size: 100% 100%;margin-left: 1%;margin-top: 1%"-->
+             <!--:style="bg1">-->
+            <!--<el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>-->
+        <!--</div>-->
+        <!--<div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%" :style="bg1">-->
+            <!--<el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>-->
+        <!--</div>-->
 
     </div>
 </template>
@@ -56,6 +67,30 @@
                 // checked1: false,
                 bg1:{
                     background:'url('+require('../assets/1.jpg')+')',
+                    backgroundRepeat:"no-repeat"
+                },
+                bg2:{
+                    background:'url('+require('../assets/2.jpg')+')',
+                    backgroundRepeat:"no-repeat"
+                },
+                bg3:{
+                    background:'url('+require('../assets/3.jpg')+')',
+                    backgroundRepeat:"no-repeat"
+                },
+                bg4:{
+                    background:'url('+require('../assets/4.jpg')+')',
+                    backgroundRepeat:"no-repeat"
+                },
+                bg5:{
+                    background:'url('+require('../assets/5.jpg')+')',
+                    backgroundRepeat:"no-repeat"
+                },
+                bg6:{
+                    background:'url('+require('../assets/6.jpg')+')',
+                    backgroundRepeat:"no-repeat"
+                },
+                bg7:{
+                    background:'url('+require('../assets/7.jpg')+')',
                     backgroundRepeat:"no-repeat"
                 }
             }

@@ -56,6 +56,6 @@
     }
 
     .width50 {
-        width: 50%;
+        width: 40%;
     }
 </style>

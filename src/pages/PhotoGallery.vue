@@ -55,6 +55,13 @@
             <!--<el-button>默认按钮</el-button>-->
             <!--</el-col>-->
         </el-row>
+        <div class="block">
+            <span class="pages"></span>
+            <el-pagination
+                    layout="prev, pager, next"
+                    :total="50">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
@@ -98,6 +105,11 @@
                     picture:"../../assets/logo.png",
                     badPosition: []
                 }, {
+                    time: "2018-11-12 11:12:12",
+                    status: 1,
+                    no: 124,
+                    badPosition: [1, 2]
+                },{
                     time: "2018-11-12 11:12:12",
                     status: 1,
                     no: 124,

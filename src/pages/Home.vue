@@ -59,11 +59,11 @@
         methods: {
             logout() {
                 let api=this.$api.userApi.logout;
-                let token=this.$cookies.get("token")
-                console.log(token)
+                let token=this.$cookies.get("token");
                 api.headers={
                     token:token
-                }
+                };
+                console.log(token);
                 this.axios(api).then(response=>{
                     if(response.data.code===0){
                         this.$message({

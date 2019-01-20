@@ -9,7 +9,8 @@
                 <el-input v-model="loginForm.passwd" placeholder="请输入密码" @keyup.enter.native="onSubmit"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" class="width50" @click="onSubmit" round>登录</el-button>
+                <el-button type="primary" class="width50" style="position: relative;left: -5%" @click="register" round>注册</el-button>
+                <el-button type="primary" class="width50" style="position: relative;right: -5%" @click="onSubmit" round>登录</el-button>
             </el-form-item>
         </el-form>
         <VueCanvasNest :config="{color:'0,0,0', count: 100}"/>
@@ -34,6 +35,32 @@
             }
         },
         methods: {
+            register(){
+                let api=this.$api.userApi.register;
+                let account=this.loginForm.account;
+                api.data={
+                    account:this.loginForm.account,
+                    pwd:this.loginForm.passwd,
+                    role:0
+                }
+                this.axios(api).then(response=>{
+                    let data=response.data;
+                    if(data.code===0){
+                        this.$message({
+                            message: '注册成功',
+                            type: 'success'
+                        });
+                        location.reload();
+                        this.loginForm=account;
+                    }
+                    else{
+                        this.$message({
+                            message: '用户已经存在',
+                            type: 'error'
+                        });
+                    }
+                })
+            },
             onSubmit() {
                 let api=this.$api.userApi.login;
                 api.data={
@@ -45,6 +72,7 @@
                     let data = response.data;
                     if(data.code===0){
                         let token=data.data.token;
+                        console.log(token);
                         this.$cookies.set("token", token, 7200);
                         console.log(token)
                         this.$message({

@@ -13,7 +13,7 @@
                 </el-table-column>
                 <el-table-column prop="status" label="状态" align="center"></el-table-column>
                 <el-table-column prop="models" label="已有模型" align="center"></el-table-column>
-                <el-table-column label="操作模型" align="center">
+                <el-table-column label="操作模型" align="center" width="250">
                     <template slot-scope="scope2">
                         <el-button
                                 type="primary"
@@ -27,11 +27,16 @@
                                 icon="el-icon-delete"
                                 @click="deleteModels">
                         </el-button>
+                        <el-button
+                                type="success"
+                                size="mini"
+                                @click="changeModel(scope2.row)">切换模型
+                        </el-button>
                     </template>
                 </el-table-column>
                 <!--<span v-model="this[0].models"></span>-->
                 <el-table-column prop="used" label="使用模型" align="center"></el-table-column>
-                <el-table-column label="设备操作" align="center" width="350">
+                <el-table-column label="设备操作" align="center" width="200">
                     <template slot-scope="scope1">
                         <el-button
                                 type="success"
@@ -39,11 +44,6 @@
                                 icon="el-icon-info"
                                 style="background-color: darkorange; border: 1px solid darkorange"
                                 @click="check()">查看
-                        </el-button>
-                        <el-button
-                                type="primary"
-                                size="mini"
-                                @click="changeModel(scope1.row)">切换模型
                         </el-button>
                         <el-button
                                 type="danger"
@@ -58,6 +58,8 @@
         <div class="block">
             <span class="pages"></span>
             <el-pagination
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
                     layout="prev, pager, next"
                     :total="50">
             </el-pagination>
@@ -69,14 +71,47 @@
     export default {
         name: "DeviceControl",
         mounted(){
-
+            let api=this.$api.userApi.getmachines;
+            let params={
+                pageNum: this.currentPage,
+                pageSize:4
+            }
+            this.axios.get(api, {params}).then(res => {
+                let data = res.data;
+                switch (data.code) {
+                    case 0:
+                        for(let i=0;i<data.length;i++)
+                            this.examineTable.push(data[i]);
+                        break;
+                    default:
+                        this.$toast("未知错误");
+                }
+            });
         },
         methods:{
             check(){
                 this.$router.push('/defect-distribution')
             },
             addMachine(){
-
+                let api=this.$api.userApi.addmachine;
+                let token=this.$cookies.get("token")
+                api.headers={
+                    token:token
+                };
+                this.axios(api).then(response=>{
+                    if(response.data.deviceId!==0){
+                        this.$message({
+                            message:"添加成功",
+                            type:'success'
+                        })
+                    }
+                    else{
+                        this.$message({
+                            message:"未知错误",
+                            type:error
+                        })
+                    }
+                })
             },
             addModels(){
                 this.$prompt('请输入想要添加的模型',  {
@@ -151,6 +186,9 @@
                         message: '已取消删除'
                     });
                 });
+            },
+            handleCurrentChange(){
+
             }
         },
         data(){
@@ -158,6 +196,7 @@
             //     image:{
             //         url:'url('+require('../assets/logo.png')+')no-repeat'
             // },
+                currentPage:'',
                 examineTable: [{
                     status: '关闭',
                     models: "1,2,3",
