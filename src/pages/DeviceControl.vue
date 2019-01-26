@@ -59,9 +59,10 @@
             <span class="pages"></span>
             <el-pagination
                     @current-change="handleCurrentChange"
-                    :current-page="currentPage"
                     layout="prev, pager, next"
-                    :total="50">
+                    :total="examineTable.length"
+                    :page-size="4">
+
             </el-pagination>
         </div>
     </div>
@@ -90,14 +91,44 @@
             check(){
                 this.$router.push('/defect-distribution')
             },
+            // handleSizeChange(val){
+            //     val=4;
+            //     this.pageSize=4;
+            // },
+
+            handleCurrentChange(val){
+                this.currentPage=val;
+            },
+            //获取表格选中时的数据
+            /*selectRow(val){
+                this.selectlistRow=val
+            },*/
+            //增加行
+            addRow(){
+                var list = {
+                    status: '关闭',
+                    models: "1,2,3",
+                    image:"../assets/logo.png",
+                    used:1,
+                    operate:0
+                }
+                this.examineTable.unshift(list)
+            },
             addMachine(){
                 let api=this.$api.userApi.addmachine;
                 let token=this.$cookies.get("token")
                 api.headers={
                     token:token
                 };
+                api.data={
+                    name:"dhu",
+                    location:"dhu"
+                };
                 this.axios(api).then(response=>{
+                    console.log(response.data);
                     if(response.data.deviceId!==0){
+                        this.addRow();
+
                         this.$message({
                             message:"添加成功",
                             type:'success'
@@ -185,16 +216,14 @@
                     });
                 });
             },
-            handleCurrentChange(){
 
-            }
         },
         data(){
             return{
             //     image:{
             //         url:'url('+require('../assets/logo.png')+')no-repeat'
             // },
-                currentPage:'',
+                currentPage:1,
                 examineTable: [{
                     status: '关闭',
                     models: "1,2,3",
@@ -219,7 +248,7 @@
                     picture:"../assets/logo.png",
                     used:1,
                     operate:0
-                }]
+                }, ]
             }
         }
     }
