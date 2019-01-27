@@ -20,5 +20,10 @@ export default {
     getmachines:{
         url:BASE_URL+'/devices/do-user',
         method:'get'
+    },
+    removemachine:{
+        url:BASE_URL+'/devices/{deviceId}/do-admin',
+        method:'delete'
+
     }
 }

@@ -12,6 +12,19 @@ let axiosInstance = Axios.create({
     }],
     headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
 });
+// 全局请求拦截，自动为header添加token
+axiosInstance.interceptors.request.use(
+    config => {
+        let token = document.cookie;
+        console.log(token);
+        // token存在，则添加至请求头
+        if (token) {
+            config.headers.token = token;
+        }
+        return config;
+    }, err => {
+        return Promise.reject(err);
+    });
 
 // // 拦截响应response，并做一些错误处理
 // axiosInstance.interceptors.response.use((res) => {

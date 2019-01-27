@@ -2,6 +2,7 @@
     <div style="width: 80%;height: 88%;position: absolute">
         <div style="margin-top: -75px">
             <el-button type="primary" @click="addMachine">添加机器</el-button>
+
         </div>
         <div style="margin-top: 30px">
             <el-table :data="examineTable" style="width: 100%;text-align: center">
@@ -73,6 +74,13 @@
         name: "DeviceControl",
         mounted(){
             let api=this.$api.userApi.getmachines;
+            console.log(api);
+
+            api.data={
+                pageNum:"dhu",
+                pageSize:"dhu"
+            };
+
             let params={
                 pageNum: this.currentPage,
                 pageSize:4
@@ -89,6 +97,7 @@
         },
         methods:{
             check(){
+
                 this.$router.push('/defect-distribution')
             },
             // handleSizeChange(val){
@@ -114,12 +123,10 @@
                 }
                 this.examineTable.unshift(list)
             },
+
             addMachine(){
                 let api=this.$api.userApi.addmachine;
-                let token=this.$cookies.get("token")
-                api.headers={
-                    token:token
-                };
+
                 api.data={
                     name:"dhu",
                     location:"dhu"
@@ -141,6 +148,7 @@
                         })
                     }
                 })
+
             },
             addModels(){
                 this.$prompt('请输入想要添加的模型',  {
@@ -154,6 +162,7 @@
                     });
                 });
             },
+
             deleteModels(){
                 this.$prompt('请输入想要删除的模型',  {
                     confirmButtonText: '确定',
@@ -199,11 +208,33 @@
                     });
                 });
             },
+            deleteRow(){
+                let val=this.removedDevice(row)
+                this.examineTable.splice(val,1)
+                console.log("12314221413241244123");
+
+            },
             removedDevice(row){
-                this.$confirm('此操作将永久删除该设备, 是否继续?', '提示', {
+                    let api=this.$api.userApi.removemachine;
+                    console.log("api=");
+                    console.log(api);
+                    api.data={
+                        deviceId:"1",
+                    };
+                    this.axios(api).then(response=>{
+                        console.log(response.data);
+                        // if(response.data.deviceId===1){
+                        //
+                        //     this.deleteRow();
+                        // }
+
+                    },
+
+                    this.$confirm('此操作将永久删除该设备, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
+
                 }).then(() => {
                     this.$message({
                         type: 'success',
@@ -214,7 +245,7 @@
                         type: 'info',
                         message: '已取消删除'
                     });
-                });
+                }))
             },
 
         },
@@ -223,7 +254,7 @@
             //     image:{
             //         url:'url('+require('../assets/logo.png')+')no-repeat'
             // },
-                currentPage:1,
+                currentPage:2,
                 examineTable: [{
                     status: '关闭',
                     models: "1,2,3",
