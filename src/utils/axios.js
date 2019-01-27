@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import Qs from 'qs'
+import cookies from 'vue-cookies'
 
 // 配置Axios
 let axiosInstance = Axios.create({
@@ -15,8 +16,7 @@ let axiosInstance = Axios.create({
 // 全局请求拦截，自动为header添加token
 axiosInstance.interceptors.request.use(
     config => {
-        let token = document.cookie;
-        console.log(token);
+        let token = cookies.get('token');
         // token存在，则添加至请求头
         if (token) {
             config.headers.token = token;
