@@ -5,9 +5,9 @@
 
         </div>
         <div style="margin-top: 30px">
-            <el-table :data="examineTable" style="width: 100%;text-align: center">
+            <el-table :data="deviceTable.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%;text-align: center">
                 <el-table-column type="index" label="机器号" align="center"></el-table-column>
-                <el-table-column prop="image" label="机器图" align="center">
+                <el-table-column label="机器图" align="center">
                     <template scope="scope">
                         <img :src="scope.row.image" width="100" height="100"/>
                     </template>
@@ -36,7 +36,7 @@
                     </template>
                 </el-table-column>
                 <!--<span v-model="this[0].models"></span>-->
-                <el-table-column prop="used" label="使用模型" align="center"></el-table-column>
+                <el-table-column prop="usingModel" label="使用模型" align="center"></el-table-column>
                 <el-table-column label="设备操作" align="center" width="200">
                     <template slot-scope="scope1">
                         <el-button
@@ -59,9 +59,11 @@
         <div class="block">
             <span class="pages"></span>
             <el-pagination
+                    @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
+                    :current-page="currentPage"
                     layout="prev, pager, next"
-                    :total="examineTable.length"
+                    :total="deviceTable.length"
                     :page-size="4">
 
             </el-pagination>
@@ -72,60 +74,49 @@
 <script>
     export default {
         name: "DeviceControl",
-        mounted(){
-            let api=this.$api.userApi.getmachines;
+        mounted() {
+            let api = this.$api.userApi.getMachines;
             console.log(api);
-
-            api.data={
-                pageNum:"dhu",
-                pageSize:"dhu"
-            };
-
-            let params={
-                pageNum: this.currentPage,
-                pageSize:4
-            };
-            this.axios.get(api, {params}).then(res => {
+            let that=this;
+            this.axios(api, {
+                params: {
+                    pageNum: this.currentPage,
+                    pageSize: this.pageSize,
+                }
+            }).then(function (res) {
+                console.log(res);
                 let data = res.data;
-                switch (data.code) {
-                    case 0:
-                        for(let i=0;i<data.length;i++)
-                            this.examineTable.push(data[i]);
-                        break;
+                console.log(data);
+                if(res.data.code===0){
+                    for (let i = 0; i < data.data.length; i++){
+                        //console.log(data.data[i]);
+                        //that.deviceTable=data.data;
+                        that.deviceTable.push(data.data[i]);
+                        //console.log(data.data[i]);
+                    }
+                    console.log(that.deviceTable);
                 }
             });
         },
         methods:{
+
             check(){
 
                 this.$router.push('/defect-distribution')
             },
-            // handleSizeChange(val){
-            //     val=4;
-            //     this.pageSize=4;
-            // },
 
-            handleCurrentChange(val){
-                this.currentPage=val;
+            handleSizeChange: function (size) {
+                this.pagesize = size;
+                console.log(this.pagesize)  //每页下拉显示数据
             },
-            //获取表格选中时的数据
-            /*selectRow(val){
-                this.selectlistRow=val
-            },*/
-            //增加行
-            addRow(){
-                var list = {
-                    status: '关闭',
-                    models: "1,2,3",
-                    image:"../assets/logo.png",
-                    used:1,
-                    operate:0
-                }
-                this.examineTable.unshift(list)
+
+            handleCurrentChange: function(currentPage){
+                this.currentPage = currentPage;
+                console.log(this.currentPage)  //点击第几页
             },
 
             addMachine(){
-                let api=this.$api.userApi.addmachine;
+                let api=this.$api.userApi.addMachine;
 
                 api.data={
                     name:"dhu",
@@ -134,12 +125,13 @@
                 this.axios(api).then(response=>{
                     console.log(response.data);
                     if(response.data.deviceId!==0){
-                        this.addRow();
+                        //this.addRow();
 
                         this.$message({
                             message:"添加成功",
                             type:'success'
-                        })
+                        });
+                        location.reload();
                     }
                     else{
                         this.$message({
@@ -150,6 +142,49 @@
                 })
 
             },
+
+            removedDevice(row){
+                var that=this;
+                let id=row.deviceId;
+                let api={
+                    url:'http://106.12.123.92:8081/api/v1/devices/'+id+'/do-admin',
+                    method:'delete',
+                };
+                let flag=false;
+                console.log("api=");
+                console.log(api);
+                api.data={
+                    deviceId:id,
+                };
+
+                this.$confirm('此操作将永久删除该设备, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    flag=true;
+                    console.log(flag);
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                }).then(()=>{
+                    if(flag===true){
+                        console.log(flag);
+                        that.axios(api).then(function (response) {
+                            console.log(response);
+                            if(response.data.code===0){
+                                that.$message({
+                                    type: 'success',
+                                    message: '删除成功!'});
+                                location.reload();
+                            }
+                        })
+                    }
+                })
+            },
+
             addModels(){
                 this.$prompt('请输入想要添加的模型',  {
                     confirmButtonText: '确定',
@@ -208,45 +243,6 @@
                     });
                 });
             },
-            deleteRow(){
-                let val=this.removedDevice(row)
-                this.examineTable.splice(val,1)
-                console.log("12314221413241244123");
-
-            },
-            removedDevice(row){
-                    let api=this.$api.userApi.removemachine;
-                    console.log("api=");
-                    console.log(api);
-                    api.data={
-                        deviceId:"1",
-                    };
-                    this.axios(api).then(response=>{
-                        console.log(response.data);
-                        // if(response.data.deviceId===1){
-                        //
-                        //     this.deleteRow();
-                        // }
-
-                    },
-
-                    this.$confirm('此操作将永久删除该设备, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-
-                }).then(() => {
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });
-                }))
-            },
 
         },
         data(){
@@ -254,32 +250,9 @@
             //     image:{
             //         url:'url('+require('../assets/logo.png')+')no-repeat'
             // },
-                currentPage:2,
-                examineTable: [{
-                    status: '关闭',
-                    models: "1,2,3",
-                    image:"../assets/logo.png",
-                    used:1,
-                    operate:0
-                }, {
-                    status: '使用中',
-                    models: "1,2,3",
-                    picture:"../assets/logo.png",
-                    used:1,
-                    operate:0
-                }, {
-                    status: '使用中',
-                    models: "1,2,3",
-                    picture:"../assets/logo.png",
-                    used:1,
-                    operate:0
-                },  {
-                    status: '维护',
-                    models: "1,2,3",
-                    picture:"../assets/logo.png",
-                    used:1,
-                    operate:0
-                }, ]
+                currentPage:1,
+                deviceTable:[],
+                pageSize:4,
             }
         }
     }

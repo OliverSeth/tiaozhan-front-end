@@ -1,4 +1,4 @@
-const BASE_URL = 'http://106.12.123.92:8081/api/v1'
+const BASE_URL = 'http://106.12.123.92:8081/api/v1';
 
 export default {
     login:{
@@ -13,17 +13,16 @@ export default {
         url:BASE_URL+'/users/do-user',
         method:'put'
     },
-    addmachine:{
+    addMachine:{
         url:BASE_URL+'/devices/do-admin',
         method:'post'
     },
-    getmachines:{
+    getMachines:{
         url:BASE_URL+'/devices/do-user',
         method:'get'
     },
-    removemachine:{
-        url:BASE_URL+'/devices/{deviceId}/do-admin',
-        method:'delete'
-
-    }
+    // removeMachine:{
+    //     url:BASE_URL+'/devices/'+'/do-admin',
+    //     method:'delete'
+    // }
 }

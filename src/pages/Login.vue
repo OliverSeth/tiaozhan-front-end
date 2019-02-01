@@ -42,7 +42,7 @@
                     account:this.loginForm.account,
                     pwd:this.loginForm.passwd,
                     role:0
-                }
+                };
                 this.axios(api).then(response=>{
                     let data=response.data;
                     if(data.code===0){
