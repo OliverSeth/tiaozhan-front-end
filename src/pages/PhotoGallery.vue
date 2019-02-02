@@ -1,34 +1,39 @@
 <template>
-    <div id="clothExamine">
-        <el-row>
+    <div id="clothExamine" style="width: 80%;height: 88%;position: absolute">
+        <div style="margin-top: -75px;margin-left:350px">
+            <el-button type="primary" @click="uploadPhoto">上传图片</el-button>
+        </div>
+        <div style="margin-top: 30px">
+            <el-row>
             <el-col>
                 <el-table
                         :data="photoTable"
                         style="width: 100%;text-align: center"
                         :row-class-name="tableRowClassName">
                     <el-table-column
-                            prop="picID"
+                            prop="picId"
                             label="图片序列"
                             width="180">
                     </el-table-column>
                     <el-table-column
+
                             label="图片"
                             width="180">
                         <template scope="scope">
-                            <img :src="scope.row.image" width="100" height="100"/>
+                            <img prop="href" :src="scope.row.image" width="100" height="100"/>
                         </template>
                     </el-table-column>
                     <el-table-column
-                            prop="status"
+                            prop="defectType"
                             label="疵点种类"
                             width="180">
                     </el-table-column>
                     <el-table-column
-                            prop="badPosition"
+                            prop="defectPosition"
                             label="疵点位置">
                     </el-table-column>
                     <el-table-column
-                            prop="time"
+                            prop="updateTime"
                             label="检测时间">
                     </el-table-column>
                     <el-table-column
@@ -47,6 +52,7 @@
                 </el-table>
             </el-col>
         </el-row>
+        </div>
         <div class="block">
             <span class="pages"></span>
             <el-pagination
@@ -78,6 +84,11 @@
                 console.log(data);
                 if(data.code===0){
                     that.photoTable=data.data;
+                    for(let i=0;i<that.photoTable.length;i++){
+                        if(that.photoTable[i].updateTime===null){
+                            that.photoTable[i].updateTime=that.photoTable[i].createTime;
+                        }
+                    }
                 }
             })
         },
@@ -90,6 +101,10 @@
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
                 console.log(this.currentPage)  //点击第几页
+            },
+
+            uploadPhoto(){
+
             },
             tableRowClassName({row, rowIndex}) {
                 switch (row.status) {

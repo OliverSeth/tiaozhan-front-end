@@ -31,5 +31,9 @@ export default {
     getPhotos:{
         url:BASE_URL+'/pictures',
         method:'get'
+    },
+    uploadPhoto: {
+        url:BASE_URL+'/pictures/upload/do-admin',
+        method:'post'
     }
 }
