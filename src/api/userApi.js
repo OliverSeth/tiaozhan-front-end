@@ -25,4 +25,11 @@ export default {
     //     url:BASE_URL+'/devices/'+'/do-admin',
     //     method:'delete'
     // }
+    // addModels:{
+    //     url:
+    // }
+    getPhotos:{
+        url:BASE_URL+'/pictures',
+        method:'get'
+    }
 }

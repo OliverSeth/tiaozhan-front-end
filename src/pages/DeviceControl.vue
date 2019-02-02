@@ -65,7 +65,6 @@
                     layout="prev, pager, next"
                     :total="deviceTable.length"
                     :page-size="4">
-
             </el-pagination>
         </div>
     </div>
@@ -75,25 +74,26 @@
     export default {
         name: "DeviceControl",
         mounted() {
-            let api = this.$api.userApi.getMachines;
-            console.log(api);
+            // let api = this.$api.userApi.getMachines;
+            let url='http://106.12.123.92:8081/api/v1/devices/do-user';
             let that=this;
-            this.axios(api, {
+            let size=that.pageSize*that.currentPage;
+            this.axios(url, {
                 params: {
-                    pageNum: this.currentPage,
-                    pageSize: this.pageSize,
+                    pageNum: that.currentPage,
+                    pageSize: 100,
                 }
             }).then(function (res) {
                 console.log(res);
                 let data = res.data;
                 console.log(data);
                 if(res.data.code===0){
-                    for (let i = 0; i < data.data.length; i++){
+                    // for (let i = 0; i < data.data.length; i++){
                         //console.log(data.data[i]);
-                        //that.deviceTable=data.data;
-                        that.deviceTable.push(data.data[i]);
+                        that.deviceTable=data.data;
+                        // that.deviceTable.push(data.data[i]);
                         //console.log(data.data[i]);
-                    }
+                    // }
                     console.log(that.deviceTable);
                 }
             });
@@ -186,10 +186,12 @@
             },
 
             addModels(){
+                let flag=false;
                 this.$prompt('请输入想要添加的模型',  {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                 }).then(({ value }) => {
+                    flag=true;
                 }).catch(() => {
                     this.$message({
                         type: 'info',

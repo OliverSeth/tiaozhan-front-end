@@ -3,11 +3,11 @@
         <el-row>
             <el-col>
                 <el-table
-                        :data="examineTable"
+                        :data="photoTable"
                         style="width: 100%;text-align: center"
                         :row-class-name="tableRowClassName">
                     <el-table-column
-                            prop="no"
+                            prop="picID"
                             label="图片序列"
                             width="180">
                     </el-table-column>
@@ -46,20 +46,16 @@
                     </el-table-column>
                 </el-table>
             </el-col>
-            <!--<el-col :span="2" :offset="4">-->
-                <!--<el-button type="primary">默认按钮</el-button>-->
-                <!--<el-button type="success">默认按钮</el-button>-->
-            <!--<el-button>默认按钮</el-button>-->
-            <!--<el-button>默认按钮</el-button>-->
-            <!--<el-button>默认按钮</el-button>-->
-            <!--<el-button>默认按钮</el-button>-->
-            <!--</el-col>-->
         </el-row>
         <div class="block">
             <span class="pages"></span>
             <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :total="photoTable.length"
                     layout="prev, pager, next"
-                    :total="50">
+                    :page-size="4">
             </el-pagination>
         </div>
     </div>
@@ -68,7 +64,33 @@
 <script>
     export default {
         name: "ClothExamine",
+        mounted(){
+            let api=this.$api.userApi.getPhotos;
+            let that =this;
+            that.axios(api,{
+                params:{
+                    pageNum: that.currentPage,
+                    pageSize: that.pageSize
+                }
+            }).then(function (response) {
+                // console.log(response);
+                let data=response.data;
+                console.log(data);
+                if(data.code===0){
+                    that.photoTable=data.data;
+                }
+            })
+        },
         methods: {
+            handleSizeChange: function (size) {
+                this.pagesize = size;
+                console.log(this.pagesize)  //每页下拉显示数据
+            },
+
+            handleCurrentChange: function(currentPage){
+                this.currentPage = currentPage;
+                console.log(this.currentPage)  //点击第几页
+            },
             tableRowClassName({row, rowIndex}) {
                 switch (row.status) {
                     case 0:
@@ -98,6 +120,9 @@
         },
         data() {
             return {
+                currentPage:1,
+                pageSize:4,
+                photoTable:[],
                 examineTable: [{
                     time: "2018-11-11 12:12:12",
                     status: 0,
