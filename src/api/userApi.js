@@ -35,5 +35,5 @@ export default {
     uploadPhoto: {
         url:BASE_URL+'/pictures/upload/do-admin',
         method:'post'
-    }
+    },
 }
