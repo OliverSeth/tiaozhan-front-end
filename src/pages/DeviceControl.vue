@@ -189,6 +189,7 @@
                 let flag=false;
                 let that=this;
                 let arr=[];
+                let newStr=new String();
                 this.$prompt('请输入想要添加的模型',  {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -207,7 +208,7 @@
                         // console.log(string);
                         string=string.substr(1,string.length-2);
                         // console.log(string);
-                        arr=string.split(",");
+                        arr=string.split(',');
                         // console.log(arr);
                         let hf=false;
                         for(let i=0;i<arr.length;i++){
@@ -225,14 +226,15 @@
                         }
                         if(hf===false){
                             arr.push(value);
-                            let newStr=arr.join(',');
+                            newStr=arr.join(',');
+                            console.log(newStr);
                             row.models='['+ newStr +']';
                             flag=true;
                         }
                         else{
                             arr=row.models;
                         }
-                        console.log(arr);
+                        // console.log(row.models);
                     }
 
                     // console.log(this.deviceTable);
@@ -252,10 +254,12 @@
                             url:'http://106.12.123.92:8081/api/v1/devices/'+row.deviceId+'/models/do-admin',
                             method:'put'
                         };
+                        console.log(row.models);
+                        // console.log(arr);
                         api.data={
-                            models:arr,
+                            models:row.models,
                         };
-                        console.log(arr);
+                        // console.log(arr);
                         that.axios(api).then(function (response) {
                             console.log(response);
                         })
