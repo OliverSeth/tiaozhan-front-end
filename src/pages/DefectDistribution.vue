@@ -7,15 +7,15 @@
         </div>
         <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"
              :style="bg1">
-            <span style="position:relative;top:60%;left: 33%">疵点位置：</span>
-            <span style="position:relative;top: 75%;left: 9%">疵点种类：</span>
+            <span style="position:relative;top:60%;left: 31%">疵点位置：</span>
+            <span style="position:relative;top: 75%;left: 8%">疵点种类：</span>
             <span style="position:relative;top: 90%;left: -15%">检测时间：</span>
             <el-checkbox v-model="checked1" style="position: relative;float: right" @change="setBorder(0)"></el-checkbox>
         </div>
         <div name="img_div" style="width: 30%;height: 30%; display: block; float: left; margin-left: 1%;margin-top: 1%"
              :style="bg2">
-            <span style="position:relative;top:60%;left: 33%">疵点位置：</span>
-            <span style="position:relative;top: 75%;left: 9%">疵点种类：</span>
+            <span style="position:relative;top:60%;left: 31%">疵点位置：</span>
+            <span style="position:relative;top: 75%;left: 8%">疵点种类：</span>
             <span style="position:relative;top: 90%;left: -15%">检测时间：</span>
             <el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>
         </div>

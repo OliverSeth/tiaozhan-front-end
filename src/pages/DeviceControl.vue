@@ -84,7 +84,7 @@
                     pageSize: 100,
                 }
             }).then(function (res) {
-                // console.log(res);
+                console.log(res);
                 let data = res.data;
                 // console.log(data);
                 if(res.data.code===0){
@@ -204,11 +204,11 @@
                         if(string==="null"){
                             string=null;
                         }
-                        console.log(string);
+                        // console.log(string);
                         string=string.substr(1,string.length-2);
                         // console.log(string);
                         arr=string.split(",");
-                        console.log(arr);
+                        // console.log(arr);
                         let hf=false;
                         for(let i=0;i<arr.length;i++){
                             if(arr[i]===value){
@@ -229,7 +229,10 @@
                             row.models='['+ newStr +']';
                             flag=true;
                         }
-                        console.log(row.models);
+                        else{
+                            arr=row.models;
+                        }
+                        console.log(arr);
                     }
 
                     // console.log(this.deviceTable);
@@ -244,13 +247,13 @@
                     });
                 }).then(()=>{
                     if(flag===true){
-                        console.log(that.deviceTable);
+                        // console.log(that.deviceTable);
                         let api={
                             url:'http://106.12.123.92:8081/api/v1/devices/'+row.deviceId+'/models/do-admin',
                             method:'put'
                         };
                         api.data={
-                            models:arr
+                            models:arr,
                         };
                         console.log(arr);
                         that.axios(api).then(function (response) {
@@ -292,11 +295,15 @@
             },
 
             changeModel(row){
+                let flag=false;
+                let v;
                 this.$prompt('请输入想要更换的模型',  {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                 }).then(({ value }) => {
                     // this[0].models=value,
+                    flag=true;
+                    v=value;
                     row.usingModel=value;
                     this.$message({
                         type: 'success',
@@ -307,7 +314,21 @@
                         type: 'info',
                         message: '取消更换'
                     });
-                });
+                }).then(()=>{
+                    if(flag===true){
+                        let api={
+                            url:'http://106.12.123.92:8081/api/v1/devices/'+row.deviceId+'/do-admin',
+                            method:'put'
+                        };
+                        console.log(v);
+                        api.data={
+                            usingModel:v,
+                        };
+                        this.axios(api).then(function (response) {
+                            console.log(response);
+                        })
+                    }
+                })
             },
 
         },
@@ -316,7 +337,7 @@
             //     image:{
             //         url:'url('+require('../assets/logo.png')+')no-repeat'
             // },
-            //     value:"",
+                value:"",
                 currentPage:1,
                 deviceTable:[],
                 pageSize:4,
