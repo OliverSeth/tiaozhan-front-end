@@ -20,13 +20,13 @@
                                 type="primary"
                                 size="mini"
                                 icon="el-icon-circle-plus-outline"
-                                @click="addModels">
+                                @click="addModels(scope2.row)">
                         </el-button>
                         <el-button
                                 type="danger"
                                 size="mini"
                                 icon="el-icon-delete"
-                                @click="deleteModels">
+                                @click="deleteModels(scope2.row)">
                         </el-button>
                         <el-button
                                 type="success"
@@ -84,9 +84,9 @@
                     pageSize: 100,
                 }
             }).then(function (res) {
-                console.log(res);
+                // console.log(res);
                 let data = res.data;
-                console.log(data);
+                // console.log(data);
                 if(res.data.code===0){
                     // for (let i = 0; i < data.data.length; i++){
                         //console.log(data.data[i]);
@@ -94,7 +94,7 @@
                         // that.deviceTable.push(data.data[i]);
                         //console.log(data.data[i]);
                     // }
-                    console.log(that.deviceTable);
+                    // console.log(that.deviceTable);
                 }
             });
         },
@@ -123,7 +123,7 @@
                     location:"dhu"
                 };
                 this.axios(api).then(response=>{
-                    console.log(response.data);
+                    //console.log(response.data);
                     if(response.data.deviceId!==0){
                         //this.addRow();
 
@@ -173,7 +173,7 @@
                     if(flag===true){
                         console.log(flag);
                         that.axios(api).then(function (response) {
-                            console.log(response);
+                            // console.log(response);
                             if(response.data.code===0){
                                 that.$message({
                                     type: 'success',
@@ -185,22 +185,83 @@
                 })
             },
 
-            addModels(){
+            addModels(row){
                 let flag=false;
+                let that=this;
+                let arr=[];
                 this.$prompt('请输入想要添加的模型',  {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                 }).then(({ value }) => {
-                    flag=true;
+                    if(value===null){
+                        this.$message({
+                            type: 'info',
+                            message: '取消添加'
+                        });
+                    }
+                    else{
+                        let string=row.models;
+                        if(string==="null"){
+                            string=null;
+                        }
+                        console.log(string);
+                        string=string.substr(1,string.length-2);
+                        // console.log(string);
+                        arr=string.split(",");
+                        console.log(arr);
+                        let hf=false;
+                        for(let i=0;i<arr.length;i++){
+                            if(arr[i]===value){
+                                hf=true;
+                                const h = this.$createElement;
+                                this.$message({
+                                    message: h('p', null, [
+                                        h('span', null, '模型 '),
+                                        h('i', { style: 'color: teal' }, value),
+                                        h('span', null, '已存在 '),
+                                    ])
+                                });
+                            }
+                        }
+                        if(hf===false){
+                            arr.push(value);
+                            let newStr=arr.join(',');
+                            row.models='['+ newStr +']';
+                            flag=true;
+                        }
+                        console.log(row.models);
+                    }
+
+                    // console.log(this.deviceTable);
+                    this.$message({
+                        type: 'success',
+                        message: '添加成功'
+                    });
                 }).catch(() => {
                     this.$message({
                         type: 'info',
                         message: '取消更换'
                     });
-                });
+                }).then(()=>{
+                    if(flag===true){
+                        console.log(that.deviceTable);
+                        let api={
+                            url:'http://106.12.123.92:8081/api/v1/devices/'+row.deviceId+'/models/do-admin',
+                            method:'put'
+                        };
+                        api.data={
+                            models:arr
+                        };
+                        console.log(arr);
+                        that.axios(api).then(function (response) {
+                            console.log(response);
+                        })
+                    }
+                })
             },
 
             deleteModels(){
+                let flag=false;
                 this.$prompt('请输入想要删除的模型',  {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -210,6 +271,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
+                        flag=true;
                         this.$message({
                             type: 'success',
                             message: '删除成功!'
@@ -228,12 +290,14 @@
                 });
 
             },
+
             changeModel(row){
                 this.$prompt('请输入想要更换的模型',  {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                 }).then(({ value }) => {
-                    this[0].models=value,
+                    // this[0].models=value,
+                    row.usingModel=value;
                     this.$message({
                         type: 'success',
                         message: '现在的模型是: ' + value
@@ -252,6 +316,7 @@
             //     image:{
             //         url:'url('+require('../assets/logo.png')+')no-repeat'
             // },
+            //     value:"",
                 currentPage:1,
                 deviceTable:[],
                 pageSize:4,

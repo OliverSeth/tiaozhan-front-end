@@ -29,7 +29,7 @@ export default {
     //     url:
     // }
     getPhotos:{
-        url:BASE_URL+'/pictures',
+        url:BASE_URL+'/pictures/do-user',
         method:'get'
     },
     uploadPhoto: {
