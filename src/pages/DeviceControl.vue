@@ -87,12 +87,7 @@
                 let data = res.data;
                 // console.log(data);
                 if(res.data.code===0){
-                    // for (let i = 0; i < data.data.length; i++){
-                        //console.log(data.data[i]);
                         that.deviceTable=data.data.list;
-                        // that.deviceTable.push(data.data[i]);
-                        //console.log(data.data[i]);
-                    // }
                     // console.log(that.deviceTable);
                 }
             });

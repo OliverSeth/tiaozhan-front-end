@@ -5,11 +5,11 @@
             <!--<el-menu-item index="2">批量上传</el-menu-item>-->
         <!--</el-menu>-->
         <div style="margin-top: -75px">
-            <el-button type="primary" @click="addMachine">上传</el-button>
+            <el-button type="primary" @click="uploadPhoto(file)">上传</el-button>
         </div>
         <div style="margin-top: 30px">
             <el-upload
-                    action="https://jsonplaceholder.typicode.com/posts/"
+                    action="http://106.12.123.92:8081/api/v1/pictures/upload/do-admin"
                     list-type="picture-card"
                     :before-upload="beforeAvatarUpload"
                     :on-preview="handlePictureCardPreview">
@@ -52,6 +52,17 @@
                     this.$message.error('上传头像图片大小不能超过 2MB!');
                 }
                 return isLt20M;
+            },
+            uploadPhoto(file){
+                let fd=new FormData();
+                fd.append("picFile", file);
+                let api=this.$api.userApi.uploadPhoto;
+                api.data={
+                    picture:fd,
+                };
+                this.axios(api).then(function (response) {
+                    console.log(response);
+                })
             }
         }
     }

@@ -7,7 +7,7 @@
             <el-row>
             <el-col>
                 <el-table
-                        :data="photoTable"
+                        :data="photoTable.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                         style="width: 100%;text-align: center"
                         :row-class-name="tableRowClassName">
                     <el-table-column
@@ -61,7 +61,6 @@
                     :current-page="currentPage"
                     layout="prev, pager, next"
                     :total="photoTable.length"
-
                     :page-size="4">
             </el-pagination>
         </div>
@@ -77,11 +76,12 @@
         mounted(){
             let api=this.$api.userApi.getPhotos;
             let that =this;
+            let url='http://106.12.123.92:8081/api/v1/pictures/do-user'
             // let photoTable = new Array();
-            that.axios(api,{
+            that.axios(url,{
                 params:{
                     pageNum: that.currentPage,
-                    pageSize: that.pageSize
+                    pageSize: 100
                 }
             }).then(function (response) {
                 // console.log(response);
@@ -92,14 +92,8 @@
                     for(let i=0;i<that.photoTable.length;i++){
                         if(that.photoTable[i].updateTime===null){
                             that.photoTable[i].updateTime=that.photoTable[i].createTime;
-
-
-
                         }
-
-
                         console.log(that.photoTable[i].createTime);
-
                         that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
                         that.photoTable[i].updateTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].updateTime);
                     }
@@ -207,28 +201,6 @@
                 currentPage:1,
                 pageSize:4,
                 photoTable:[],
-                examineTable: [{
-                    time: "2018-11-11 12:12:12",
-                    status: 0,
-                    no: 123,
-                    picture:"../../assets/logo.png",
-                    badPosition: []
-                }, {
-                    time: "2018-11-12 11:12:12",
-                    status: 1,
-                    no: 124,
-                    badPosition: [1, 2]
-                },{
-                    time: "2018-11-12 11:12:12",
-                    status: 1,
-                    no: 124,
-                    badPosition: [1, 2]
-                }, {
-                    time: "2018-11-12 12:12:12",
-                    status: 2,
-                    no: 125,
-                    badPosition: [1, 2, 3, 4]
-                }]
             }
         }
     }
