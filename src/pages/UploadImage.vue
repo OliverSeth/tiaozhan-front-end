@@ -1,21 +1,26 @@
 <template>
     <div style="width: 80%;height: 88%;position: absolute">
-        <!--<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">-->
-            <!--<el-menu-item index="1">单张上传</el-menu-item>-->
-            <!--<el-menu-item index="2">批量上传</el-menu-item>-->
-        <!--</el-menu>-->
-        <div style="margin-top: -75px">
-            <el-button type="primary" @click="uploadPhoto(file)">上传</el-button>
-        </div>
+        <!--<div style="margin-top: -75px">-->
+            <!--<el-button type="primary" @click="uploadPhoto">上传</el-button>-->
+        <!--</div>-->
+        <el-form :model="form">
+            <el-form-item>
+                <el-upload
+                        action="http://106.12.123.92:8081/api/v1/pictures/upload/do-admin"
+                        list-type="picture-card"
+                        ref="upload"
+                        :before-upload="beforeAvatarUpload"
+                        :on-preview="handlePictureCardPreview"
+                        :on-remove="handleRemove">
+                    <i class="el-icon-plus"></i>
+                </el-upload>
+            </el-form-item>
+            <el-form-item>
+                <el-button size="small" type="primary" @click="uploadPhoto">上传</el-button>
+                <el-button size="small">取消</el-button>
+            </el-form-item>
+        </el-form>
         <div style="margin-top: 30px">
-            <el-upload
-                    action="http://106.12.123.92:8081/api/v1/pictures/upload/do-admin"
-                    list-type="picture-card"
-                    :before-upload="beforeAvatarUpload"
-                    :on-preview="handlePictureCardPreview">
-                    <!--:on-remove="handleRemove">-->
-                <i class="el-icon-plus"></i>
-            </el-upload>
             <el-dialog :visible.sync="dialogVisible">
                 <img width="100%" :src="dialogImageUrl" alt="">
             </el-dialog>
@@ -30,7 +35,9 @@
             return{
                 activeIndex:'1',
                 dialogImageUrl: '',
-                dialogVisible: false
+                dialogVisible: false,
+                form:{},
+                // file:'',
             }
         },
         methods:{
@@ -44,12 +51,13 @@
             beforeAvatarUpload(file) {
                 // const isJPG = file.type === 'image/jpeg';
                 const isLt20M = file.size / 1024 / 1024 < 20;
+                // this.file=file;
 
                 // if (!isJPG) {
                 //     this.$message.error('上传头像图片只能是 JPG 格式!');
                 // }
                 if (!isLt20M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                    this.$message.error('上传头像图片大小不能超过 20MB!');
                 }
                 return isLt20M;
             },
@@ -60,9 +68,13 @@
                 api.data={
                     picture:fd,
                 };
+                api.headers={
+                    "Content-Type": "multipart/form-data"
+                };
                 this.axios(api).then(function (response) {
                     console.log(response);
                 })
+                // this.$refs.upload.submit();
             }
         }
     }
