@@ -151,12 +151,8 @@
                 }
             },
             confirm(){
-                this.flag=true;
                 this.dialogFormVisible = false;
-            },
-            modify(row){
-                this.dialogFormVisible = true;
-                let id=row.picId;
+                let id=this.row0.picId;
                 console.log(id);
                 let api={
                     url:'http://106.12.123.92:8081/api/v1/pictures/'+id+'/do-admin',
@@ -165,16 +161,16 @@
                 api.data={
                     picId:id,
                     defectPosition:this.form.position,
-                    // defectType:this.form.type.value,
+                    defectType:this.form.type,
                 };
-                if(this.flag===true){
-                    this.axios(api).then(function (response) {
-                        console.log(response);
-                        this.flag=false;
-                        location.reload();
-                    });
-                }
-
+                this.axios(api).then(function (response) {
+                    console.log(response);
+                    location.reload();
+                });
+            },
+            modify(row){
+                this.dialogFormVisible = true;
+                this.row0=row;
                 // this.$prompt('请输入疵点种类','请输入疵点位置', '提示', {
                 //     confirmButtonText: '确定',
                 //     cancelButtonText: '取消',
@@ -250,7 +246,7 @@
                     {value:0,text:"无"},
                 ],
                 formLabelWidth: '120px',
-                flag:false,
+                row0:'',
             }
         }
     }
