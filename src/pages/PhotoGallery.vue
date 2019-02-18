@@ -42,7 +42,7 @@
                             <el-button
                                     type="primary"
                                     size="small"
-                                    @click="modify()">修改
+                                    @click="modify(scope.row)">修改
                             </el-button>
                             <el-button type="danger" size="small" @click="removePhoto(scope.row)">
                                 删除
@@ -59,8 +59,9 @@
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="currentPage"
-                    :total="photoTable.length"
                     layout="prev, pager, next"
+                    :total="photoTable.length"
+
                     :page-size="4">
             </el-pagination>
         </div>
@@ -68,13 +69,15 @@
 </template>
 
 <script>
-    import utils from '@/utils'
+    import utils from '../utils/index'
+
     export default {
 
         name: "ClothExamine",
         mounted(){
             let api=this.$api.userApi.getPhotos;
             let that =this;
+            // let photoTable = new Array();
             that.axios(api,{
                 params:{
                     pageNum: that.currentPage,
@@ -90,32 +93,19 @@
                         if(that.photoTable[i].updateTime===null){
                             that.photoTable[i].updateTime=that.photoTable[i].createTime;
                         }
-                        photoTable[i].createTime = this.getDateFormat('yyyy-MM-dd', photoTable[i].createTime);
-                        photoTable[i].updateTime = this.getDateFormat('yyyy-MM-dd', photoTable[i].updateTime);
+
+
+                        console.log(that.photoTable[i].createTime);
+
+                        that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
+                        that.photoTable[i].updateTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].updateTime);
                     }
                 }
             })
         },
         methods: {
 
-            getDateFormat(fmt, date) {
-                date = new Date(date);
-                const o = {
-                    "M+": date.getMonth() + 1,                 //月份
-                    "d+": date.getDate(),                    //日
-                    "h+": date.getHours(),                   //小时
-                    "m+": date.getMinutes(),                 //分
-                    "s+": date.getSeconds(),                 //秒
-                    "q+": Math.floor((date.getMonth() + 3) / 3), //季度
-                    "S": date.getMilliseconds()             //毫秒
-                };
-                if (/(y+)/.test(fmt))
-                    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
-                for (let k in o)
-                    if (new RegExp("(" + k + ")").test(fmt))
-                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-                return fmt;
-            },
+
             handleSizeChange: function (size) {
                 this.pagesize = size;
                 console.log(this.pagesize)  //每页下拉显示数据
@@ -139,7 +129,18 @@
                         return 'danger-row';
                 }
             },
-            modify(){
+            modify(row){
+                var that=this;
+                let id=row.picId;
+                let api={
+                    url:'http://106.12.123.92:8081/api/v1/pictures/'+id+'/do-admin',
+                    method:'put',
+                };
+                let flag=false;
+                api.data={
+                    picId:id,
+                };
+
                 this.$prompt('请输入疵点种类','请输入疵点位置', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
