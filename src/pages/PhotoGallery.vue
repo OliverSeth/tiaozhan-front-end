@@ -92,6 +92,9 @@
                     for(let i=0;i<that.photoTable.length;i++){
                         if(that.photoTable[i].updateTime===null){
                             that.photoTable[i].updateTime=that.photoTable[i].createTime;
+
+
+
                         }
 
 
