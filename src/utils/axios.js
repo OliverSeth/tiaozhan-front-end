@@ -25,7 +25,7 @@ axiosInstance.interceptors.request.use(
     }, err => {
         return Promise.reject(err);
     });
-
+export default axiosInstance;
 // // 拦截响应response，并做一些错误处理
 // axiosInstance.interceptors.response.use((res) => {
 //         let code = res.data.code;
@@ -69,4 +69,3 @@ axiosInstance.interceptors.request.use(
 
 
 
-export default axiosInstance;

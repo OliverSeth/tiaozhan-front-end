@@ -9,9 +9,12 @@
                         action="http://106.12.123.92:8081/api/v1/pictures/upload/do-admin"
                         list-type="picture-card"
                         ref="upload"
+                        name="picFile"
                         :before-upload="beforeAvatarUpload"
                         :on-preview="handlePictureCardPreview"
-                        :on-remove="handleRemove">
+                        :on-remove="handleRemove"
+                        :on-success="uploadSuccess"
+                        :auto-upload="false">
                     <i class="el-icon-plus"></i>
                 </el-upload>
             </el-form-item>
@@ -29,6 +32,7 @@
 </template>
 
 <script>
+
     export default {
         name: "uploadImage",
         data(){
@@ -62,19 +66,24 @@
                 return isLt20M;
             },
             uploadPhoto(file){
-                let fd=new FormData();
-                fd.append("picFile", file);
-                let api=this.$api.userApi.uploadPhoto;
-                api.data={
-                    picture:fd,
-                };
-                api.headers={
-                    "Content-Type": "multipart/form-data"
-                };
-                this.axios(api).then(function (response) {
-                    console.log(response);
-                })
+                this.$refs.upload.submit();
+               console.log(file);
+               let fd=new FormData();
+               fd.append("picFile", file);
+               let api=this.$api.userApi.uploadPhoto;
+               api.data=fd;
+               console.log(fd);
+               api.headers={
+                   "Content-type":"multipart/form-data"
+               };
+               this.axios(api).then(function (response) {
+                   console.log(response);
+               })
+
                 // this.$refs.upload.submit();
+            },
+            uploadSuccess(res){
+                console.log(res);
             }
         }
     }
