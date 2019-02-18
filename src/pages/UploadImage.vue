@@ -53,17 +53,17 @@
                 this.dialogVisible = true;
             },
             beforeAvatarUpload(file) {
-                // const isJPG = file.type === 'image/jpeg';
+                const isJPG = file.type === 'image/jpeg';
                 const isLt20M = file.size / 1024 / 1024 < 20;
-                // this.file=file;
+                this.file=file;
 
-                // if (!isJPG) {
-                //     this.$message.error('上传头像图片只能是 JPG 格式!');
-                // }
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
                 if (!isLt20M) {
                     this.$message.error('上传头像图片大小不能超过 20MB!');
                 }
-                return isLt20M;
+                return isLt20M && isJPG;
             },
             uploadPhoto(file){
                 this.$refs.upload.submit();

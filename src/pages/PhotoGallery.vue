@@ -119,6 +119,25 @@
                         if(that.photoTable[i].updateTime===null){
                             that.photoTable[i].updateTime=that.photoTable[i].createTime;
                         }
+                        switch (that.photoTable[i].defectType) {
+                            case 0:{
+                                that.photoTable[i].defectType="无";
+                                break;
+                            }
+                            case 1:{
+                                that.photoTable[i].defectType="横疵";
+                                break;
+                            }
+                            case 2:{
+                                that.photoTable[i].defectType="纵疵";
+                                break;
+                            }
+                            case 3:{
+                                that.photoTable[i].defectType="横纵疵";
+                                break;
+                            }
+                            default:that.photoTable[i].defectType="错误";
+                        }
                         // console.log(that.photoTable[i].createTime);
                         that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
                         that.photoTable[i].updateTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].updateTime);
