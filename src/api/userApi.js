@@ -21,6 +21,7 @@ export default {
         url:BASE_URL+'/devices/do-user',
         method:'get'
     },
+
     // removeMachine:{
     //     url:BASE_URL+'/devices/'+'/do-admin',
     //     method:'delete'

@@ -44,7 +44,7 @@
                                     size="small"
                                     @click="modify()">修改
                             </el-button>
-                            <el-button type="danger" size="small">
+                            <el-button type="danger" size="small" @click="removephoto(scope.row)">
                                 删除
                             </el-button>
                         </template>
@@ -154,6 +154,48 @@
                         message: '取消输入'
                     });
                 });
+            },
+            removephoto(row){
+                var that=this;
+                let id=row.picId;
+                let api={
+                    url:'http://106.12.123.92:8081/api/v1/pictures/'+id+'/do-admin',
+                    method:'delete',
+                };
+                let flag=false;
+                console.log("api");
+                console.log(api);
+                api.data={
+                    picId:id,
+                };
+                this.$confirm('此操作将永久删除该设备，是否继续？','提示',{
+                    confirmButtonText:'确定',
+                    cancelButtonText:'取消',
+                    type:'warning'
+                }).then(()=>{
+                    flag=true;
+                    console.log(flag);
+                }).catch(()=>{
+                    this.$message({
+                        type:'info',
+                        message:'已取消删除'
+                    });
+                }).then(()=>{
+                    if(flag===true){
+                        console.log(flag);
+                        that.axios(api).then(function(response){
+                            console.log(response);
+                            if(response.data.code===0){
+                                that.$message({
+                                    type:'success',
+                                    message:'删除成功'});
+                                location.reload();
+                            }
+
+                        })
+                    }
+                })
+
             }
         },
         data() {
