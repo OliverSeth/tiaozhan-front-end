@@ -44,7 +44,7 @@
                                     size="small"
                                     @click="modify()">修改
                             </el-button>
-                            <el-button type="danger" size="small" @click="removephoto(scope.row)">
+                            <el-button type="danger" size="small" @click="removePhoto(scope.row)">
                                 删除
                             </el-button>
                         </template>
@@ -155,7 +155,7 @@
                     });
                 });
             },
-            removephoto(row){
+            removePhoto(row){
                 var that=this;
                 let id=row.picId;
                 let api={

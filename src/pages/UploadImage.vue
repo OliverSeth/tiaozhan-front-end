@@ -29,6 +29,8 @@
         data(){
             return{
                 activeIndex:'1',
+                dialogImageUrl: '',
+                dialogVisible: false
             }
         },
         methods:{
