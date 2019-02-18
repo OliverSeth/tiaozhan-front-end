@@ -74,12 +74,12 @@
                         let token=data.data.token;
                         console.log(token);
                         this.$cookies.set("token", token, 7200);
-                        console.log(token)
+                        console.log(token);
                         this.$message({
                             message: '登录成功',
                             type: 'success'
                         });
-                        this.$router.push('/');
+                        this.$router.push('/photo-gallery');
                     }
                     else{
                         this.$notify.error({

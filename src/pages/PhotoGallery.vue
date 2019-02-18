@@ -127,7 +127,7 @@
             },
 
             uploadPhoto(){
-
+                this.$router.push('/upload-image');
             },
             tableRowClassName({row, rowIndex}) {
                 switch (row.status) {

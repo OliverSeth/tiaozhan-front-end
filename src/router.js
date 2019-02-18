@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard'
 import  DeviceControl from './pages/DeviceControl'
 import  DefectDistribution from './pages/DefectDistribution'
 import PictureClassify from './pages/PictureClassify'
+import UploadImage from './pages/UploadImage'
 
 Vue.use(Router)
 
@@ -22,6 +23,7 @@ let router = new Router({
             meta: {
                 title: '控制台'
             },
+            redirect:'/login',
             children: [
                 // {
                 //     path: '/dashboard',
@@ -65,6 +67,9 @@ let router = new Router({
                 },{
                     path:'/defect-distribution',
                     component:DefectDistribution,
+                },{
+                    path:'/upload-image',
+                    component:UploadImage,
                 }
             ]
         }, {

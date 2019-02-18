@@ -2,7 +2,6 @@
     <div style="width: 80%;height: 88%;position: absolute">
         <div style="margin-top: -75px">
             <el-button type="primary" @click="addMachine">添加机器</el-button>
-
         </div>
         <div style="margin-top: 30px">
             <el-table :data="deviceTable.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%;text-align: center">
