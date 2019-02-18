@@ -20,7 +20,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button size="small" type="primary" @click="uploadPhoto">上传</el-button>
-                <el-button size="small">取消</el-button>
+                <el-button size="small" @click="cancel">取消</el-button>
             </el-form-item>
         </el-form>
         <div style="margin-top: 30px">
@@ -45,6 +45,9 @@
             }
         },
         methods:{
+            cancel(){
+                this.$router.push('/photo-gallery');
+            },
             handleRemove(file, fileList) {
                 console.log(file, fileList);
             },
@@ -78,6 +81,19 @@
                };
                this.axios(api).then(function (response) {
                    console.log(response);
+                   if(response.data.code===0){
+                       this.$notify({
+                           title: '成功',
+                           message: '上传成功',
+                           type: 'success'
+                       });
+                   }
+                   else{
+                       this.$notify.error({
+                           title: '失败',
+                           message: '上传失败'
+                       });
+                   }
                })
 
                 // this.$refs.upload.submit();
