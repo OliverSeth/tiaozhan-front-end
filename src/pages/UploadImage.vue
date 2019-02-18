@@ -69,7 +69,8 @@
                 return isLt20M && isJPG;
             },
             uploadPhoto(file){
-                this.$refs.upload.submit();
+               this.$refs.upload.submit();
+               let that=this;
                console.log(file);
                let fd=new FormData();
                fd.append("picFile", file);
@@ -82,14 +83,13 @@
                this.axios(api).then(function (response) {
                    console.log(response);
                    if(response.data.code===0){
-                       this.$notify({
+                       that.$notify.success({
                            title: '成功',
                            message: '上传成功',
-                           type: 'success'
                        });
                    }
                    else{
-                       this.$notify.error({
+                       that.$notify.error({
                            title: '失败',
                            message: '上传失败'
                        });
