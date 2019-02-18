@@ -49,6 +49,31 @@
                             </el-button>
                         </template>
                     </el-table-column>
+                    <el-table-column>
+                        <template scope="scope1">
+                            <el-dialog title="修改图片信息" :visible.sync="dialogFormVisible">
+                                <el-form :model="form">
+                                    <el-form-item label="疵点类型" :label-width="formLabelWidth">
+                                        <el-select v-model="form.type" placeholder="请选择疵点类型" style="width: 300px">
+                                            <el-option v-for="item in options"
+                                                       :label="item.text"
+                                                       :key="item.value"
+                                                       :value="item.value"
+                                            >
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item label="疵点位置" :label-width="formLabelWidth">
+                                        <el-input v-model="form.position" autocomplete="off" style="width:300px"></el-input>
+                                    </el-form-item>
+                                </el-form>
+                                <div slot="footer" class="dialog-footer">
+                                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                    <el-button type="primary" @click="confirm">确 定</el-button>
+                                </div>
+                            </el-dialog>
+                        </template>
+                    </el-table-column>
                 </el-table>
             </el-col>
         </el-row>
@@ -64,6 +89,7 @@
                     :page-size="4">
             </el-pagination>
         </div>
+
     </div>
 </template>
 
@@ -86,14 +112,14 @@
             }).then(function (response) {
                 // console.log(response);
                 let data=response.data;
-                console.log(data);
+                // console.log(data);
                 if(data.code===0){
                     that.photoTable=data.data.list;
                     for(let i=0;i<that.photoTable.length;i++){
                         if(that.photoTable[i].updateTime===null){
                             that.photoTable[i].updateTime=that.photoTable[i].createTime;
                         }
-                        console.log(that.photoTable[i].createTime);
+                        // console.log(that.photoTable[i].createTime);
                         that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
                         that.photoTable[i].updateTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].updateTime);
                     }
@@ -101,8 +127,6 @@
             })
         },
         methods: {
-
-
             handleSizeChange: function (size) {
                 this.pagesize = size;
                 console.log(this.pagesize)  //每页下拉显示数据
@@ -126,32 +150,45 @@
                         return 'danger-row';
                 }
             },
+            confirm(){
+                this.flag=true;
+                this.dialogFormVisible = false;
+            },
             modify(row){
-                var that=this;
+                this.dialogFormVisible = true;
                 let id=row.picId;
+                console.log(id);
                 let api={
                     url:'http://106.12.123.92:8081/api/v1/pictures/'+id+'/do-admin',
                     method:'put',
                 };
-                let flag=false;
                 api.data={
                     picId:id,
+                    defectPosition:this.form.position,
+                    // defectType:this.form.type.value,
                 };
+                if(this.flag===true){
+                    this.axios(api).then(function (response) {
+                        console.log(response);
+                        this.flag=false;
+                        location.reload();
+                    });
+                }
 
-                this.$prompt('请输入疵点种类','请输入疵点位置', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                }).then(({ value }) => {
-                    this.$message({
-                        type: 'success',
-                        message: '你的邮箱是: ' + value
-                    });
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '取消输入'
-                    });
-                });
+                // this.$prompt('请输入疵点种类','请输入疵点位置', '提示', {
+                //     confirmButtonText: '确定',
+                //     cancelButtonText: '取消',
+                // }).then(({ value }) => {
+                //     this.$message({
+                //         type: 'success',
+                //         message: '你的邮箱是: ' + value
+                //     });
+                // }).catch(() => {
+                //     this.$message({
+                //         type: 'info',
+                //         message: '取消输入'
+                //     });
+                // });
             },
             removePhoto(row){
                 var that=this;
@@ -201,6 +238,19 @@
                 currentPage:1,
                 pageSize:4,
                 photoTable:[],
+                dialogFormVisible: false,
+                form:{
+                    type:'',
+                    position:'',
+                },
+                options:[
+                    {value:1,text:"横疵"},
+                    {value:2,text:"纵疵"},
+                    {value:3,text:"横纵疵"},
+                    {value:0,text:"无"},
+                ],
+                formLabelWidth: '120px',
+                flag:false,
             }
         }
     }
