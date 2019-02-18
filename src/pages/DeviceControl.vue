@@ -189,7 +189,7 @@
                 let flag=false;
                 let that=this;
                 let arr=[];
-                let newStr=new String();
+                let newStr=String();
                 this.$prompt('请输入想要添加的模型',  {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -228,6 +228,7 @@
                             arr.push(value);
                             newStr=arr.join(',');
                             console.log(newStr);
+                            // row.models=newStr;
                             row.models='['+ newStr +']';
                             flag=true;
                         }
