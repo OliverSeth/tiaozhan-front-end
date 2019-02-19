@@ -37,4 +37,8 @@ export default {
         url:BASE_URL+'/pictures/upload/do-admin',
         method:'post'
     },
+    savePicture: {
+        url:BASE_URL+'/pictures/do-admin',
+        method:'post',
+    }
 }
