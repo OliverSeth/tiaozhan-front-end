@@ -8,6 +8,7 @@ let axiosInstance = Axios.create({
     // 请求时携带Cookie
     withCredentials: true,
     transformRequest: [function (data) {
+
         data = Qs.stringify(data);
         return data;
     }],

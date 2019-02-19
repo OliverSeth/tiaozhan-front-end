@@ -5,6 +5,20 @@
         <!--</div>-->
         <el-form :model="form">
             <el-form-item>
+                <!--<el-upload-->
+                        <!--class="upload-demo"-->
+                        <!--ref="upload"-->
+                        <!--action="https://jsonplaceholder.typicode.com/posts/"-->
+                        <!--:on-preview="handlePreview"-->
+                        <!--:on-remove="handleRemove"-->
+                        <!--:file-list="fileList"-->
+                        <!--:auto-upload="false">-->
+                    <!--<el-button slot="trigger" size="small" type="primary">选取文件</el-button>-->
+                    <!--<el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>-->
+                    <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+                <!--</el-upload>-->
+
+
                 <el-upload
                         action="http://106.12.123.92:8081/api/v1/pictures/upload/do-admin"
                         list-type="picture-card"
@@ -37,6 +51,19 @@
         name: "uploadImage",
         data(){
             return{
+                parseDate:{
+                    overwrite:null,
+                    sourceid:null
+                },
+                httpHeaders:{
+                    'X-token':window.localStorage.getItem('TOKEN')
+                },
+                fileList:[],
+                checked:false,
+                isDel:false,
+                loading:false,
+                success:null,
+
                 activeIndex:'1',
                 dialogImageUrl: '',
                 dialogVisible: false,
@@ -68,38 +95,76 @@
                 }
                 return isLt20M && isJPG;
             },
-            uploadPhoto(file){
-               this.$refs.upload.submit();
-               let that=this;
-               console.log(file);
-               let fd=new FormData();
-               fd.append("picFile", file);
-               let api=this.$api.userApi.uploadPhoto;
-               api.data=fd;
-               console.log(fd);
-               api.headers={
-                   "Content-type":"multipart/form-data"
-               };
-               this.axios(api).then(function (response) {
-                   console.log(response);
-                   if(response.data.code===0){
-                       that.$notify.success({
-                           title: '成功',
-                           message: '上传成功',
-                       });
-                   }
-                   else{
-                       that.$notify.error({
-                           title: '失败',
-                           message: '上传失败'
-                       });
-                   }
-               })
-
+            // data(){
+            //   return{
+            //       parseDate:{
+            //           overwrite:null,
+            //           sourceId:null
+            //       },
+            //       httpHeaders:{
+            //           'X-token':window.localStorage.getItem('TOKEN')
+            //       },
+            //       fileList:[],
+            //       checked:false,
+            //       isDel:false,
+            //       loading:false,
+            //       success:null
+            //   }  ;
+            // },
+            uploadPhoto($done){
                 // this.$refs.upload.submit();
+
+                // console.log(file);
+                // let fd=new FormData();
+                // fd.append("picFile", file);
+                this.loading=true;
+                this.parseDate.overwrite=this.checked?1:0;
+                // this.parseDate.sourceid=this.value.sourceId;
+
+                this.$refs.upload.submit()
+                console.log("file");
+
+                this.success=$done;
+
+
+
             },
+            // uploadPhoto(file){
+            //    this.$refs.upload.submit();
+            //    let that=this;
+            //    console.log(file);
+            //    let fd=new FormData();
+            //    fd.append("picFile", file);
+            //    let api=this.$api.userApi.uploadPhoto;
+            //    api.data={
+            //        formData:fd,
+            //
+            //    };
+            //    console.log(fd);
+            //    api.headers={
+            //        "Content-type":"multipart/form-data"
+            //    };
+            //    console.log(api.headers);
+            //    this.axios(api).then(function (response) {
+            //        console.log(response);
+            //        if(response.data.code===0){
+            //            that.$notify.success({
+            //                title: '成功',
+            //                message: '上传成功',
+            //            });
+            //        }
+            //        else{
+            //            that.$notify.error({
+            //                title: '失败',
+            //                message: '上传失败'
+            //            });
+            //        }
+            //    })
+            //
+            //     // this.$refs.upload.submit();
+            // },
             uploadSuccess(res){
-                console.log(res);
+                // console.log(res);
             }
         }
     }
