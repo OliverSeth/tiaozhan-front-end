@@ -72,6 +72,9 @@
                 if(fileValue.substring(index)==='.xml'){
                     this.file2=file;
                 }
+                else{
+                    this.$message.error('上传文件只能是 xml 格式!');
+                }
             },
             returnPg(){
                 this.$router.push('/photo-gallery');
@@ -99,10 +102,10 @@
                 // this.file=file;
 
                 if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                    this.$message.error('上传图片只能是 JPG 格式!');
                 }
                 if (!isLt5M) {
-                    this.$message.error('上传头像图片大小不能超过 5MB!');
+                    this.$message.error('上传图片大小不能超过 5MB!');
                 }
 
                 if(isJPG && isLt5M){
