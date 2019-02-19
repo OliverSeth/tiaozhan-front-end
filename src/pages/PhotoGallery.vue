@@ -16,13 +16,19 @@
                             width="180">
                     </el-table-column>
                     <el-table-column
-
-                            label="图片"
+                            prop="require(href)"
+                            label="图片路径"
+                            sortable
                             width="180">
-                        <template scope="scope">
-                            <img prop="href" :src="scope.row.image" width="100" height="100"/>
+
+                        <!--插入图片链接的代码-->
+                        <template slot-scope="scope">
+                            <img  src="../assets/logo.png"   style="width: 50px;height: 50px">
                         </template>
+
                     </el-table-column>
+
+
                     <el-table-column
                             prop="defectType"
                             label="疵点种类"
@@ -102,6 +108,7 @@
         mounted(){
             let api=this.$api.userApi.getPhotos;
             let that =this;
+
             let url='http://106.12.123.92:8081/api/v1/pictures/do-user'
             // let photoTable = new Array();
             that.axios(url,{
@@ -110,15 +117,17 @@
                     pageSize: 100
                 }
             }).then(function (response) {
-                // console.log(response);
+
                 let data=response.data;
-                // console.log(data);
+
                 if(data.code===0){
                     that.photoTable=data.data.list;
                     for(let i=0;i<that.photoTable.length;i++){
                         if(that.photoTable[i].updateTime===null){
                             that.photoTable[i].updateTime=that.photoTable[i].createTime;
                         }
+
+
                         switch (that.photoTable[i].defectType) {
                             case 0:{
                                 that.photoTable[i].defectType="无";
@@ -139,6 +148,13 @@
                             default:that.photoTable[i].defectType="错误";
                         }
                         // console.log(that.photoTable[i].createTime);
+
+                        // that.photoTable[i].picId="/../assets/1.jpg";
+                        that.photoTable[i].href='../assets/logo.png';
+
+                        console.log(that.photoTable[i].href);
+                        console.log(that.photoTable[i]);
+
                         that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
                         that.photoTable[i].updateTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].updateTime);
                     }
@@ -150,6 +166,11 @@
                 this.pagesize = size;
                 console.log(this.pagesize)  //每页下拉显示数据
             },
+            // getImgPath(path){
+            //     let path="";
+            //     return require(path);
+            //
+            // },
 
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
