@@ -152,8 +152,8 @@
                         // that.photoTable[i].picId="/../assets/1.jpg";
                         that.photoTable[i].href='../assets/logo.png';
 
-                        console.log(that.photoTable[i].href);
-                        console.log(that.photoTable[i]);
+                        // console.log(that.photoTable[i].href);
+                        // console.log(that.photoTable[i]);
 
                         that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
                         that.photoTable[i].updateTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].updateTime);
@@ -199,7 +199,6 @@
                     method:'put',
                 };
                 api.data={
-                    picId:id,
                     defectPosition:this.form.position,
                     defectType:this.form.type,
                 };
@@ -234,11 +233,11 @@
                     method:'delete',
                 };
                 let flag=false;
-                console.log("api");
-                console.log(api);
-                api.data={
-                    picId:id,
-                };
+                // console.log("api");
+                // console.log(api);
+                // api.data={
+                //     picId:id,
+                // };
                 this.$confirm('此操作将永久删除该设备，是否继续？','提示',{
                     confirmButtonText:'确定',
                     cancelButtonText:'取消',
