@@ -23,7 +23,7 @@
 
                         <!--插入图片链接的代码-->
                         <template slot-scope="scope">
-                            <img  src="../assets/logo.png"   style="width: 50px;height: 50px">
+                            <img  src="../assets/logo.png"   style="width: 90px;height: 90px">
                         </template>
 
                     </el-table-column>
