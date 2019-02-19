@@ -226,8 +226,8 @@
                 // });
             },
             removePhoto(row){
-                var that=this;
-                let id=row.picId;
+                let that=this;
+                let id="1";
                 let api={
                     url:'http://106.12.123.92:8081/api/v1/pictures/'+id+'/do-admin',
                     method:'delete',
@@ -252,7 +252,7 @@
                     });
                 }).then(()=>{
                     if(flag===true){
-                        console.log(flag);
+                        console.log("ok");
                         that.axios(api).then(function(response){
                             console.log(response);
                             if(response.data.code===0){

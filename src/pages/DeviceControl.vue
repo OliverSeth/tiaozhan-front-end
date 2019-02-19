@@ -5,11 +5,18 @@
         </div>
         <div style="margin-top: 30px">
             <el-table :data="deviceTable.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%;text-align: center">
-                <el-table-column type="index" label="机器号" align="center"></el-table-column>
-                <el-table-column label="机器图" align="center">
-                    <template scope="scope">
-                        <img :src="scope.row.image" width="100" height="100"/>
+                <el-table-column prop="deviceId" label="机器号" align="center"></el-table-column>
+                <el-table-column
+                        prop="require(href)"
+                        label="机器图片"
+                        sortable
+                        width="180">
+
+                    <!--插入图片链接的代码-->
+                    <template slot-scope="scope">
+                        <img  src="../assets/logo.png"   style="width: 90px;height: 90px">
                     </template>
+
                 </el-table-column>
                 <el-table-column prop="status" label="状态" align="center"></el-table-column>
                 <el-table-column prop="models" label="已有模型" align="center"></el-table-column>
