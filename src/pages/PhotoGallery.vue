@@ -24,7 +24,7 @@
 
                         <!--插入图片链接的代码-->
                         <template slot-scope="scope">
-                            <img  :src="getscr1(scope.row.href)"   style="width: 90px;height: 90px">
+                            <img  :src="getscr1(scope.row.href)"    style="width: 90px;height: 90px">
                         </template>
 
                     </el-table-column>
