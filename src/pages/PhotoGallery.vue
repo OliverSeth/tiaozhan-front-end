@@ -107,10 +107,10 @@
 
         name: "ClothExamine",
         mounted(){
-            let api=this.$api.userApi.getPhotos;
+            // let api=this.$api.userApi.getPhotos;
             let that =this;
 
-            let url='http://106.12.123.92:8081/api/v1/pictures/do-user'
+            let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
             // let photoTable = new Array();
             that.axios(url,{
                 params:{

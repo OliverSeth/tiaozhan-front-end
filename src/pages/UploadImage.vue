@@ -100,8 +100,7 @@
                 const isJPG = file.type === 'image/jpeg';
                 const isLt5M = file.size / 1024 / 1024 < 5;
                 this.file=file;
-                let fileName=file.name;
-                let arr=fileName.split()
+                // let arr=fileName.split();
                 // this.file=file;
 
                 if (!isJPG) {
@@ -167,9 +166,14 @@
                 // this.axios.post(url,fd,config).then(function (response) {
                 //     console.log(response);
                 // })
-
                 // console.log(fd.get("picture"));
                 let xhr=new XMLHttpRequest();
+                let fileName=this.file.name;
+                let index=fileName.lastIndexOf('.');
+                // console.log(index);
+                fileName=fileName.slice(0,index);
+                // console.log(fileName);
+                sessionStorage.setItem("name",fileName);
                 xhr.open("post",'http://106.12.123.92:8081/api/v1/pictures/upload/do-admin',true);
                 xhr.send(fd);
                 xhr.onload = function () {
@@ -190,7 +194,7 @@
                                 }
                             }
                             sessionStorage.setItem("href",url);
-                            console.log(sessionStorage.getItem("href"));
+                            // console.log(sessionStorage.getItem("href"));
                         }
                     }
                 };
@@ -211,13 +215,17 @@
                 // this.$refs.upload.submit();
             },
             savePicture(){
+                // this.uploadPhoto();
                 let api=this.$api.userApi.savePicture;
                 let url=sessionStorage.getItem("href");
+                let name=sessionStorage.getItem("name");
+                console.log(url);
+                console.log(name);
                 let that=this;
                 console.log(url);
                 api.data={
                     href:url,
-                    name:'',
+                    name:name,
                     defectType: -1,
                     defectPosition: -1,
                 };
