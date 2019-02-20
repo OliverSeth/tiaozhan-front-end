@@ -1,7 +1,8 @@
 <template>
     <div style="width: 80%;height: 88%;position: absolute">
         <div style="margin-top: -75px">
-            <el-button type="primary" @click="addMachine">添加机器</el-button>
+            <el-button type="primary" v-on:click="addMachine">添加机器</el-button>
+            <el-button type="primary" v-on:click="uploadModel">上传模型</el-button>
         </div>
         <div style="margin-top: 30px">
             <el-table :data="deviceTable.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%;text-align: center">
@@ -73,6 +74,21 @@
                     :page-size="4">
             </el-pagination>
         </div>
+        <el-dialog title="上传算法" :visible.sync="dialogFormVisible">
+            <el-upload
+                    class="upload-demo"
+                    action="http://106.12.123.92:8081/api/v1/models/upload/py/do-admin"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :before-upload="handleBefore"
+                    multiple
+                    :on-exceed="handleExceed"
+                    :file-list="fileList">
+                <i class="el-icon-plus"></i>
+                <div slot="tip" class="el-upload__tip" style="margin-top: 20px">只能上传py算法文件</div>
+            </el-upload>
+            <el-button size="small" type="primary" style="margin-top: 20px" v-on:click="saveModel">点击上传</el-button>
+        </el-dialog>
     </div>
 </template>
 
@@ -90,7 +106,7 @@
                     pageSize: 100,
                 }
             }).then(function (res) {
-                console.log(res);
+                // console.log(res);
                 let data = res.data;
                 // console.log(data);
                 if(res.data.code===0){
@@ -101,6 +117,49 @@
         },
         methods:{
 
+            uploadModel:function(){
+                this.dialogFormVisible=true;
+            },
+            saveModel:function(){
+                let fd=new FormData();
+                let api=this.$api.userApi.saveModel;
+                fd.append("pyFile", this.file);
+                let fileName=this.file.name;
+                let index=fileName.lastIndexOf('.');
+                fileName=fileName.slice(0,index);
+                let xhr=new XMLHttpRequest();
+                let that=this;
+                xhr.open("post",'http://106.12.123.92:8081/api/v1/models/upload/py/do-admin',true);
+                xhr.send(fd);
+                xhr.onload = function () {
+                    if (xhr.readyState === xhr.DONE) {
+                        if (xhr.status === 200) {
+                            console.log(xhr.responseText);
+                            let py;
+                            let arr=xhr.responseText.split('"');
+                            let flag=false;
+                            for(let i=0;i<arr.length;i++){
+                                if(arr[i]==="成功") flag=true;
+                            }
+                            if(flag){
+                                for(let i=0;i<arr.length;i++){
+                                    if(arr[i]==="data"&&arr[i+1]===":"){
+                                        py=arr[i+2];
+                                        break;
+                                    }
+                                }
+                            }
+                            api.data={
+                                pyUrl:py,
+                                name:fileName,
+                            };
+                            that.axios(api).then(function (response) {
+                                console.log(response);
+                            })
+                        }
+                    }
+                }
+            },
             check(){
 
                 this.$router.push('/defect-distribution')
@@ -336,7 +395,30 @@
                     }
                 })
             },
-
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+            },
+            handlePreview(file) {
+                console.log(file);
+            },
+            handleExceed(files, fileList) {
+                this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+            },
+            handleBefore:function (file) {
+                // console.log();
+                let fileValue = file.name;
+                // console.log(fileValue);
+                let index = fileValue.lastIndexOf('.');
+                const isPy=fileValue.substring(index)==='.py';
+                // console.log(index);
+                if(isPy){
+                    this.file=file;
+                }
+                else{
+                    this.$message.error('上传文件只能是 py 格式!');;
+                }
+                return isPy;
+            },
         },
         data(){
             return{
@@ -344,9 +426,12 @@
             //         url:'url('+require('../assets/logo.png')+')no-repeat'
             // },
                 value:"",
+                dialogFormVisible:false,
                 currentPage:1,
                 deviceTable:[],
                 pageSize:4,
+                file:'',
+                fileList:[],
             }
         }
     }

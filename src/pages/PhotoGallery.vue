@@ -49,7 +49,7 @@
                             <el-button
                                     type="primary"
                                     size="small"
-                                    @click="modify(scope.row)">修改
+                                    @click="modify(scope.row)">标注
                             </el-button>
                             <el-button type="danger" size="small" @click="removePhoto(scope.row)">
                                 删除

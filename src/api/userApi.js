@@ -40,5 +40,9 @@ export default {
     savePicture: {
         url:BASE_URL+'/pictures/do-admin',
         method:'post',
+    },
+    saveModel:{
+        url:BASE_URL+'/models/upload/py/do-admin',
+        method:'post',
     }
 }
