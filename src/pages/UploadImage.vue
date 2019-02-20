@@ -100,6 +100,8 @@
                 const isJPG = file.type === 'image/jpeg';
                 const isLt5M = file.size / 1024 / 1024 < 5;
                 this.file=file;
+                let fileName=file.name;
+                let arr=fileName.split()
                 // this.file=file;
 
                 if (!isJPG) {
@@ -142,6 +144,9 @@
                             }
                             api.data={
                                 xml:xml,
+                                name:'',
+                                defectType: -1,
+                                defectPosition: -1,
                             };
                             that.axios(api).then(function (response) {
                                 console.log(response);
@@ -212,25 +217,25 @@
                 console.log(url);
                 api.data={
                     href:url,
-                    // name:'1',
-                    // defectType: 1,
-                    // defectPosition: 1,
+                    name:'',
+                    defectType: -1,
+                    defectPosition: -1,
                 };
                 this.axios(api).then(function (response) {
                     console.log(response);
-                    // if(response.data.code===0){
-                    //     that.$notify({
-                    //         title: '成功',
-                    //         message: '上传成功',
-                    //         type: 'success'
-                    //     });
-                    // }
-                    // else{
-                    //     that.$notify.error({
-                    //         title: '失败',
-                    //         message: '上传失败'
-                    //     });
-                    // }
+                    if(response.data.code===0){
+                        that.$notify({
+                            title: '成功',
+                            message: '上传成功',
+                            type: 'success'
+                        });
+                    }
+                    else{
+                        that.$notify.error({
+                            title: '失败',
+                            message: '上传失败'
+                        });
+                    }
                 })
             }
         }

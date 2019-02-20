@@ -204,7 +204,7 @@
                 };
                 this.axios(api).then(function (response) {
                     console.log(response);
-                    location.reload();
+                    // location.reload();
                 });
             },
             modify(row){
@@ -259,7 +259,7 @@
                                 that.$message({
                                     type:'success',
                                     message:'删除成功'});
-                                location.reload();
+                                // location.reload();
                             }
 
                         })
