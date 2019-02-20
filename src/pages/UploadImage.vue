@@ -27,7 +27,6 @@
                         action="http://106.12.123.92:8081/api/v1/pictures/upload/xml/do-admin"
                         :on-preview="handlePreview"
                         :on-remove="handleRemove"
-                        :before-remove="beforeRemove"
                         :before-upload="handleBefore"
                         multiple
                         :on-exceed="handleExceed"
@@ -68,13 +67,15 @@
                 let fileValue = file.name;
                 // console.log(fileValue);
                 let index = fileValue.lastIndexOf('.');
+                const isXML=fileValue.substring(index)==='.xml';
                 // console.log(index);
-                if(fileValue.substring(index)==='.xml'){
+                if(isXML){
                     this.file2=file;
                 }
                 else{
-                    this.$message.error('上传文件只能是 xml 格式!');
+                    this.$message.error('上传文件只能是 xml 格式!');;
                 }
+                return isXML;
             },
             returnPg(){
                 this.$router.push('/photo-gallery');
@@ -85,9 +86,9 @@
             handleExceed(files, fileList) {
                 this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
             },
-            beforeRemove(file, fileList) {
-                return this.$confirm(`确定移除 ${ file.name }？`);
-            },
+            // beforeRemove(file, fileList) {
+            //     return this.$confirm(`确定移除 ${ file.name }？`);
+            // },
             handleRemove(file, fileList) {
                 console.log(file, fileList);
             },
