@@ -16,7 +16,7 @@
                 </el-upload>
             </el-form-item>
             <el-form-item>
-                <el-button size="small" type="primary" @click="savePicture">上传图片</el-button>
+                <el-button size="small" type="primary" @click="uploadPhoto">上传图片</el-button>
                 <el-button size="small" @click="returnPg">返回</el-button>
             </el-form-item>
         </el-form>
@@ -110,9 +110,9 @@
                     this.$message.error('上传图片大小不能超过 5MB!');
                 }
 
-                if(isJPG && isLt5M){
-                    this.uploadPhoto();
-                }
+                // if(isJPG && isLt5M){
+                //     this.uploadPhoto();
+                // }
                 return isJPG && isLt5M;
             },
             uploadXML(){
@@ -167,6 +167,8 @@
                 //     console.log(response);
                 // })
                 // console.log(fd.get("picture"));
+                let that=this;
+                let api=that.$api.userApi.savePicture;
                 let xhr=new XMLHttpRequest();
                 let fileName=this.file.name;
                 let index=fileName.lastIndexOf('.');
@@ -193,8 +195,34 @@
                                     }
                                 }
                             }
-                            sessionStorage.setItem("href",url);
+                            // sessionStorage.setItem("href",url);
                             // console.log(sessionStorage.getItem("href"));
+                            console.log(url);
+                            console.log(fileName);
+                            // let that=this;
+                            // console.log(url);
+                            api.data={
+                                href:url,
+                                name:name,
+                                defectType: -1,
+                                defectPosition: -1,
+                            };
+                            that.axios(api).then(function (response) {
+                                console.log(response);
+                                if(response.data.code===0){
+                                    that.$notify({
+                                        title: '成功',
+                                        message: '上传成功',
+                                        type: 'success'
+                                    });
+                                }
+                                else{
+                                    that.$notify.error({
+                                        title: '失败',
+                                        message: '上传失败'
+                                    });
+                                }
+                            })
                         }
                     }
                 };
@@ -216,35 +244,7 @@
             },
             savePicture(){
                 // this.uploadPhoto();
-                let api=this.$api.userApi.savePicture;
-                let url=sessionStorage.getItem("href");
-                let name=sessionStorage.getItem("name");
-                console.log(url);
-                console.log(name);
-                let that=this;
-                console.log(url);
-                api.data={
-                    href:url,
-                    name:name,
-                    defectType: -1,
-                    defectPosition: -1,
-                };
-                this.axios(api).then(function (response) {
-                    console.log(response);
-                    if(response.data.code===0){
-                        that.$notify({
-                            title: '成功',
-                            message: '上传成功',
-                            type: 'success'
-                        });
-                    }
-                    else{
-                        that.$notify.error({
-                            title: '失败',
-                            message: '上传失败'
-                        });
-                    }
-                })
+
             }
         }
     }

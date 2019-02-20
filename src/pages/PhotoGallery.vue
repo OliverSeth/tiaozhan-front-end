@@ -12,8 +12,8 @@
                         style="width: 100%;text-align: center"
                         :row-class-name="tableRowClassName">
                     <el-table-column
-                            prop="picId"
-                            label="序号"
+                            prop="name"
+                            label="图片名"
                             width="180">
                     </el-table-column>
                     <el-table-column
