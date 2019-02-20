@@ -1,6 +1,6 @@
 <template>
-    <div style="width: 80%;position: absolute">
-        <div style="width: 25%;">
+    <div style="width: 80%;height:88%;position: absolute">
+        <div style="width: 20%;height:10%;float: left">
             <p class="optionmenu" >选择设备</p>
             <el-select v-model="value8" filterable placeholder="选择设备">
                 <el-option
@@ -11,7 +11,7 @@
                 </el-option>
             </el-select>
         </div>
-        <div style="width: 25%">
+        <div style="width: 35%;height:10%;float: left">
             <p class="optionmenu" > 检测时间段</p>
             <div class="block">
                 <!--<span class="demonstration">带快捷选</span>-->
@@ -27,7 +27,7 @@
                 </el-date-picker>
             </div>
         </div>
-        <div style="width: 30%">
+        <div style="width: 40%;height:10%;float: left;">
             <p class="optionmenu" > 疵点类型</p>
             <el-checkbox-group v-model="checkList">
                 <el-checkbox label="横疵"></el-checkbox>
@@ -36,7 +36,22 @@
                 <el-checkbox label="无"></el-checkbox>
             </el-checkbox-group>
         </div>
+        <div name="img_div" style="width: 10%;height: 10%; display: block; float: left;margin:0 0"
+             :style="bg1">
+            <el-checkbox v-model="checked1" style="position: relative;float: right" @change="setBorder(0)"></el-checkbox>
+        </div>
 
+        <div class="block" style="height: 10%;margin-top: 10%;float: left">
+            <span class="pages"></span>
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    layout="prev, pager, next"
+                    :total="photoTable.length"
+                    :page-size="4">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
@@ -44,8 +59,39 @@
 
     export default {
         name: "PictureClassify",
+        mounted(){
+            let divs = document.getElementsByName('img_div');
+            for (let index in divs) {
+                divs[index].style.backgroundSize = '100% 100%';
+            }
+            let that =this;
+            let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
+            that.axios(url,{
+                params:{
+                    pageNum: that.currentPage,
+                    pageSize: 100
+                }
+            }).then(function (response) {
+                console.log(response);
+            })
+        },
+        methods:{
+            handleSizeChange: function (size) {
+                this.pagesize = size;
+                console.log(this.pagesize)  //每页下拉显示数据
+            },
+            handleCurrentChange: function(currentPage){
+                this.currentPage = currentPage;
+                console.log(this.currentPage)  //点击第几页
+            },
+        },
         data() {
             return {
+                bg1:{
+                    background:'url(http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN)',
+                    // background:'url('+require('../assets/1.jpg')+')',
+                    backgroundRepeat:"no-repeat",
+                },
                 pickerOptions2: {
                     shortcuts: [{
                         text: '最近一周',
