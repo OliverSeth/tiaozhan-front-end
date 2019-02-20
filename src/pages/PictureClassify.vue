@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 80%;height:88%;position: absolute">
+    <div style="width: 80%;height:88%;position: absolute"  :data="photoTable">
         <div style="width: 20%;height:10%;float: left">
             <p class="optionmenu" >选择设备</p>
             <el-select v-model="value8" filterable placeholder="选择设备">
@@ -36,6 +36,35 @@
                 <el-checkbox label="无" v-model="checked0"></el-checkbox>
             </el-checkbox-group>
         </div>
+        <div style="width: 100%;height:10%;float: left;">
+
+
+        </div>
+
+        <el-row >
+
+
+            <el-col  :span="2" v-for="(o) in getPhotonumber(1)" :key="o" >
+                <el-card v-for="photo in photoTable" :body-style="{ padding: '0px' }">
+                    <img  :src="getscr1(photo.href)" style="width: 90px;height: 90px">
+                    <!--<img :src="getscr1(photoTable[1].href)" style="width: 90px;height: 90px">-->
+                    <template>
+                        <!-- `checked` 为 true 或 false -->
+                        <el-checkbox  v-model="checked">备选项</el-checkbox>
+                    </template>
+                    <!--<div style="padding: 14px;">-->
+                        <!--&lt;!&ndash;<span>好吃的汉堡</span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="bottom clearfix">&ndash;&gt;-->
+                            <!--&lt;!&ndash;&lt;!&ndash;<time class="time">{{ currentDate }}</time>&ndash;&gt;&ndash;&gt;-->
+                            <!--&lt;!&ndash;&lt;!&ndash;<el-button type="text" class="button">操作按钮</el-button>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
+                </el-card>
+            </el-col>
+        </el-row>
+
+
+
         <!--<div name="img_div" style="width: 10%;height: 10%; display: block; float: left;margin:0 0"-->
              <!--:style="bg1">-->
             <!--<el-checkbox v-model="checkedD1" style="position: relative;float: right" @change="setBorder(0)"></el-checkbox>-->
@@ -80,7 +109,8 @@
                 if(data.code===0){
                     that.photoTable=data.data.list;
                     for(let i=0;i<that.photoTable.length;i++){
-                        // console.log(that.photoTable[i]);
+                         console.log(that.photoTable[i]);
+
 
                     }
                 }
@@ -92,6 +122,10 @@
                 this.pagesize = size;
                 // console.log(this.pagesize)  //每页下拉显示数据
             },
+            getPhotonumber(i){
+                return i;
+
+            },
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
                 // console.log(this.currentPage)  //点击第几页
@@ -99,16 +133,22 @@
             //获取图片路径
             getscr1(item){
                 // document.images.imgInit.src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
+                // return ('http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/ef941f06-7d1f-43ab-b6a0-28275be153e7-153314543.jpg?op=OPEN');
                 return ('http://148.70.63.35:50070'+item);
             },
         },
         data() {
             return {
+                photoTable:[],
+                currentPage:1,
+                pageSize:4,
+                // currentDate: new Date(),
                 // bg1:{
                 //     background:'url(http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN)',
                 //     backgroundRepeat:"no-repeat",
                 // },
                 url:'',
+                checked: true,
                 checked1:false,
                 checked2:false,
                 checked3:false,
