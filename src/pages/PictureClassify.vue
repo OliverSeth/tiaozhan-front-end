@@ -36,10 +36,10 @@
                 <el-checkbox label="无" v-model="checked0"></el-checkbox>
             </el-checkbox-group>
         </div>
-        <div name="img_div" style="width: 10%;height: 10%; display: block; float: left;margin:0 0"
-             :style="bg1">
-            <el-checkbox v-model="checkedD1" style="position: relative;float: right" @change="setBorder(0)"></el-checkbox>
-        </div>
+        <!--<div name="img_div" style="width: 10%;height: 10%; display: block; float: left;margin:0 0"-->
+             <!--:style="bg1">-->
+            <!--<el-checkbox v-model="checkedD1" style="position: relative;float: right" @change="setBorder(0)"></el-checkbox>-->
+        <!--</div>-->
 
         <!--<div class="block" style="height: 10%;margin-top: 10%;float: left">-->
             <!--<span class="pages"></span>-->
@@ -60,11 +60,13 @@
     export default {
         name: "PictureClassify",
         mounted(){
-            let divs = document.getElementsByName('img_div');
-            for (let index in divs) {
-                divs[index].style.backgroundSize = '100% 100%';
-            }
+
+            // let divs = document.getElementsByName('img_div');
+            // for (let index in divs) {
+            //     divs[index].style.backgroundSize = '100% 100%';
+            // }
             let that =this;
+
             let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
             that.axios(url,{
                 params:{
@@ -72,25 +74,40 @@
                     pageSize: 100
                 }
             }).then(function (response) {
-                console.log(response);
+                // console.log("ok");
+                // console.log(response);
+                let data=response.data;
+                if(data.code===0){
+                    that.photoTable=data.data.list;
+                    for(let i=0;i<that.photoTable.length;i++){
+                        // console.log(that.photoTable[i]);
+
+                    }
+                }
+
             })
         },
         methods:{
             handleSizeChange: function (size) {
                 this.pagesize = size;
-                console.log(this.pagesize)  //每页下拉显示数据
+                // console.log(this.pagesize)  //每页下拉显示数据
             },
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
-                console.log(this.currentPage)  //点击第几页
+                // console.log(this.currentPage)  //点击第几页
+            },
+            //获取图片路径
+            getscr1(item){
+                // document.images.imgInit.src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
+                return ('http://148.70.63.35:50070'+item);
             },
         },
         data() {
             return {
-                bg1:{
-                    background:'url(http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN)',
-                    backgroundRepeat:"no-repeat",
-                },
+                // bg1:{
+                //     background:'url(http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN)',
+                //     backgroundRepeat:"no-repeat",
+                // },
                 url:'',
                 checked1:false,
                 checked2:false,

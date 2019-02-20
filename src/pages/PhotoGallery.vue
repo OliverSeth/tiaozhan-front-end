@@ -13,12 +13,12 @@
                         :row-class-name="tableRowClassName">
                     <el-table-column
                             prop="picId"
-                            label="图片序列"
+                            label="序号"
                             width="180">
                     </el-table-column>
                     <el-table-column
                             prop="href"
-                            label="图片路径"
+                            label="图片"
                             sortable
                             width="180">
 
@@ -152,12 +152,12 @@
 
                         // that.photoTable[i].picId="/../assets/1.jpg";
                         // that.photoTable[i].href='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
-                        console.log("that.photoTable[i].href=");
-
-                        console.log(that.photoTable[i].href);
-                        console.log("i=");
-
-                        console.log(i);
+                        // console.log("that.photoTable[i].href=");
+                        //
+                        // console.log(that.photoTable[i].href);
+                        // console.log("i=");
+                        //
+                        // console.log(i);
                         // console.log(that.photoTable[i]);12
 
                         that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
@@ -172,7 +172,7 @@
 
             handleSizeChange: function (size) {
                 this.pagesize = size;
-                console.log(this.pagesize)  //每页下拉显示数据
+                // console.log(this.pagesize)  //每页下拉显示数据
             },
             // getImgPath(path){
             //     let path="";
@@ -182,7 +182,7 @@
 
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
-                console.log(this.currentPage)  //点击第几页
+                // console.log(this.currentPage)  //点击第几页
             },
 
             uploadPhoto(){
@@ -211,7 +211,7 @@
                     defectType:this.form.type,
                 };
                 this.axios(api).then(function (response) {
-                    console.log(response);
+                    // console.log(response);
                     // location.reload();
                 });
             },
@@ -257,7 +257,7 @@
                     type:'warning'
                 }).then(()=>{
                     flag=true;
-                    console.log(flag);
+                    // console.log(flag);
                 }).catch(()=>{
                     this.$message({
                         type:'info',
@@ -265,9 +265,9 @@
                     });
                 }).then(()=>{
                     if(flag===true){
-                        console.log("ok");
+                        // console.log("ok");
                         that.axios(api).then(function(response){
-                            console.log(response);
+                            // console.log(response);
                             if(response.data.code===0){
                                 that.$message({
                                     type:'success',
