@@ -195,34 +195,43 @@
                                     }
                                 }
                             }
+                            if(url===undefined){
+                                that.$notify.error({
+                                    title: '失败',
+                                    message: '图片未上传成功'
+                                });
+                            }
+                            else{
+                                api.data={
+                                    href:url,
+                                    name:fileName,
+                                    defectType: -1,
+                                    defectPosition: -1,
+                                };
+                                that.axios(api).then(function (response) {
+                                    console.log(response);
+                                    if(response.data.code===0){
+                                        that.$notify({
+                                            title: '成功',
+                                            message: '上传成功',
+                                            type: 'success'
+                                        });
+                                    }
+                                    else{
+                                        that.$notify.error({
+                                            title: '失败',
+                                            message: '上传失败'
+                                        });
+                                    }
+                                })
+                            }
                             // sessionStorage.setItem("href",url);
                             // console.log(sessionStorage.getItem("href"));
-                            console.log(url);
-                            console.log(fileName);
+                            // console.log(url);
+                            // console.log(fileName);
                             // let that=this;
                             // console.log(url);
-                            api.data={
-                                href:url,
-                                name:name,
-                                defectType: -1,
-                                defectPosition: -1,
-                            };
-                            that.axios(api).then(function (response) {
-                                console.log(response);
-                                if(response.data.code===0){
-                                    that.$notify({
-                                        title: '成功',
-                                        message: '上传成功',
-                                        type: 'success'
-                                    });
-                                }
-                                else{
-                                    that.$notify.error({
-                                        title: '失败',
-                                        message: '上传失败'
-                                    });
-                                }
-                            })
+
                         }
                     }
                 };

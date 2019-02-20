@@ -146,6 +146,10 @@
                                 that.photoTable[i].defectType="横纵疵";
                                 break;
                             }
+                            case -1:{
+                                that.photoTable[i].defectType="未检测";
+                                break;
+                            }
                             default:that.photoTable[i].defectType="错误";
                         }
                         // console.log(that.photoTable[i].createTime);
