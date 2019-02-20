@@ -158,7 +158,7 @@
                         console.log("i=");
 
                         console.log(i);
-                        // console.log(that.photoTable[i]);
+                        // console.log(that.photoTable[i]);12
 
                         that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
                         that.photoTable[i].updateTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].updateTime);
