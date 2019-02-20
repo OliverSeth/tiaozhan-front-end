@@ -21,7 +21,7 @@
                 <el-table-column prop="status" label="状态" align="center"></el-table-column>
                 <el-table-column prop="models" label="已有模型" align="center"></el-table-column>
                 <el-table-column label="操作模型" align="center" width="250">
-                    <template slot-sc9ope="scope2">
+                    <template slot-scope="scope2">
                         <el-button
                                 type="primary"
                                 size="mini"
