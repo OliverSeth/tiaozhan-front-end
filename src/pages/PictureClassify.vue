@@ -30,28 +30,28 @@
         <div style="width: 40%;height:10%;float: left;">
             <p class="optionmenu" > 疵点类型</p>
             <el-checkbox-group v-model="checkList">
-                <el-checkbox label="横疵"></el-checkbox>
-                <el-checkbox label="纵疵"></el-checkbox>
-                <el-checkbox label="横纵疵"></el-checkbox>
-                <el-checkbox label="无"></el-checkbox>
+                <el-checkbox label="横疵" v-model="checked1"></el-checkbox>
+                <el-checkbox label="纵疵" v-model="checked2"></el-checkbox>
+                <el-checkbox label="横纵疵" v-model="checked3"></el-checkbox>
+                <el-checkbox label="无" v-model="checked0"></el-checkbox>
             </el-checkbox-group>
         </div>
         <div name="img_div" style="width: 10%;height: 10%; display: block; float: left;margin:0 0"
              :style="bg1">
-            <el-checkbox v-model="checked1" style="position: relative;float: right" @change="setBorder(0)"></el-checkbox>
+            <el-checkbox v-model="checkedD1" style="position: relative;float: right" @change="setBorder(0)"></el-checkbox>
         </div>
 
-        <div class="block" style="height: 10%;margin-top: 10%;float: left">
-            <span class="pages"></span>
-            <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    layout="prev, pager, next"
-                    :total="photoTable.length"
-                    :page-size="4">
-            </el-pagination>
-        </div>
+        <!--<div class="block" style="height: 10%;margin-top: 10%;float: left">-->
+            <!--<span class="pages"></span>-->
+            <!--<el-pagination-->
+                    <!--@size-change="handleSizeChange"-->
+                    <!--@current-change="handleCurrentChange"-->
+                    <!--:current-page="currentPage"-->
+                    <!--layout="prev, pager, next"-->
+                    <!--:total="photoTable.length"-->
+                    <!--:page-size="4">-->
+            <!--</el-pagination>-->
+        <!--</div>-->
     </div>
 </template>
 
@@ -89,9 +89,14 @@
             return {
                 bg1:{
                     background:'url(http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN)',
-                    // background:'url('+require('../assets/1.jpg')+')',
                     backgroundRepeat:"no-repeat",
                 },
+                url:'',
+                checked1:false,
+                checked2:false,
+                checked3:false,
+                checked0:false,
+                checkedD1:false,
                 pickerOptions2: {
                     shortcuts: [{
                         text: '最近一周',
