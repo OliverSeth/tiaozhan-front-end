@@ -1,4 +1,5 @@
 <template>
+
     <div id="clothExamine" style="width: 80%;height: 88%;position: absolute">
         <div style="margin-top: -75px;margin-left:350px">
             <el-button type="primary" @click="uploadPhoto">上传图片</el-button>
@@ -16,14 +17,14 @@
                             width="180">
                     </el-table-column>
                     <el-table-column
-                            prop="require(href)"
+                            prop="href"
                             label="图片路径"
                             sortable
                             width="180">
 
                         <!--插入图片链接的代码-->
                         <template slot-scope="scope">
-                            <img  src="../assets/logo.png"   style="width: 90px;height: 90px">
+                            <img  :src="getscr1(scope.row.href)"   style="width: 90px;height: 90px">
                         </template>
 
                     </el-table-column>
@@ -150,9 +151,13 @@
                         // console.log(that.photoTable[i].createTime);
 
                         // that.photoTable[i].picId="/../assets/1.jpg";
-                        that.photoTable[i].href='../assets/logo.png';
+                        // that.photoTable[i].href='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
+                        console.log("that.photoTable[i].href=");
 
-                        // console.log(that.photoTable[i].href);
+                        console.log(that.photoTable[i].href);
+                        console.log("i=");
+
+                        console.log(i);
                         // console.log(that.photoTable[i]);
 
                         that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
@@ -162,6 +167,9 @@
             })
         },
         methods: {
+
+
+
             handleSizeChange: function (size) {
                 this.pagesize = size;
                 console.log(this.pagesize)  //每页下拉显示数据
@@ -224,6 +232,11 @@
                 //         message: '取消输入'
                 //     });
                 // });
+            },
+            //获取图片路径
+            getscr1(item){
+                // document.images.imgInit.src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
+                return ('http://148.70.63.35:50070'+item);
             },
             removePhoto(row){
                 let that=this;
