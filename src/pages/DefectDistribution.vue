@@ -1,10 +1,10 @@
 <template>
     <div style="width: 80%;height: 88%;position: absolute">
-        <div style="margin-top: -75px">
-            <el-button type="primary">
-                训练新模型
-            </el-button>
-        </div>
+        <!--<div style="margin-top: -75px">-->
+            <!--<el-button type="primary">-->
+                <!--训练新模型-->
+            <!--</el-button>-->
+        <!--</div>-->
         <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"
              :style="bg1">
             <span style="position:relative;top:60%;left: 31%">疵点位置：</span>

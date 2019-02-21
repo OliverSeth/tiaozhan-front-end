@@ -2,7 +2,7 @@
     <div style="width: 80%;height: 88%;position: absolute">
         <div style="margin-top: -75px">
             <el-button type="primary" v-on:click="addMachine">添加机器</el-button>
-            <el-button type="primary" v-on:click="uploadModel">上传模型</el-button>
+            <el-button type="primary" v-on:click="uploadModel">上传算法</el-button>
         </div>
         <div style="margin-top: 30px">
             <el-table :data="deviceTable.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%;text-align: center">
@@ -27,13 +27,13 @@
                                 type="primary"
                                 size="mini"
                                 icon="el-icon-circle-plus-outline"
-                                @click="addModels(scope2.row)">
+                                @click="dialogFormVisible2=true">
                         </el-button>
                         <el-button
                                 type="danger"
                                 size="mini"
                                 icon="el-icon-delete"
-                                @click="deleteModels(scope2.row)">
+                                @click="dialogFormVisible3=true">
                         </el-button>
                         <el-button
                                 type="success"
@@ -74,7 +74,7 @@
                     :page-size="4">
             </el-pagination>
         </div>
-        <el-dialog title="上传算法" :visible.sync="dialogFormVisible">
+        <el-dialog title="上传算法" :visible.sync="dialogFormVisible" width="30%">
             <el-upload
                     class="upload-demo"
                     action="http://106.12.123.92:8081/api/v1/models/upload/py/do-admin"
@@ -88,6 +88,28 @@
                 <div slot="tip" class="el-upload__tip" style="margin-top: 20px">只能上传py算法文件</div>
             </el-upload>
             <el-button size="small" type="primary" style="margin-top: 20px" v-on:click="saveModel">点击上传</el-button>
+        </el-dialog>
+        <el-dialog title="选择要添加的模型" :visible.sync="dialogFormVisible2" width="25%" height="30%">
+            <el-select v-model="value" placeholder="请选择">
+                <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                </el-option>
+            </el-select>
+            <el-button size="small" type="primary" style="margin-top: 20px;margin-left: 20px" v-on:click="addModels">添加</el-button>
+        </el-dialog>
+        <el-dialog title="选择要删除的模型" :visible.sync="dialogFormVisible3" width="25%" height="30%">
+            <el-select v-model="value" placeholder="请选择">
+                <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                </el-option>
+            </el-select>
+            <el-button size="small" type="danger" style="margin-top: 20px;margin-left: 20px" v-on:click="deleteModels">删除</el-button>
         </el-dialog>
     </div>
 </template>
@@ -251,7 +273,7 @@
                 let that=this;
                 let arr=[];
                 let newStr=String();
-                this.$prompt('请输入想要添加的模型',  {
+                this.$prompt('请选择想要添加的模型',  {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                 }).then(({ value }) => {
@@ -429,11 +451,15 @@
             // },
                 value:"",
                 dialogFormVisible:false,
+                dialogFormVisible2:false,
+                dialogFormVisible3:false,
                 currentPage:1,
                 deviceTable:[],
                 pageSize:4,
                 file:'',
                 fileList:[],
+                options:[],
+                value:'',
             }
         }
     }
