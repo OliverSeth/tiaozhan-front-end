@@ -11,7 +11,7 @@
                 </el-option>
             </el-select>
         </div>
-        <div style="width: 40%;height:20%;float: left">
+        <div style="width: 30%;height:20%;float: left">
             <p class="optionmenu" > 检测时间段</p>
             <div class="block">
                 <!--<span class="demonstration">带快捷选</span>-->
@@ -27,7 +27,7 @@
                 </el-date-picker>
             </div>
         </div>
-        <div style="width: 40%;height:20%;float: left;">
+        <div style="width: 30%;height:20%;float: left;">
             <p class="optionmenu" > 疵点类型</p>
             <el-checkbox-group v-model="checkList">
                 <el-checkbox label="横疵" v-model="checked1"></el-checkbox>
@@ -36,14 +36,21 @@
                 <el-checkbox label="无" v-model="checked0"></el-checkbox>
             </el-checkbox-group>
         </div>
+        <div style="width: 20%;height:20%;float: left;">
+            <el-row>
+
+                <el-button type="primary" @click="getflage(value-key)">进行筛选</el-button>
+
+            </el-row>
+        </div>
         <div style="width: 100%;height:10%;float: left;">
             <el-row >
 
 
                 <el-col  v-for="photo in photoTable" :span="2"  >
                     <el-card  :body-style="{ padding: '0px' }">
-                        <img  :src="getscr1(photo.href)" style="width: 90px;height: 90px">
-                        <!--<img :src="getscr1(photoTable[1].href)" style="width: 90px;height: 90px">-->
+                        <img  v-if="flage" :src="getscr1(photo.href)" style="width: 90px;height: 90px">
+
                         <template>
                             <!-- `checked` 为 true 或 false -->
                             <el-checkbox  v-model="checked">备选项</el-checkbox>
@@ -86,7 +93,7 @@
 </template>
 
 <script>
-    import deviceIdlist from './DeviceControl'
+
 
     export default {
         name: "PictureClassify",
@@ -105,12 +112,15 @@
                 }
             }).then(function (response) {
                 // console.log("ok");
-                // console.log(response);
+
                 let data=response.data;
+
                 if(data.code===0){
+                    // if(data.)
                     that.photoTable=data.data.list;
+                    console.log(response.data);
                     for(let i=0;i<that.photoTable.length;i++){
-                         // console.log(that.devicedlist[i].deviceId);
+
 
 
                     }
@@ -132,7 +142,7 @@
                 }).then(function (res) {
                     // console.log(res);
                     let data = res.data;
-                    console.log(data);
+                    // console.log(data);
                     if(res.data.code===0){
                         that.deviceTable=data.data.list;
                         // console.log(that.getDeviceid());
@@ -145,10 +155,7 @@
                 this.pagesize = size;
                 // console.log(this.pagesize)  //每页下拉显示数据
             },
-            // getPhotonumber(i){
-            //     return i;
-            //
-            // },
+
 
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
@@ -160,10 +167,26 @@
                 // return ('http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/ef941f06-7d1f-43ab-b6a0-28275be153e7-153314543.jpg?op=OPEN');
                 return ('http://148.70.63.35:50070'+item);
             },
+            getflage(item){
+
+                // for(let i=0;i<this.photoTable.length;i++){
+                //     if(item===this.photoTable[i].deviceId)
+                //     {
+                //
+                //     }
+                //
+                //
+                //
+                // }
+                // // if(item===)
+                return true;
+
+            },
         },
         data() {
             return {
                 deviceTable:[],
+                flage:this.getflage(),
                 value9: '请选择设备ID',
 
                 photoTable:[],
