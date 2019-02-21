@@ -44,8 +44,8 @@
         <el-row >
 
 
-            <el-col  :span="2" v-for="(o) in getPhotonumber(1)" :key="o" >
-                <el-card v-for="photo in photoTable" :body-style="{ padding: '0px' }">
+            <el-col  v-for="photo in photoTable" :span="2"  :key="o" >
+                <el-card  :body-style="{ padding: '0px' }">
                     <img  :src="getscr1(photo.href)" style="width: 90px;height: 90px">
                     <!--<img :src="getscr1(photoTable[1].href)" style="width: 90px;height: 90px">-->
                     <template>
