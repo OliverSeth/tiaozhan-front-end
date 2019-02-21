@@ -110,10 +110,11 @@
                 let data = res.data;
                 // console.log(data);
                 if(res.data.code===0){
-                        that.deviceTable=data.data.list;
-                    // console.log(that.deviceTable);
+                    that.deviceTable=data.data.list;
+
                 }
             });
+
         },
         methods:{
 
@@ -211,8 +212,8 @@
                     method:'delete',
                 };
                 let flag=false;
-                console.log("api=");
-                console.log(api);
+                // console.log("api=");
+                // console.log(api);
                 api.data={
                     deviceId:id,
                 };
@@ -231,7 +232,7 @@
                     });
                 }).then(()=>{
                     if(flag===true){
-                        console.log(flag);
+                        // console.log(flag);
                         that.axios(api).then(function (response) {
                             // console.log(response);
                             if(response.data.code===0){
@@ -298,7 +299,7 @@
                         // console.log(row.models);
                     }
 
-                    // console.log(this.deviceTable);
+                    // console.log(this.getDeviceid());
                     this.$message({
                         type: 'success',
                         message: '添加成功'
@@ -390,7 +391,7 @@
                             usingModel:v,
                         };
                         this.axios(api).then(function (response) {
-                            console.log(response);
+                            // console.log(response);
                         })
                     }
                 })
@@ -419,6 +420,7 @@
                 }
                 return isPy;
             },
+
         },
         data(){
             return{

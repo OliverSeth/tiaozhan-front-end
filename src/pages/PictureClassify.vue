@@ -1,17 +1,17 @@
 <template>
     <div style="width: 80%;height:88%;position: absolute"  :data="photoTable">
-        <div style="width: 20%;height:10%;float: left">
+        <div style="width: 20%;height:20%;float: left" >
             <p class="optionmenu" >选择设备</p>
-            <el-select v-model="value8" filterable placeholder="选择设备">
+            <el-select v-model=" value9" clearable placeholder="请选择">
                 <el-option
-                        v-for="item in options"
+                        v-for="item in deviceTable"
                         :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
+                        :label="item.deviceId"
+                        :value="item.deviceId">
                 </el-option>
             </el-select>
         </div>
-        <div style="width: 35%;height:10%;float: left">
+        <div style="width: 40%;height:20%;float: left">
             <p class="optionmenu" > 检测时间段</p>
             <div class="block">
                 <!--<span class="demonstration">带快捷选</span>-->
@@ -27,7 +27,7 @@
                 </el-date-picker>
             </div>
         </div>
-        <div style="width: 40%;height:10%;float: left;">
+        <div style="width: 40%;height:20%;float: left;">
             <p class="optionmenu" > 疵点类型</p>
             <el-checkbox-group v-model="checkList">
                 <el-checkbox label="横疵" v-model="checked1"></el-checkbox>
@@ -37,31 +37,32 @@
             </el-checkbox-group>
         </div>
         <div style="width: 100%;height:10%;float: left;">
+            <el-row >
+
+
+                <el-col  v-for="photo in photoTable" :span="2"  >
+                    <el-card  :body-style="{ padding: '0px' }">
+                        <img  :src="getscr1(photo.href)" style="width: 90px;height: 90px">
+                        <!--<img :src="getscr1(photoTable[1].href)" style="width: 90px;height: 90px">-->
+                        <template>
+                            <!-- `checked` 为 true 或 false -->
+                            <el-checkbox  v-model="checked">备选项</el-checkbox>
+                        </template>
+                        <!--<div style="padding: 14px;">-->
+                        <!--&lt;!&ndash;<span>好吃的汉堡</span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="bottom clearfix">&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;<time class="time">{{ currentDate }}</time>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;<el-button type="text" class="button">操作按钮</el-button>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--</div>-->
+                    </el-card>
+                </el-col>
+            </el-row>
 
 
         </div>
 
-        <el-row >
 
-
-            <el-col  v-for="photo in photoTable" :span="2"  :key="o" >
-                <el-card  :body-style="{ padding: '0px' }">
-                    <img  :src="getscr1(photo.href)" style="width: 90px;height: 90px">
-                    <!--<img :src="getscr1(photoTable[1].href)" style="width: 90px;height: 90px">-->
-                    <template>
-                        <!-- `checked` 为 true 或 false -->
-                        <el-checkbox  v-model="checked">备选项</el-checkbox>
-                    </template>
-                    <!--<div style="padding: 14px;">-->
-                        <!--&lt;!&ndash;<span>好吃的汉堡</span>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<div class="bottom clearfix">&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;<time class="time">{{ currentDate }}</time>&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;<el-button type="text" class="button">操作按钮</el-button>&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--</div>-->
-                </el-card>
-            </el-col>
-        </el-row>
 
 
 
@@ -85,16 +86,16 @@
 </template>
 
 <script>
+    import deviceIdlist from './DeviceControl'
 
     export default {
         name: "PictureClassify",
         mounted(){
 
-            // let divs = document.getElementsByName('img_div');
-            // for (let index in divs) {
-            //     divs[index].style.backgroundSize = '100% 100%';
-            // }
+
             let that =this;
+            this.getDeviceid();
+
 
             let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
             that.axios(url,{
@@ -109,7 +110,7 @@
                 if(data.code===0){
                     that.photoTable=data.data.list;
                     for(let i=0;i<that.photoTable.length;i++){
-                         console.log(that.photoTable[i]);
+                         // console.log(that.devicedlist[i].deviceId);
 
 
                     }
@@ -118,14 +119,37 @@
             })
         },
         methods:{
+            getDeviceid:function() {
+                // let api = this.$api.userApi.getMachines;
+                let url='http://106.12.123.92:8081/api/v1/devices/do-user';
+                let that=this;
+                let size=that.pageSize*that.currentPage;
+                this.axios(url, {
+                    params: {
+                        pageNum: that.currentPage,
+                        pageSize: 100,
+                    }
+                }).then(function (res) {
+                    // console.log(res);
+                    let data = res.data;
+                    console.log(data);
+                    if(res.data.code===0){
+                        that.deviceTable=data.data.list;
+                        // console.log(that.getDeviceid());
+                    }
+                });
+                return that.deviceTable;
+
+            },
             handleSizeChange: function (size) {
                 this.pagesize = size;
                 // console.log(this.pagesize)  //每页下拉显示数据
             },
-            getPhotonumber(i){
-                return i;
+            // getPhotonumber(i){
+            //     return i;
+            //
+            // },
 
-            },
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
                 // console.log(this.currentPage)  //点击第几页
@@ -139,6 +163,9 @@
         },
         data() {
             return {
+                deviceTable:[],
+                value9: '请选择设备ID',
+
                 photoTable:[],
                 currentPage:1,
                 pageSize:4,
@@ -183,23 +210,23 @@
                 },
                 value7: '',
                 checkList: ['复选框 A'],
-                options: [{
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                }],
-                value8: ''
+                // options: [{
+                //     value: '选项1',
+                //     label: '黄金糕'
+                // }, {
+                //     value: '选项2',
+                //     label: '双皮奶'
+                // }, {
+                //     value: '选项3',
+                //     label: '蚵仔煎'
+                // }, {
+                //     value: '选项4',
+                //     label: '龙须面'
+                // }, {
+                //     value: '选项5',
+                //     label: '北京烤鸭'
+                // }],
+                // value8: '',
             };
         },
     }
