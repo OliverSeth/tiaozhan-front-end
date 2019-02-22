@@ -43,7 +43,7 @@
 
             </el-row>
         </div>
-        <div style="width: 100%;height:10%;float: left;">
+        <div style="width: 100%;height:65%;float: left;">
             <el-row >
 
 
@@ -67,6 +67,18 @@
             </el-row>
 
 
+        </div>
+        <div style="width: 100%;height:65%;float: left;" class="block">
+            <!--<span class="demonstration">完整功能</span>-->
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage4"
+                    :page-sizes="[100, 200, 300, 400]"
+                    :page-size="100"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="400">
+            </el-pagination>
         </div>
 
 
@@ -129,6 +141,12 @@
             })
         },
         methods:{
+            handleSizeChange(val) {
+                console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange(val) {
+                console.log(`当前页: ${val}`);
+            },
             getDeviceid:function() {
                 // let api = this.$api.userApi.getMachines;
                 let url='http://106.12.123.92:8081/api/v1/devices/do-user';
@@ -188,6 +206,7 @@
                 deviceTable:[],
                 flage:this.getflage(),
                 value9: '请选择设备ID',
+                currentPage4: 4,
 
                 photoTable:[],
                 currentPage:1,
