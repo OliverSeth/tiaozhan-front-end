@@ -39,7 +39,7 @@
         <div style="width: 20%;height:20%;float: left;">
             <el-row>
 
-                <el-button type="primary" @click="getPhoto(value7[0],value7[1],)">进行筛选</el-button>
+                <el-button type="primary" @click="getPhoto(value7[0],value7[1])">进行筛选</el-button>
 
             </el-row>
         </div>
@@ -155,8 +155,8 @@
                     params:{
                         pageNum: 1,
                         pageSize: 10,
-                        createTime:item1,
-                        endTime:item2,
+                        startTime:item1,
+                        endTime:item2
 
                     }
                 }).then(function (response) {
