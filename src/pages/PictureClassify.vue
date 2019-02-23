@@ -47,7 +47,7 @@
             <el-row >
 
 
-                <el-col  v-for="photo in photoTable.slice((currentPage-1)*pageSize,currentPage*pageSize)" :span="2"  >
+                <el-col  v-for="photo in photoTable" :span="2"  >
                     <el-card  :body-style="{ padding: '0px' }">
                         <img   :src="getscr1(photo.href)" style="width: 90px;height: 90px">
 
@@ -74,10 +74,10 @@
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="currentPage4"
-                    :page-sizes="[100, 200, 300, 400]"
-                    :page-size="100"
+                    :page-sizes="[10, 20, 30, 40]"
+                    :page-size="10"
                     layout="total, sizes, prev, pager, next, jumper"
-                    :total="400">
+                    :total="total">
             </el-pagination>
         </div>
 
@@ -153,8 +153,8 @@
                 let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
                 that.axios(url,{
                     params:{
-                        pageNum: that.currentPage,
-                        pageSize: 100,
+                        pageNum: 1,
+                        pageSize: 10,
                         // createTime:item1,
                     }
                 }).then(function (response) {
@@ -166,6 +166,7 @@
                     if(data.code===0){
                         // if(data.)
                         that.photoTable=data.data.list;
+                        that.total=data.data.total;
                         // console.log(response.data);
                         for(let i=0;i<that.photoTable.length;i++){
 
@@ -189,8 +190,34 @@
             // },
 
             handleCurrentChange: function(currentPage){
-                console.log("123");
                 this.currentPage = currentPage;
+                let that =this;
+                let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
+                that.axios(url,{
+                    params:{
+                        pageNum: currentPage,
+                        pageSize: 10,
+                        // createTime:item1,
+                    }
+                }).then(function (response) {
+                    console.log(response);
+                    // console.log("ok");
+
+                    let data=response.data;
+
+                    if(data.code===0){
+                        // if(data.)
+                        that.photoTable=data.data.list;
+                        that.total=data.data.total;
+                        // console.log(response.data);
+                        for(let i=0;i<that.photoTable.length;i++){
+
+
+
+                        }
+                    }
+
+                })
 
                 // console.log(this.currentPage)  //点击第几页
             },
@@ -210,22 +237,14 @@
                     // console.log(data);
                     if(res.data.code===0){
                         that.deviceTable=data.data.list;
+
                         // console.log(that.getDeviceid());
                     }
                 });
                 return that.deviceTable;
 
             },
-            handleSizeChange: function (size) {
-                this.pagesize = size;
-                // console.log(this.pagesize)  //每页下拉显示数据
-            },
 
-
-            handleCurrentChange: function(currentPage){
-                this.currentPage = currentPage;
-                // console.log(this.currentPage)  //点击第几页
-            },
             //获取图片路径
             getscr1(item){
                 // document.images.imgInit.src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
@@ -251,7 +270,7 @@
         data() {
             return {
                 deviceTable:[],
-
+                total:0,
                 value9: '请选择设备ID',
                 currentPage4:1,
 

@@ -8,7 +8,7 @@
             <el-row>
             <el-col>
                 <el-table
-                        :data="photoTable.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+                        :data="photoTable"
                         style="width: 100%;text-align: center"
                         :row-class-name="tableRowClassName">
                     <el-table-column
@@ -92,7 +92,7 @@
                     @current-change="handleCurrentChange"
                     :current-page="currentPage"
                     layout="prev, pager, next"
-                    :total="photoTable.length"
+                    :total="total"
                     :page-size="4">
             </el-pagination>
         </div>
@@ -114,8 +114,8 @@
             // let photoTable = new Array();
             that.axios(url,{
                 params:{
-                    pageNum: that.currentPage,
-                    pageSize: 100
+                    pageNum: 1,
+                    pageSize: 4
                 }
             }).then(function (response) {
 
@@ -124,6 +124,7 @@
 
                 if(data.code===0){
                     that.photoTable=data.data.list;
+                    that.total=data.data.total;
                     for(let i=0;i<that.photoTable.length;i++){
                         if(that.photoTable[i].updateTime===null){
                             that.photoTable[i].updateTime=that.photoTable[i].createTime;
@@ -187,6 +188,69 @@
 
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
+                let that =this;
+
+                let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
+                // let photoTable = new Array();
+                that.axios(url,{
+                    params:{
+                        pageNum: currentPage,
+                        pageSize: 4
+                    }
+                }).then(function (response) {
+
+                    let data=response.data;
+                    console.log(data);
+
+                    if(data.code===0){
+                        that.photoTable=data.data.list;
+                        that.total=data.data.total;
+                        for(let i=0;i<that.photoTable.length;i++){
+                            if(that.photoTable[i].updateTime===null){
+                                that.photoTable[i].updateTime=that.photoTable[i].createTime;
+                            }
+
+
+                            switch (that.photoTable[i].defectType) {
+                                case 0:{
+                                    that.photoTable[i].defectType="无";
+                                    break;
+                                }
+                                case 1:{
+                                    that.photoTable[i].defectType="横疵";
+                                    break;
+                                }
+                                case 2:{
+                                    that.photoTable[i].defectType="纵疵";
+                                    break;
+                                }
+                                case 3:{
+                                    that.photoTable[i].defectType="横纵疵";
+                                    break;
+                                }
+                                case -1:{
+                                    that.photoTable[i].defectType="未检测";
+                                    break;
+                                }
+                                default:that.photoTable[i].defectType="错误";
+                            }
+                            // console.log(that.photoTable[i].createTime);
+
+                            // that.photoTable[i].picId="/../assets/1.jpg";
+                            // that.photoTable[i].href='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
+                            // console.log("that.photoTable[i].href=");
+                            //
+                            // console.log(that.photoTable[i].href);
+                            // console.log("i=");
+                            //
+                            // console.log(i);
+                            // console.log(that.photoTable[i]);12
+
+                            that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
+                            that.photoTable[i].updateTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].updateTime);
+                        }
+                    }
+                })
                 // console.log(this.currentPage)  //点击第几页
             },
 
@@ -296,6 +360,7 @@
                     type:'',
                     position:'',
                 },
+                total:0,
                 options:[
                     {value:1,text:"横疵"},
                     {value:2,text:"纵疵"},
