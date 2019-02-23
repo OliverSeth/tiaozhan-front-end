@@ -120,6 +120,7 @@
             }).then(function (response) {
 
                 let data=response.data;
+                console.log(data);
 
                 if(data.code===0){
                     that.photoTable=data.data.list;
