@@ -39,7 +39,7 @@
         <div style="width: 20%;height:20%;float: left;">
             <el-row>
 
-                <el-button type="primary" @click="getflage(value-key)">进行筛选</el-button>
+                <el-button type="primary" @click="getPhoto(value7[0],value7[1],)">进行筛选</el-button>
 
             </el-row>
         </div>
@@ -47,9 +47,9 @@
             <el-row >
 
 
-                <el-col  v-for="photo in photoTable" :span="2"  >
+                <el-col  v-for="photo in photoTable.slice((currentPage-1)*pageSize,currentPage*pageSize)" :span="2"  >
                     <el-card  :body-style="{ padding: '0px' }">
-                        <img  v-if="flage" :src="getscr1(photo.href)" style="width: 90px;height: 90px">
+                        <img   :src="getscr1(photo.href)" style="width: 90px;height: 90px">
 
                         <template>
                             <!-- `checked` 为 true 或 false -->
@@ -116,36 +116,83 @@
             this.getDeviceid();
 
 
-            let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
-            that.axios(url,{
-                params:{
-                    pageNum: that.currentPage,
-                    pageSize: 100
-                }
-            }).then(function (response) {
-                // console.log("ok");
-
-                let data=response.data;
-
-                if(data.code===0){
-                    // if(data.)
-                    that.photoTable=data.data.list;
-                    console.log(response.data);
-                    for(let i=0;i<that.photoTable.length;i++){
-
-
-
-                    }
-                }
-
-            })
+            // let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
+            // that.axios(url,{
+            //     params:{
+            //         pageNum: that.currentPage,
+            //         pageSize: 100
+            //     }
+            // }).then(function (response) {
+            //     // console.log("ok");
+            //
+            //     let data=response.data;
+            //
+            //     if(data.code===0){
+            //         // if(data.)
+            //         that.photoTable=data.data.list;
+            //         console.log(response.data);
+            //         for(let i=0;i<that.photoTable.length;i++){
+            //
+            //
+            //
+            //         }
+            //     }
+            //
+            // })
         },
         methods:{
-            handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+            getPhoto(item1,item2){
+                let that =this;
+                this.getDeviceid();
+
+                // console.log(item1);
+                // console.log(item2);
+
+
+
+                let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
+                that.axios(url,{
+                    params:{
+                        pageNum: that.currentPage,
+                        pageSize: 100,
+                        // createTime:item1,
+                    }
+                }).then(function (response) {
+                    console.log(response);
+                    // console.log("ok");
+
+                    let data=response.data;
+
+                    if(data.code===0){
+                        // if(data.)
+                        that.photoTable=data.data.list;
+                        // console.log(response.data);
+                        for(let i=0;i<that.photoTable.length;i++){
+
+
+
+                        }
+                    }
+
+                })
+
             },
-            handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+            handleSizeChange: function (size) {
+                this.pagesize = size;
+                // console.log(`每页    条`);
+                // console.log(this.pagesize)  //每页下拉显示数据
+            },
+            // getImgPath(path){
+            //     let path="";
+            //     return require(path);
+            //
+            // },
+
+            handleCurrentChange: function(currentPage){
+                console.log("123");
+                this.currentPage = currentPage;
+
+                // console.log(this.currentPage)  //点击第几页
             },
             getDeviceid:function() {
                 // let api = this.$api.userApi.getMachines;
@@ -185,32 +232,32 @@
                 // return ('http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/ef941f06-7d1f-43ab-b6a0-28275be153e7-153314543.jpg?op=OPEN');
                 return ('http://148.70.63.35:50070'+item);
             },
-            getflage(item){
-
-                // for(let i=0;i<this.photoTable.length;i++){
-                //     if(item===this.photoTable[i].deviceId)
-                //     {
-                //
-                //     }
-                //
-                //
-                //
-                // }
-                // if(item===)
-                return true;
-
-            },
+            // getflage(item){
+            //
+            //     // for(let i=0;i<this.photoTable.length;i++){
+            //     //     if(item===this.photoTable[i].deviceId)
+            //     //     {
+            //     //
+            //     //     }
+            //     //
+            //     //
+            //     //
+            //     // }
+            //     // if(item===)
+            //     return true;
+            //
+            // },
         },
         data() {
             return {
                 deviceTable:[],
-                flage:this.getflage(),
+
                 value9: '请选择设备ID',
-                currentPage4: 4,
+                currentPage4:1,
 
                 photoTable:[],
                 currentPage:1,
-                pageSize:4,
+                pageSize:10,
                 // currentDate: new Date(),
                 // bg1:{
                 //     background:'url(http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN)',
