@@ -42,7 +42,8 @@ export default {
         method:'post',
     },
     saveModel:{
-        url:BASE_URL+'/models/upload/py/do-admin',
+        url:BASE_URL+'/models/do-admin',
         method:'post',
-    }
+    },
+
 }

@@ -6,8 +6,10 @@
         <el-form :model="form">
             <el-form-item>
                 <el-upload
-                        action='http://106.12.123.92:8081/api/v1/pictures/upload/do-admin'
+                        action='#'
+                        http-request=""
                         list-type="picture-card"
+                        auto-upload="false"
                         ref="upload"
                         :before-upload="beforeAvatarUpload"
                         :on-preview="handlePictureCardPreview"
@@ -59,6 +61,7 @@
                 file:'',
                 file2:'',
                 fileList:[],
+                fileList2:[],
             }
         },
         methods:{
@@ -89,6 +92,7 @@
             // beforeRemove(file, fileList) {
             //     return this.$confirm(`确定移除 ${ file.name }？`);
             // },
+
             handleRemove(file, fileList) {
                 console.log(file, fileList);
             },
@@ -96,10 +100,12 @@
                 this.dialogImageUrl = file.url;
                 this.dialogVisible = true;
             },
-            beforeAvatarUpload(file) {
+            beforeAvatarUpload(file,fileList) {
                 const isJPG = file.type === 'image/jpeg';
                 const isLt5M = file.size / 1024 / 1024 < 5;
-                this.file=file;
+                // this.file=file;
+                this.fileList2.push(file);
+                console.log(this.fileList2);
                 // let arr=fileName.split();
                 // this.file=file;
 
@@ -156,7 +162,11 @@
             },
             uploadPhoto(){
                 let fd=new FormData();
-                fd.append("picture", this.file);
+                for(let i=0;i<this.fileList2.length;i++){
+                    fd.append("pictures",this.fileList2[i]);
+                }
+                // fd.append("pictures", this.fileList2);
+                console.log(this.fileList2);
                 // let url='http://106.12.123.92:8081/api/v1/pictures/upload/do-admin';
                 // let config = {
                 //     headers: {
@@ -167,64 +177,66 @@
                 //     console.log(response);
                 // })
                 // console.log(fd.get("picture"));
-                let that=this;
-                let api=that.$api.userApi.savePicture;
+
+                // let that=this;
+                // let api=that.$api.userApi.savePicture;
                 let xhr=new XMLHttpRequest();
-                let fileName=this.file.name;
-                let index=fileName.lastIndexOf('.');
+                // let fileName=this.file.name;
+                // let index=fileName.lastIndexOf('.');
                 // console.log(index);
-                fileName=fileName.slice(0,index);
+                // fileName=fileName.slice(0,index);
                 // console.log(fileName);
-                sessionStorage.setItem("name",fileName);
+                // sessionStorage.setItem("name",fileName);
                 xhr.open("post",'http://106.12.123.92:8081/api/v1/pictures/upload/do-admin',true);
+                console.log(fd.get("pictures"));
                 xhr.send(fd);
                 xhr.onload = function () {
                     if (xhr.readyState === xhr.DONE) {
                         if (xhr.status === 200) {
-                            let url;
-                            let arr=xhr.responseText.split('"');
-                            let flag=false;
-                            for(let i=0;i<arr.length;i++){
-                                if(arr[i]==="成功") flag=true;
-                            }
-                            if(flag){
-                                for(let i=0;i<arr.length;i++){
-                                    if(arr[i]==="data"&&arr[i+1]===":"){
-                                        url=arr[i+2];
-                                        break;
-                                    }
-                                }
-                            }
-                            if(url===undefined){
-                                that.$notify.error({
-                                    title: '失败',
-                                    message: '图片未上传成功'
-                                });
-                            }
-                            else{
-                                api.data={
-                                    href:url,
-                                    name:fileName,
-                                    defectType: -1,
-                                    defectPosition: -1,
-                                };
-                                that.axios(api).then(function (response) {
-                                    console.log(response);
-                                    if(response.data.code===0){
-                                        that.$notify({
-                                            title: '成功',
-                                            message: '上传成功',
-                                            type: 'success'
-                                        });
-                                    }
-                                    else{
-                                        that.$notify.error({
-                                            title: '失败',
-                                            message: '上传失败'
-                                        });
-                                    }
-                                })
-                            }
+                            // let url;
+                            // let arr=xhr.responseText.split('"');
+                            // let flag=false;
+                            // for(let i=0;i<arr.length;i++){
+                            //     if(arr[i]==="成功") flag=true;
+                            // }
+                            // if(flag){
+                            //     for(let i=0;i<arr.length;i++){
+                            //         if(arr[i]==="data"&&arr[i+1]===":"){
+                            //             url=arr[i+2];
+                            //             break;
+                            //         }
+                            //     }
+                            // }
+                            // if(url===undefined){
+                            //     that.$notify.error({
+                            //         title: '失败',
+                            //         message: '图片未上传成功'
+                            //     });
+                            // }
+                            // else{
+                            //     api.data={
+                            //         href:url,
+                            //         // name:fileName,
+                            //         defectType: -1,
+                            //         defectPosition: -1,
+                            //     };
+                            //     that.axios(api).then(function (response) {
+                            //         console.log(response);
+                            //         if(response.data.code===0){
+                            //             that.$notify({
+                            //                 title: '成功',
+                            //                 message: '上传成功',
+                            //                 type: 'success'
+                            //             });
+                            //         }
+                            //         else{
+                            //             that.$notify.error({
+                            //                 title: '失败',
+                            //                 message: '上传失败'
+                            //             });
+                            //         }
+                            //     })
+                            // }
                             // sessionStorage.setItem("href",url);
                             // console.log(sessionStorage.getItem("href"));
                             // console.log(url);
