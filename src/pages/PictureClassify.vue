@@ -145,20 +145,22 @@
                 let that =this;
                 this.getDeviceid();
 
-                // console.log(item1);
-                // console.log(item2);
+                console.log(item1);
+                console.log(item2);
 
 
 
-                let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
+                let url='http://106.12.123.92:8081/api/v1/pictures/search/do-user';
                 that.axios(url,{
                     params:{
                         pageNum: 1,
                         pageSize: 10,
-                        // createTime:item1,
+                        createTime:item1,
+                        endTime:item2,
+
                     }
                 }).then(function (response) {
-                    console.log(response);
+                    // console.log(response);
                     // console.log("ok");
 
                     let data=response.data;
@@ -200,7 +202,7 @@
                         // createTime:item1,
                     }
                 }).then(function (response) {
-                    console.log(response);
+                    // console.log(response);
                     // console.log("ok");
 
                     let data=response.data;
