@@ -167,7 +167,7 @@
             uploadXML(){
                 // console.log(this.row);
                 let fd=new FormData();
-                console.log(this.row.picId);
+                // console.log(this.row.picId);
                 let api={
                     url:'http://106.12.123.92:8081/api/v1/pictures/'+this.row.picId+'/do-admin',
                     method:'put'
@@ -180,7 +180,7 @@
                 xhr.onload = function () {
                     if (xhr.readyState === xhr.DONE) {
                         if (xhr.status === 200) {
-                            console.log(xhr.responseText);
+                            // console.log(xhr.responseText);
                             let xml;
                             let arr=xhr.responseText.split('"');
                             let flag=false;
@@ -195,7 +195,7 @@
                                     }
                                 }
                             }
-                            console.log(xml);
+                            // console.log(xml);
                             api.data={
                                 xml:xml,
                             };
@@ -215,7 +215,7 @@
                                 }
                                 that.dialogFormVisible2=false;
                                 that.$refs.upload.clearFiles();
-                                console.log(response);
+                                // console.log(response);
                             })
                         }
                     }
