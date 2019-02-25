@@ -30,21 +30,38 @@
         <div style="width: 30%;height:20%;float: left;">
             <p class="optionmenu" > 疵点类型</p>
             <el-checkbox-group v-model="checkList">
-                <el-checkbox label="横疵" v-model="checked1"></el-checkbox>
-                <el-checkbox label="纵疵" v-model="checked2"></el-checkbox>
-                <el-checkbox label="横纵疵" v-model="checked3"></el-checkbox>
-                <el-checkbox label="无" v-model="checked0"></el-checkbox>
+                <!--<el-checkbox label="横疵" v-model="checked1"></el-checkbox>-->
+                <!--<el-checkbox label="纵疵" v-model="checked2"></el-checkbox>-->
+                <!--<el-checkbox label="横纵疵" v-model="checked3"></el-checkbox>-->
+                <!--<el-checkbox label="无" v-model="checked0"></el-checkbox>-->
+                <el-checkbox label="横" ></el-checkbox>
+                <el-checkbox label="纵"></el-checkbox>
+                <el-checkbox label="横纵"></el-checkbox>
+                <el-checkbox label="无"></el-checkbox>
             </el-checkbox-group>
         </div>
         <div style="width: 20%;height:20%;float: left;">
             <el-row>
 
-                <el-button type="primary" @click="getPhoto(value7[0],value7[1])">进行筛选</el-button>
+                <el-button type="primary" @click="getPhoto(value7[0],value7[1],value9,checkList)">进行筛选</el-button>
 
             </el-row>
         </div>
+
+
         <div style="width: 100%;height:65%;float: left;">
             <el-row >
+                <el-dialog
+                        title="提示"
+                        :visible.sync="dialogVisible"
+                        width="30%"
+                        >
+                    <span>无查询信息</span>
+                    <span slot="footer" class="dialog-footer">
+                       <el-button @click="dialogVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                    </span>
+                </el-dialog>
 
 
                 <el-col  v-for="photo in photoTable" :span="2"  >
@@ -141,40 +158,60 @@
             // })
         },
         methods:{
-            getPhoto(item1,item2){
+            getPhoto(item1,item2,item3,item4){
                 let that =this;
                 this.getDeviceid();
 
-                console.log(item1);
-                console.log(item2);
+                // console.log(item1);
+                // console.log(item2);
+                // console.log(item3);
+                console.log(item4);
 
 
 
                 let url='http://106.12.123.92:8081/api/v1/pictures/search/do-user';
                 that.axios(url,{
                     params:{
+
                         pageNum: 1,
                         pageSize: 10,
-                        startTime:item1,
-                        endTime:item2
+                        // startTime:item1,
+                        // endTime:item2,
+                        types:item4
+                        // deviceId:item3
+
 
                     }
                 }).then(function (response) {
-                    // console.log(response);
+
                     // console.log("ok");
 
                     let data=response.data;
 
                     if(data.code===0){
+                        that.dialogFormVisible=false;
                         // if(data.)
                         that.photoTable=data.data.list;
                         that.total=data.data.total;
-                        // console.log(response.data);
+                        console.log(response.data);
+                        console.log(response);
                         for(let i=0;i<that.photoTable.length;i++){
 
 
 
                         }
+
+
+                    }
+                    else{
+                        console.log("无查询结果");
+                        that.photoTable=[];
+                        that.dialogVisible=true;
+
+
+
+
+
                     }
 
                 })
@@ -273,8 +310,9 @@
             return {
                 deviceTable:[],
                 total:0,
-                value9: '请选择设备ID',
+                value9: '',
                 currentPage4:1,
+                dialogVisible:false,//判断是否有查询结果
 
                 photoTable:[],
                 currentPage:1,
@@ -319,7 +357,7 @@
                     }]
                 },
                 value7: '',
-                checkList: ['复选框 A'],
+                checkList:[],
                 // options: [{
                 //     value: '选项1',
                 //     label: '黄金糕'
