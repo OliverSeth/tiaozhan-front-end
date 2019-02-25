@@ -21,12 +21,10 @@
                             label="图片"
                             sortable
                             width="180">
-
                         <!--插入图片链接的代码-->
                         <template slot-scope="scope">
                             <img  :src="getscr1(scope.row.href)"    style="width: 90px;height: 90px">
                         </template>
-
                     </el-table-column>
 
 
@@ -43,41 +41,31 @@
                             prop="updateTime"
                             label="检测时间">
                     </el-table-column>
-                    <el-table-column
-                            label="操作">
-                        <template scope="scope">
+                    <el-table-column label="操作">
+                        <template slot-scope="scope2">
                             <el-button
                                     type="primary"
                                     size="small"
-                                    @click="modify(scope.row)">标注
+                                    @click="modify(scope2.row)">标注
                             </el-button>
-                            <el-button type="danger" size="small" @click="removePhoto(scope.row)">
+                            <el-button type="danger" size="small" @click="removePhoto(scope2.row)">
                                 删除
                             </el-button>
-                        </template>
-                    </el-table-column>
-                    <el-table-column>
-                        <template scope="scope1">
-                            <el-dialog title="修改图片信息" :visible.sync="dialogFormVisible">
-                                <el-form :model="form">
-                                    <el-form-item label="疵点类型" :label-width="formLabelWidth">
-                                        <el-select v-model="form.type" placeholder="请选择疵点类型" style="width: 300px">
-                                            <el-option v-for="item in options"
-                                                       :label="item.text"
-                                                       :key="item.value"
-                                                       :value="item.value"
-                                            >
-                                            </el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                    <el-form-item label="疵点位置" :label-width="formLabelWidth">
-                                        <el-input v-model="form.position" autocomplete="off" style="width:300px"></el-input>
-                                    </el-form-item>
-                                </el-form>
-                                <div slot="footer" class="dialog-footer">
-                                    <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                    <el-button type="primary" @click="confirm">确 定</el-button>
-                                </div>
+                            <el-dialog :visible="dialogFormVisible2">
+                                <el-upload
+                                        class="upload-demo"
+                                        ref="upload"
+                                        action="http://106.12.123.92:8081/api/v1/pictures/upload/xml/do-admin"
+                                        :on-preview="handlePreview"
+                                        :on-remove="handleRemove"
+                                        :before-upload="handleBefore"
+                                        multiple
+                                        :on-exceed="handleExceed">
+                                    <i class="el-icon-plus"></i>
+                                </el-upload>
+                                <el-button size="small" type="primary" @click="uploadXML" style="margin-top: 20px">上传XML文件
+                                </el-button>
+                                <el-button size="small" @click="dialogFormVisible2=false">取消</el-button>
                             </el-dialog>
                         </template>
                     </el-table-column>
@@ -85,6 +73,7 @@
             </el-col>
         </el-row>
         </div>
+
         <div class="block">
             <span class="pages"></span>
             <el-pagination
@@ -96,13 +85,11 @@
                     :page-size="4">
             </el-pagination>
         </div>
-
     </div>
 </template>
 
 <script>
     import utils from '../utils/index'
-
     export default {
 
         name: "ClothExamine",
@@ -120,7 +107,7 @@
             }).then(function (response) {
 
                 let data=response.data;
-                console.log(data);
+                // console.log(data);
 
                 if(data.code===0){
                     that.photoTable=data.data.list;
@@ -173,19 +160,95 @@
             })
         },
         methods: {
-
-
-
+            modify:function(row){
+                this.row=row;
+                this.dialogFormVisible2=true;
+            },
+            uploadXML(){
+                // console.log(this.row);
+                let fd=new FormData();
+                console.log(this.row.picId);
+                let api={
+                    url:'http://106.12.123.92:8081/api/v1/pictures/'+this.row.picId+'/do-admin',
+                    method:'put'
+                };
+                fd.append("xmlFile", this.file);
+                let xhr=new XMLHttpRequest();
+                let that=this;
+                xhr.open("post",'http://106.12.123.92:8081/api/v1/pictures/upload/xml/do-admin',true);
+                xhr.send(fd);
+                xhr.onload = function () {
+                    if (xhr.readyState === xhr.DONE) {
+                        if (xhr.status === 200) {
+                            console.log(xhr.responseText);
+                            let xml;
+                            let arr=xhr.responseText.split('"');
+                            let flag=false;
+                            for(let i=0;i<arr.length;i++){
+                                if(arr[i]==="成功") flag=true;
+                            }
+                            if(flag){
+                                for(let i=0;i<arr.length;i++){
+                                    if(arr[i]==="url"&&arr[i+1]===":"){
+                                        xml=arr[i+2];
+                                        break;
+                                    }
+                                }
+                            }
+                            console.log(xml);
+                            api.data={
+                                xml:xml,
+                            };
+                            that.axios(api).then(function (response) {
+                                if(response.data.code===0){
+                                    that.$notify({
+                                        title: '成功',
+                                        message: '上传xml文件成功',
+                                        type: 'success'
+                                    });
+                                }
+                                else{
+                                    that.$notify.error({
+                                                        title: '失败',
+                                        message: '上传失败'
+                                    });
+                                }
+                                that.dialogFormVisible2=false;
+                                that.$refs.upload.clearFiles();
+                                console.log(response);
+                            })
+                        }
+                    }
+                }
+            },
+            handleBefore(file){
+                // console.log(file);
+                let fileValue = file.name;
+                // console.log(fileValue);
+                let index = fileValue.lastIndexOf('.');
+                const isXML=fileValue.substring(index)==='.xml';
+                // console.log(index);
+                if(isXML){
+                    this.file=file;
+                }
+                else{
+                    this.$message.error('上传文件只能是 xml 格式!');;
+                }
+                return isXML;
+            },
+            handlePreview(file) {
+                console.log(file);
+            },
+            handleExceed(files) {
+                // this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+            },
+            handleRemove(file) {
+                console.log(file);
+            },
             handleSizeChange: function (size) {
                 this.pagesize = size;
                 // console.log(this.pagesize)  //每页下拉显示数据
             },
-            // getImgPath(path){
-            //     let path="";
-            //     return require(path);
-            //
-            // },
-
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
                 let that =this;
@@ -253,7 +316,6 @@
                 })
                 // console.log(this.currentPage)  //点击第几页
             },
-
             uploadPhoto(){
                 this.$router.push('/upload-image');
             },
@@ -267,47 +329,13 @@
                         return 'danger-row';
                 }
             },
-            confirm(){
-                this.dialogFormVisible = false;
-                let id=this.row0.picId;
-                console.log(id);
-                let api={
-                    url:'http://106.12.123.92:8081/api/v1/pictures/'+id+'/do-admin',
-                    method:'put',
-                };
-                api.data={
-                    defectPosition:this.form.position,
-                    defectType:this.form.type,
-                };
-                this.axios(api).then(function (response) {
-                    // console.log(response);
-                    // location.reload();
-                });
-            },
-            modify(row){
-                this.dialogFormVisible = true;
-                this.row0=row;
-                // this.$prompt('请输入疵点种类','请输入疵点位置', '提示', {
-                //     confirmButtonText: '确定',
-                //     cancelButtonText: '取消',
-                // }).then(({ value }) => {
-                //     this.$message({
-                //         type: 'success',
-                //         message: '你的邮箱是: ' + value
-                //     });
-                // }).catch(() => {
-                //     this.$message({
-                //         type: 'info',
-                //         message: '取消输入'
-                //     });
-                // });
-            },
             //获取图片路径
             getscr1(item){
                 // document.images.imgInit.src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
                 return ('http://148.70.63.35:50070'+item);
             },
             removePhoto(row){
+                // console.log(row);
                 let that=this;
                 let id="1";
                 let api={
@@ -356,6 +384,7 @@
                 pageSize:4,
                 photoTable:[],
                 dialogFormVisible: false,
+                dialogFormVisible2:false,
                 form:{
                     type:'',
                     position:'',
@@ -368,7 +397,9 @@
                     {value:0,text:"无"},
                 ],
                 formLabelWidth: '120px',
+                row:'',
                 row0:'',
+                file:'',
             }
         }
     }
