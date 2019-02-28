@@ -337,7 +337,7 @@
             removePhoto(row){
                 // console.log(row);
                 let that=this;
-                let id="1";
+                let id=row.picId;
                 let api={
                     url:'http://106.12.123.92:8081/api/v1/pictures/'+id+'/do-admin',
                     method:'delete',
@@ -364,14 +364,13 @@
                     if(flag===true){
                         // console.log("ok");
                         that.axios(api).then(function(response){
-                            // console.log(response);
+                            console.log(response);
                             if(response.data.code===0){
                                 that.$message({
                                     type:'success',
                                     message:'删除成功'});
-                                // location.reload();
+                                setTimeout("window.location.reload()",500);
                             }
-
                         })
                     }
                 })

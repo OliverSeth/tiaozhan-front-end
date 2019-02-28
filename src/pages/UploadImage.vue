@@ -9,7 +9,6 @@
                         action='#'
                         http-request=""
                         list-type="picture-card"
-                        auto-upload="false"
                         ref="upload"
                         :before-upload="beforeAvatarUpload"
                         :on-preview="handlePictureCardPreview"
@@ -193,6 +192,7 @@
                 xhr.onload = function () {
                     if (xhr.readyState === xhr.DONE) {
                         if (xhr.status === 200) {
+
                             // let url;
                             // let arr=xhr.responseText.split('"');
                             // let flag=false;
