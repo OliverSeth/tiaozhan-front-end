@@ -11,11 +11,12 @@ import  DefectDistribution from './pages/DefectDistribution'
 import PictureClassify from './pages/PictureClassify'
 import UploadImage from './pages/UploadImage'
 
-Vue.use(Router)
+Vue.use(Router);
 
 let router = new Router({
     mode: 'history',
-    base: process.env.BASE_URL,
+    // base: process.env.BASE_URL,
+    base:'/tiaozhan-front-end/',
     routes: [
         {
             path: '/',

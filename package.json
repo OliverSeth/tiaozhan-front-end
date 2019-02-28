@@ -18,6 +18,10 @@
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:tiaozhan/tiaozhan-front-end.git"
+  },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.3.0",
     "@vue/cli-service": "^3.3.0",
