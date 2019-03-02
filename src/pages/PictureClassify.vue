@@ -1,7 +1,7 @@
 <template>
     <div style="width: 80%;height:88%;position: absolute"  :data="photoTable">
         <div style="width: 20%;height:20%;float: left" >
-            <p class="optionmenu" >选择设备</p>
+            <p class="optionmenu" ><el-tag>检测设备</el-tag></p>
             <el-select v-model=" value9" clearable placeholder="请选择">
                 <el-option
                         v-for="item in deviceTable"
@@ -12,7 +12,7 @@
             </el-select>
         </div>
         <div style="width: 30%;height:20%;float: left">
-            <p class="optionmenu" > 检测时间段</p>
+            <p class="optionmenu" ><el-tag>检测时间</el-tag></p>
             <div class="block">
                 <!--<span class="demonstration">带快捷选</span>-->
                 <el-date-picker
@@ -23,21 +23,22 @@
                         range-separator="至"
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
+                        value-format="new date()"
                         :picker-options="pickerOptions2">
                 </el-date-picker>
             </div>
         </div>
         <div style="width: 30%;height:20%;float: left;">
-            <p class="optionmenu" > 疵点类型</p>
+            <p class="optionmenu" > <el-tag>疵点类型</el-tag></p>
             <el-checkbox-group v-model="checkList">
                 <!--<el-checkbox label="横疵" v-model="checked1"></el-checkbox>-->
                 <!--<el-checkbox label="纵疵" v-model="checked2"></el-checkbox>-->
                 <!--<el-checkbox label="横纵疵" v-model="checked3"></el-checkbox>-->
                 <!--<el-checkbox label="无" v-model="checked0"></el-checkbox>-->
-                <el-checkbox label="横" ></el-checkbox>
-                <el-checkbox label="纵"></el-checkbox>
-                <el-checkbox label="横纵"></el-checkbox>
-                <el-checkbox label="无"></el-checkbox>
+                <el-checkbox label="1" ></el-checkbox>
+                <el-checkbox label="2"></el-checkbox>
+                <el-checkbox label="3"></el-checkbox>
+                <el-checkbox label="4"></el-checkbox>
             </el-checkbox-group>
         </div>
         <div style="width: 20%;height:20%;float: left;">
@@ -47,8 +48,6 @@
 
             </el-row>
         </div>
-
-
         <div style="width: 100%;height:65%;float: left;">
             <el-row >
                 <el-dialog
@@ -62,16 +61,19 @@
                         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
                     </span>
                 </el-dialog>
+                <template>
+                    <!-- `checked` 为 true 或 false -->
+                    <el-checkbox-group v-model="photoTable">
+                    </el-checkbox-group>
+
+                </template>
 
 
                 <el-col  v-for="photo in photoTable" :span="2"  >
                     <el-card  :body-style="{ padding: '0px' }">
                         <img   :src="getscr1(photo.href)" style="width: 90px;height: 90px">
 
-                        <template>
-                            <!-- `checked` 为 true 或 false -->
-                            <el-checkbox  v-model="checked">备选项</el-checkbox>
-                        </template>
+
                         <!--<div style="padding: 14px;">-->
                         <!--&lt;!&ndash;<span>好吃的汉堡</span>&ndash;&gt;-->
                         <!--&lt;!&ndash;<div class="bottom clearfix">&ndash;&gt;-->
@@ -122,18 +124,12 @@
 </template>
 
 <script>
-
-
-    export default {
+ export default {
         name: "PictureClassify",
         mounted(){
-
-
-            let that =this;
-            this.getDeviceid();
-
-
-            // let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
+          let that =this;
+          that.getDeviceid();
+           // let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
             // that.axios(url,{
             //     params:{
             //         pageNum: that.currentPage,
@@ -160,28 +156,32 @@
         methods:{
             getPhoto(item1,item2,item3,item4){
                 let that =this;
+                // let dataStr=item4;//原始字符串
+
+                // let arryy = new Array();
+
+                // item4 = item4.replace(/"([^"]*)"/g, "'$1'");
+                // let array = eval('(' + item4 + ')');//封装成数
+                // console.log(array);
+                // arryy=item4;
+                // let dataStrArr=item4.toString().split(",");//分割成字符串数组
+                // let dataIntArr=[];//保存转换后的整型字符串
+                // dataStrArr.forEach(function(data,index,arr){
+                //     dataIntArr.push(+data);
+                // });
+                // console.log(this.value7);
+                console.log();
+                let photoClass=[];
                 this.getDeviceid();
-
-                // console.log(item1);
-                // console.log(item2);
-
-                // console.log(item3);
-                console.log(item4);
-
-
-
                 let url='http://106.12.123.92:8081/api/v1/pictures/search/do-user';
                 that.axios(url,{
                     params:{
-
                         pageNum: 1,
                         pageSize: 10,
-                        // startTime:item1,
-                        // endTime:item2,
-                        types:item4
-                        // deviceId:item3
-
-
+                        types:item4.toString(),
+                        startTime:item1.toDate,
+                        endTime:item2.toDate,
+                        deviceId:item3
                     }
                 }).then(function (response) {
 
@@ -194,29 +194,20 @@
                         // if(data.)
                         that.photoTable=data.data.list;
                         that.total=data.data.total;
-                        console.log(response.data);
-                        console.log(response);
+                        // console.log(response.data);
+                        // console.log(response);
                         for(let i=0;i<that.photoTable.length;i++){
 
-
-
                         }
-
 
                     }
                     else{
                         console.log("无查询结果");
                         that.photoTable=[];
                         that.dialogVisible=true;
-
-
-
-
-
                     }
 
                 })
-
             },
             handleSizeChange: function (size) {
                 this.pagesize = size;
@@ -251,16 +242,16 @@
                         that.total=data.data.total;
                         // console.log(response.data);
                         for(let i=0;i<that.photoTable.length;i++){
-
-
-
                         }
                     }
-
                 })
-
                 // console.log(this.currentPage)  //点击第几页
             },
+            // getitem4Num(item4)
+            // {
+            //     item4.length
+            // },
+            //
             getDeviceid:function() {
                 // let api = this.$api.userApi.getMachines;
                 let url='http://106.12.123.92:8081/api/v1/devices/do-user';
@@ -281,7 +272,6 @@
                         // console.log(that.getDeviceid());
                     }
                 });
-                return that.deviceTable;
 
             },
 
@@ -357,7 +347,7 @@
                         }
                     }]
                 },
-                value7: '',
+                value7: [new Date(),new Date()],
                 checkList:[],
                 // options: [{
                 //     value: '选项1',
