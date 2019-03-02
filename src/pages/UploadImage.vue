@@ -9,7 +9,8 @@
                         action='#'
                         http-request=""
                         list-type="picture-card"
-                        ref="upload"
+                        ref="upload2"
+                        :file-list="fileList2"
                         :before-upload="beforeAvatarUpload"
                         :on-preview="handlePictureCardPreview"
                         :on-remove="handleRemove">
@@ -28,6 +29,7 @@
                             class="upload-demo"
                             action="#"
                             http-request=""
+                            ref="upload"
                             :on-preview="handlePreview"
                             :on-remove="handleRemove"
                             :before-upload="handleBefore"
@@ -162,6 +164,7 @@
                                     message: '上传xml文件成功',
                                     type: 'success'
                                 });
+                                that.$refs.upload.clearFiles();
                             }
                             else{
                                 that.$notify.error({
@@ -170,7 +173,7 @@
                                 });
                             }
                             that.formVisible=false;
-                            that.$refs.upload.clearFiles();
+
                             // if(flag){
                             //     for(let i=0;i<arr.length;i++){
                             //         if(arr[i]==="url"&&arr[i+1]===":"){
@@ -256,6 +259,8 @@
                                 }
                             }
                             if (flag) {
+                                that.$refs.upload2.clearFiles();
+                                this.fileList2='';
                                 that.formVisible=true;
                                 that.$notify({
                                     title: '成功',
