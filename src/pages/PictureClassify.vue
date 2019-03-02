@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 80%;height:88%;position: absolute"  :data="photoTable">
+    <div style="width: 80%;height:100%;position: absolute"  :data="photoTable">
         <div style="width: 20%;height:20%;float: left" >
             <p class="optionmenu" ><el-tag>检测设备</el-tag></p>
             <el-select v-model=" value9" clearable placeholder="请选择">
@@ -11,24 +11,39 @@
                 </el-option>
             </el-select>
         </div>
+
         <div style="width: 30%;height:20%;float: left">
             <p class="optionmenu" ><el-tag>检测时间</el-tag></p>
             <div class="block">
-                <!--<span class="demonstration">带快捷选</span>-->
+                <span class="demonstration"></span>
                 <el-date-picker
                         v-model="value7"
                         type="daterange"
                         align="right"
+                        format="yyyy 年 MM 月 dd 日"
+                        value-format="yyyy-MM-dd"
                         unlink-panels
                         range-separator="至"
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
                         :picker-options="pickerOptions2">
-
                 </el-date-picker>
             </div>
+
+
         </div>
-        <div style="width: 30%;height:20%;float: left;">
+        <div style="width: 20%;height:20%;float: left" >
+            <p class="optionmenu" ><el-tag>检测模型</el-tag></p>
+            <el-select v-model=" value10" clearable placeholder="请选择">
+                <el-option
+                        v-for="item in modelTable"
+                        :key="item.value"
+                        :label="item.modelId"
+                        :value="item.modelId">
+                </el-option>
+            </el-select>
+        </div>
+        <div style="width: 20%;height:20%;float: left;">
             <p class="optionmenu" > <el-tag>疵点类型</el-tag></p>
             <el-checkbox-group v-model="checkList">
                 <!--<el-checkbox label="横疵" v-model="checked1"></el-checkbox>-->
@@ -40,10 +55,18 @@
                 <el-checkbox label="无"></el-checkbox>
             </el-checkbox-group>
         </div>
+        <div style="width: 15%;height:20%;float: left;">
+            <p class="optionmenu" > <el-tag>检测类型</el-tag></p>
+            <el-checkbox-group v-model="checkList2">
+                <el-checkbox label="人工"></el-checkbox>
+                <el-checkbox label="机器"></el-checkbox>
+            </el-checkbox-group>
+        </div>
+
         <div style="width: 20%;height:20%;float: left;">
             <el-row>
 
-                <el-button type="primary" @click="getPhoto(value7[0],value7[1],value9,checkList)">进行筛选</el-button>
+                <el-button type="primary" @click="getPhoto(value9,checkList)">进行筛选</el-button>
 
             </el-row>
         </div>
@@ -128,6 +151,7 @@
         mounted(){
           let that =this;
           that.getDeviceid();
+          that.getModelid();
            // let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
             // that.axios(url,{
             //     params:{
@@ -153,7 +177,8 @@
             // })
         },
         methods:{
-            getPhoto(item1,item2,item3,item4){
+
+            getPhoto(item3,item4){
                 let that =this;
                 // let dataStr=item4;//原始字符串
 
@@ -171,7 +196,7 @@
                 // });
                 // // console.log(this.value7);
 
-                console.log(dataStrArr);
+                // console.log(dataStrArr);
                 for(let i=0;i<item4.length;i++)
                 {
                     if(dataStrArr[i]==="横")
@@ -187,7 +212,27 @@
                         dataIntArr[i]=0;
                     }
                 }
-                console.log(dataIntArr);
+                let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
+                let dataIntArr1=[];//保存转换后的整型字符串
+                // dataStrArr.forEach(function(data,index,arr){
+                //     dataIntArr.push(+data);
+                // });
+                // // console.log(this.value7);
+
+                // console.log(dataStrArr);
+                for(let i=0;i<this.checkList2.length;i++)
+                {
+                    if(dataStrArr1[i]==="人工")
+                    {
+                        dataIntArr1[i]=0;
+                    }
+                    if(dataStrArr1[i]==="机器")
+                    {
+                        dataIntArr1[i]=1;
+                    }
+
+                }
+                // console.log(dataIntArr);
                 // if(dataIntArr==="1")
                 // {
                 //     console.log("good");
@@ -195,15 +240,19 @@
                 // console.log();
                 let photoClass=[];
                 this.getDeviceid();
+                this.getModelid();
+                // console.log(item1);
                 let url='http://106.12.123.92:8081/api/v1/pictures/search/do-user';
                 that.axios(url,{
                     params:{
                         pageNum: 1,
                         pageSize: 10,
                         types:dataIntArr.toString(),
-                        startTime:item1.toDate,
-                        endTime:item2.toDate,
-                        deviceId:item3
+                        startTime:this.value7[0],
+                        endTime:this.value7[1],
+                        deviceId:item3,
+                        modelId:this.value10,
+                        identifyType:dataIntArr1.toString()
                     }
                 }).then(function (response) {
 
@@ -244,12 +293,61 @@
 
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
+                let dataStrArr=this.checkList.toString().split(",");//分割成字符串数组
+                let dataIntArr=[];//保存转换后的整型字符串
+                // dataStrArr.forEach(function(data,index,arr){
+                //     dataIntArr.push(+data);
+                // });
+                // // console.log(this.value7);
+
+                // console.log(dataStrArr);
+                for(let i=0;i<this.checkList.length;i++)
+                {
+                    if(dataStrArr[i]==="横")
+                    {
+                        dataIntArr[i]=1;
+                    }
+                    if(dataStrArr[i]==="纵")
+                    {
+                        dataIntArr[i]=2;
+                    }
+                    if(dataStrArr[i]==="无")
+                    {
+                        dataIntArr[i]=0;
+                    }
+                }
+                let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
+                let dataIntArr1=[];//保存转换后的整型字符串
+                // dataStrArr.forEach(function(data,index,arr){
+                //     dataIntArr.push(+data);
+                // });
+                // // console.log(this.value7);
+
+                // console.log(dataStrArr);
+                for(let i=0;i<this.checkList2.length;i++)
+                {
+                    if(dataStrArr1[i]==="人工")
+                    {
+                        dataIntArr1[i]=0;
+                    }
+                    if(dataStrArr1[i]==="机器")
+                    {
+                        dataIntArr1[i]=1;
+                    }
+
+                }
                 let that =this;
-                let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
+                let url='http://106.12.123.92:8081/api/v1/pictures/search/do-user';
                 that.axios(url,{
                     params:{
                         pageNum: currentPage,
                         pageSize: 10,
+                        types:dataIntArr.toString(),
+                        startTime:this.value7[0],
+                        endTime:this.value7[1],
+                        deviceId:this.value9,
+                        modelId:this.value10,
+                        identifyType:dataIntArr1.toString()
                         // createTime:item1,
                     }
                 }).then(function (response) {
@@ -296,6 +394,28 @@
                 });
 
             },
+            getModelid:function() {
+                // let api = this.$api.userApi.getMachines;
+                let url='http://106.12.123.92:8081//api/v1/models';
+                let that=this;
+                let size=that.pageSize*that.currentPage;
+                this.axios(url, {
+                    params: {
+                        pageNum: that.currentPage,
+                        pageSize: 100,
+                    }
+                }).then(function (res) {
+                    // console.log(res);
+                    let data = res.data;
+                    // console.log(data);
+                    if(res.data.code===0){
+                        that.modelTable=data.data.list;
+
+                        console.log(that.modelTable);
+                    }
+                });
+
+            },
 
             //获取图片路径
             getscr1(item){
@@ -324,8 +444,10 @@
                 deviceTable:[],
                 total:0,
                 value9: '',
+                value10:'',
                 currentPage4:1,
                 dialogVisible:false,//判断是否有查询结果
+                modelTable:[],
 
                 photoTable:[],
                 currentPage:1,
@@ -370,8 +492,9 @@
                     }]
 
                 },
-                value7: [new Date(),new Date()],
+                value7: [],
                 checkList:[],
+                checkList2:[],
                 // options: [{
                 //     value: '选项1',
                 //     label: '黄金糕'
