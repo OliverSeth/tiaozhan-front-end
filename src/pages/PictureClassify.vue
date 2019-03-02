@@ -1,6 +1,6 @@
 <template>
-    <div style="width: 80%;height:100%;position: absolute"  :data="photoTable">
-        <div style="width: 20%;height:20%;float: left" >
+    <div style="width: 80%;height:75%;position: absolute"  :data="photoTable">
+        <div style="width: 10%;height:20%;float: left" >
             <p class="optionmenu" ><el-tag>检测设备</el-tag></p>
             <el-select v-model=" value9" clearable placeholder="请选择">
                 <el-option
@@ -32,7 +32,7 @@
 
 
         </div>
-        <div style="width: 20%;height:20%;float: left" >
+        <div style="width: 15%;height:20%;float: left" >
             <p class="optionmenu" ><el-tag>检测模型</el-tag></p>
             <el-select v-model=" value10" clearable placeholder="请选择">
                 <el-option
@@ -63,7 +63,7 @@
             </el-checkbox-group>
         </div>
 
-        <div style="width: 20%;height:20%;float: left;">
+        <div style="width: 10%;height:20%;float: left;">
             <el-row>
 
                 <el-button type="primary" @click="getPhoto(value9,checkList)">进行筛选</el-button>
