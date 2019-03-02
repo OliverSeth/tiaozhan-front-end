@@ -16,7 +16,7 @@ Vue.use(Router);
 let router = new Router({
     mode: 'history',
     // base: process.env.BASE_URL,
-    base:'/tiaozhan-front-end/',
+    //base:'/tiaozhan-front-end/',
     routes: [
         {
             path: '/',

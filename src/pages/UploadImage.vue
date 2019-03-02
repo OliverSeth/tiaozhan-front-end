@@ -48,6 +48,8 @@
     </div>
 </template>
 <script>
+    import  cookies from "vue-cookies";
+
     export default {
         name: "uploadImage",
         data(){
@@ -187,6 +189,7 @@
                 // console.log(fileName);
                 // sessionStorage.setItem("name",fileName);
                 xhr.open("post",'http://106.12.123.92:8081/api/v1/pictures/upload/do-admin',true);
+                xhr.setRequestHeader('token',cookies.get('token'));
                 console.log(fd.get("pictures"));
                 xhr.send(fd);
                 xhr.onload = function () {

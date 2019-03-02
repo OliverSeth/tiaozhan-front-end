@@ -90,6 +90,7 @@
 
 <script>
     import utils from '../utils/index'
+    import cookies from 'vue-cookies'
     export default {
 
         name: "ClothExamine",
@@ -176,6 +177,7 @@
                 let xhr=new XMLHttpRequest();
                 let that=this;
                 xhr.open("post",'http://106.12.123.92:8081/api/v1/pictures/upload/xml/do-admin',true);
+                xhr.setRequestHeader('token',cookies.get('token'));
                 xhr.send(fd);
                 xhr.onload = function () {
                     if (xhr.readyState === xhr.DONE) {
