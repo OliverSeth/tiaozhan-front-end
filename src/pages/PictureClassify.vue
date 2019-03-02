@@ -70,7 +70,7 @@
 
             </el-row>
         </div>
-        <div style="width: 100%;height:65%;float: left;">
+        <div style="width: 100%;height:85%;float: left;">
             <el-row >
                 <el-dialog
                         title="提示"
