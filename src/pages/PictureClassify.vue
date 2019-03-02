@@ -23,8 +23,8 @@
                         range-separator="至"
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
-                        value-format="new date()"
                         :picker-options="pickerOptions2">
+
                 </el-date-picker>
             </div>
         </div>
@@ -35,10 +35,9 @@
                 <!--<el-checkbox label="纵疵" v-model="checked2"></el-checkbox>-->
                 <!--<el-checkbox label="横纵疵" v-model="checked3"></el-checkbox>-->
                 <!--<el-checkbox label="无" v-model="checked0"></el-checkbox>-->
-                <el-checkbox label="1" ></el-checkbox>
-                <el-checkbox label="2"></el-checkbox>
-                <el-checkbox label="3"></el-checkbox>
-                <el-checkbox label="4"></el-checkbox>
+                <el-checkbox label="横"></el-checkbox>
+                <el-checkbox label="纵"></el-checkbox>
+                <el-checkbox label="无"></el-checkbox>
             </el-checkbox-group>
         </div>
         <div style="width: 20%;height:20%;float: left;">
@@ -158,19 +157,42 @@
                 let that =this;
                 // let dataStr=item4;//原始字符串
 
-                // let arryy = new Array();
 
+
+                // let arryy = [];
                 // item4 = item4.replace(/"([^"]*)"/g, "'$1'");
                 // let array = eval('(' + item4 + ')');//封装成数
                 // console.log(array);
                 // arryy=item4;
-                // let dataStrArr=item4.toString().split(",");//分割成字符串数组
-                // let dataIntArr=[];//保存转换后的整型字符串
+                let dataStrArr=item4.toString().split(",");//分割成字符串数组
+                let dataIntArr=[];//保存转换后的整型字符串
                 // dataStrArr.forEach(function(data,index,arr){
                 //     dataIntArr.push(+data);
                 // });
-                // console.log(this.value7);
-                console.log();
+                // // console.log(this.value7);
+
+                console.log(dataStrArr);
+                for(let i=0;i<item4.length;i++)
+                {
+                    if(dataStrArr[i]==="横")
+                    {
+                        dataIntArr[i]=1;
+                    }
+                    if(dataStrArr[i]==="纵")
+                    {
+                        dataIntArr[i]=2;
+                    }
+                    if(dataStrArr[i]==="无")
+                    {
+                        dataIntArr[i]=0;
+                    }
+                }
+                console.log(dataIntArr);
+                // if(dataIntArr==="1")
+                // {
+                //     console.log("good");
+                // }
+                // console.log();
                 let photoClass=[];
                 this.getDeviceid();
                 let url='http://106.12.123.92:8081/api/v1/pictures/search/do-user';
@@ -178,7 +200,7 @@
                     params:{
                         pageNum: 1,
                         pageSize: 10,
-                        types:item4.toString(),
+                        types:dataIntArr.toString(),
                         startTime:item1.toDate,
                         endTime:item2.toDate,
                         deviceId:item3
@@ -346,6 +368,7 @@
                             picker.$emit('pick', [start, end]);
                         }
                     }]
+
                 },
                 value7: [new Date(),new Date()],
                 checkList:[],
