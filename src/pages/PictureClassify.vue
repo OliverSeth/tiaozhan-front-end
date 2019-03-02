@@ -66,7 +66,7 @@
         <div style="width: 10%;height:20%;float: left;">
             <el-row>
 
-                <el-button type="primary" @click="getPhoto(value9,checkList)">进行筛选</el-button>
+                <el-button type="primary" @click="getPhoto()">进行筛选</el-button>
 
             </el-row>
         </div>
@@ -178,7 +178,7 @@
         },
         methods:{
 
-            getPhoto(item3,item4){
+            getPhoto(){
                 let that =this;
                 // let dataStr=item4;//原始字符串
 
@@ -189,7 +189,7 @@
                 // let array = eval('(' + item4 + ')');//封装成数
                 // console.log(array);
                 // arryy=item4;
-                let dataStrArr=item4.toString().split(",");//分割成字符串数组
+                let dataStrArr=this.value9.toString().split(",");//分割成字符串数组
                 let dataIntArr=[];//保存转换后的整型字符串
                 // dataStrArr.forEach(function(data,index,arr){
                 //     dataIntArr.push(+data);
@@ -197,7 +197,7 @@
                 // // console.log(this.value7);
 
                 // console.log(dataStrArr);
-                for(let i=0;i<item4.length;i++)
+                for(let i=0;i<this.checkList.length;i++)
                 {
                     if(dataStrArr[i]==="横")
                     {
@@ -248,9 +248,9 @@
                         pageNum: 1,
                         pageSize: 10,
                         types:dataIntArr.toString(),
-                        startTime:this.value7[0],
-                        endTime:this.value7[1],
-                        deviceId:item3,
+                        startTime:this.value7 ? this.value7[0] : null,
+                        endTime:this.value7 ? this.value7[1] : null,
+                        deviceId:this.value9,
                         modelId:this.value10,
                         identifyType:dataIntArr1.toString()
                     }
@@ -343,8 +343,8 @@
                         pageNum: currentPage,
                         pageSize: 10,
                         types:dataIntArr.toString(),
-                        startTime:this.value7[0],
-                        endTime:this.value7[1],
+                        startTime:this.value7 ? this.value7[0] : null,
+                        endTime:this.value7 ? this.value7[1] : null,
                         deviceId:this.value9,
                         modelId:this.value10,
                         identifyType:dataIntArr1.toString()
@@ -492,7 +492,7 @@
                     }]
 
                 },
-                value7: [],
+                value7: ["",""],
                 checkList:[],
                 checkList2:[],
                 // options: [{
