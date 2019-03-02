@@ -26,7 +26,8 @@
                 <el-form-item>
                     <el-upload
                             class="upload-demo"
-                            action="http://106.12.123.92:8081/api/v1/pictures/upload/xml/do-admin"
+                            action="#"
+                            http-request=""
                             :on-preview="handlePreview"
                             :on-remove="handleRemove"
                             :before-upload="handleBefore"
@@ -54,6 +55,12 @@
 
     export default {
         name: "uploadImage",
+        mounted(){
+            let arr=[];
+            // console.log(1);
+            console.log(arr.toString());
+            // console.log(1);
+        },
         data() {
             return {
                 formVisible: false,
@@ -106,9 +113,10 @@
             beforeAvatarUpload(file, fileList) {
                 const isJPG = file.type === 'image/jpeg';
                 const isLt5M = file.size / 1024 / 1024 < 5;
-                // this.file=file;
-                this.fileList2.push(file);
-                console.log(this.fileList2);
+                this.file=file;
+                // console.log(this.file);
+                // this.fileList2.push(file);
+                // console.log(this.fileList2);
                 // let arr=fileName.split();
                 // this.file=file;
 
@@ -126,57 +134,73 @@
             },
             uploadXML() {
                 let fd=new FormData();
+                // let that=this;
                 // console.log(this.row.picId);
-                let api={
-                    url:'http://106.12.123.92:8081/api/v1/pictures/'+this.id+'/do-admin',
-                    method:'put'
-                };
-                fd.append("xmlFile", this.file);
+                // let api={
+                //     url:'http://106.12.123.92:8081/api/v1/pictures/'+this.id+'/do-admin',
+                //     method:'put'
+                // };
+                fd.append("xmlFile", this.file2);
                 let xhr=new XMLHttpRequest();
                 let that=this;
-                xhr.open("post",'http://106.12.123.92:8081/api/v1/pictures/upload/xml/do-admin',true);
+                xhr.open("put",'http://106.12.123.92:8081/api/v1/pictures/upload/xml/'+this.id+'/do-admin',true);
                 xhr.setRequestHeader('token',cookies.get('token'));
                 xhr.send(fd);
                 xhr.onload = function () {
                     if (xhr.readyState === xhr.DONE) {
                         if (xhr.status === 200) {
                             // console.log(xhr.responseText);
-                            let xml;
+                            // let xml;
                             let arr=xhr.responseText.split('"');
                             let flag=false;
                             for(let i=0;i<arr.length;i++){
                                 if(arr[i]==="成功") flag=true;
                             }
                             if(flag){
-                                for(let i=0;i<arr.length;i++){
-                                    if(arr[i]==="url"&&arr[i+1]===":"){
-                                        xml=arr[i+2];
-                                        break;
-                                    }
-                                }
+                                that.$notify({
+                                    title: '成功',
+                                    message: '上传xml文件成功',
+                                    type: 'success'
+                                });
                             }
+                            else{
+                                that.$notify.error({
+                                    title: '失败',
+                                    message: '上传失败'
+                                });
+                            }
+                            that.formVisible=false;
+                            that.$refs.upload.clearFiles();
+                            // if(flag){
+                            //     for(let i=0;i<arr.length;i++){
+                            //         if(arr[i]==="url"&&arr[i+1]===":"){
+                            //             xml=arr[i+2];
+                            //             break;
+                            //         }
+                            //     }
+                            // }
                             // console.log(xml);
-                            api.data={
-                                xml:xml,
-                            };
-                            that.axios(api).then(function (response) {
-                                if(response.data.code===0){
-                                    that.$notify({
-                                        title: '成功',
-                                        message: '上传xml文件成功',
-                                        type: 'success'
-                                    });
-                                }
-                                else{
-                                    that.$notify.error({
-                                        title: '失败',
-                                        message: '上传失败'
-                                    });
-                                }
-                                that.formVisible=false;
-                                that.$refs.upload.clearFiles();
-                                // console.log(response);
-                            })
+                            // api.data={
+                            //     xml:xml,
+                            // };
+                                // that.axios(api).then(function (response) {
+                                //     if(response.data.code===0){
+                                //         that.$notify({
+                                //             title: '成功',
+                                //             message: '上传xml文件成功',
+                                //             type: 'success'
+                                //         });
+                                //     }
+                                //     else{
+                                //         that.$notify.error({
+                                //             title: '失败',
+                                //             message: '上传失败'
+                                //         });
+                                //     }
+                                //     that.formVisible=false;
+                                //     that.$refs.upload.clearFiles();
+                                //     // console.log(response);
+                                // })
                         }
                     }
                 }
@@ -184,11 +208,11 @@
             uploadPhoto() {
                 let fd = new FormData();
                 let that = this;
-                for (let i = 0; i < this.fileList2.length; i++) {
-                    fd.append("pictures", this.fileList2[i]);
-                }
-                // fd.append("pictures", this.fileList2);
-                console.log(this.fileList2);
+                // for (let i = 0; i < this.fileList2.length; i++) {
+                //     fd.append("pictures", this.fileList2[i]);
+                // }
+                fd.append("picture", this.file);
+                // console.log(this.file);
                 // let url='http://106.12.123.92:8081/api/v1/pictures/upload/do-admin';
                 // let config = {
                 //     headers: {
@@ -211,12 +235,12 @@
                 // sessionStorage.setItem("name",fileName);
                 xhr.open("post", 'http://106.12.123.92:8081/api/v1/pictures/upload/do-admin', true);
                 xhr.setRequestHeader('token', cookies.get('token'));
-                console.log(fd.get("pictures"));
+                // console.log(fd.get("picture"));
                 xhr.send(fd);
                 xhr.onload = function () {
                     if (xhr.readyState === xhr.DONE) {
                         if (xhr.status === 200) {
-                            console.log(xhr.responseText);
+                            // console.log(xhr.responseText);
 
                             // let url;
                             let arr = xhr.responseText.split('"');
@@ -227,8 +251,8 @@
                                 }
                                 if(arr[i]==='data'){
                                     // console.log(arr[i+1].substring(2,arr[i+1].length-2));
-                                    that.id=parseInt(arr[i+1].substring(2,arr[i+1].length-2));
-                                    // console.log(that.id);
+                                    that.id=parseInt(arr[i+1].substring(1,arr[i+1].length-1));
+                                    console.log(that.id);
                                 }
                             }
                             if (flag) {
