@@ -269,7 +269,7 @@
                     image.src = "http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN";
                     // 解决跨域 Canvas 污染问题
 
-                    image.setAttribute('crossOrigin', 'anonymous');//如在img标签加了该属性后，图片在其他网站则无法显示
+                    // image.setAttribute('crossOrigin', 'anonymous');//如在img标签加了该属性后，图片在其他网站则无法显示
                     // console.log("123");
                     image.onload = function () {
 
@@ -397,7 +397,7 @@
                     }
                 }).then(function (response) {
 
-                    // console.log("ok");
+                    console.log(response);
 
                     let data=response.data;
 
@@ -563,7 +563,7 @@
             getscr1(item){
                 // document.images.imgInit.src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
                 // return ('http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/ef941f06-7d1f-43ab-b6a0-28275be153e7-153314543.jpg?op=OPEN');
-                return ('v'+item);
+                return ('http://148.70.63.35:50070'+item);
             },
             // getflage(item){
             //
