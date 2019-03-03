@@ -19,6 +19,20 @@
                         <i class="el-icon-document"></i>
                         <span slot="title">分类</span>
                     </el-menu-item>
+                    <el-submenu>
+                        <template slot="title">
+                            <i class="el-icon-upload"></i>
+                            <span>上传</span>
+                        </template>
+                        <el-menu-item index="upload-image">
+                            <i class="el-icon-upload2"></i>
+                            <span>上传图片</span>
+                        </el-menu-item>
+                        <el-menu-item index="upload-py">
+                            <i class="el-icon-upload2"></i>
+                            <span>上传算法</span>
+                        </el-menu-item>
+                    </el-submenu>
                     <!--<el-menu-item index="user-manage">-->
                         <!--<i class="el-icon-setting"></i>-->
                         <!--<span slot="title">用户管理</span>-->
@@ -33,7 +47,7 @@
                     <el-submenu index="1">
                         <template slot="title">
                             <img src="../assets/logo.png" class="headpic" alt=""/>
-                            超级管理员 李鱼皮
+                            {{userName}}
                         </template>
                         <el-menu-item index="1-1">个人</el-menu-item>
                         <el-menu-item index="1-2" @click="logout">注销</el-menu-item>
@@ -53,8 +67,12 @@
         data() {
             return {
                 activeIndex: '1',
-                title: '仪表盘'
+                title: '仪表盘',
+                userName:''
             }
+        },
+        mounted(){
+            this.userName=sessionStorage.getItem("userName");
         },
         methods: {
             logout() {

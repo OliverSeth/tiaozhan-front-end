@@ -50,14 +50,16 @@
                             message: '注册成功',
                             type: 'success'
                         });
-                        location.reload();
-                        this.loginForm=account;
+                        // location.reload();
+                        this.loginForm.passwd='';
                     }
                     else{
                         this.$message({
                             message: '用户已经存在',
                             type: 'error'
                         });
+                        this.loginForm.account='';
+                        this.loginForm.passwd=''
                     }
                 })
             },
@@ -79,6 +81,7 @@
                             message: '登录成功',
                             type: 'success'
                         });
+                        sessionStorage.setItem("userName",this.loginForm.account);
                         this.$router.push('/photo-gallery');
                     }
                     else{

@@ -6,10 +6,11 @@ import UserManage from './pages/UserManage'
 import PhotoGallery from './pages/PhotoGallery'
 import ExamineReport from './pages/ExamineReport'
 import Dashboard from './pages/Dashboard'
-import  DeviceControl from './pages/DeviceControl'
-import  DefectDistribution from './pages/DefectDistribution'
+import DeviceControl from './pages/DeviceControl'
+import DefectDistribution from './pages/DefectDistribution'
 import PictureClassify from './pages/PictureClassify'
 import UploadImage from './pages/UploadImage'
+import UploadPy from './pages/UploadPy'
 
 Vue.use(Router);
 
@@ -24,7 +25,7 @@ let router = new Router({
             meta: {
                 title: '控制台'
             },
-            redirect:'/login',
+            redirect: '/login',
             children: [
                 // {
                 //     path: '/dashboard',
@@ -59,18 +60,21 @@ let router = new Router({
                     meta: {
                         title: '布料检测'
                     }
-                },{
-                    path:'/device-control',
-                    component:DeviceControl,
+                }, {
+                    path: '/device-control',
+                    component: DeviceControl,
                     // meta{
                     //
                     // }
-                },{
-                    path:'/defect-distribution',
-                    component:DefectDistribution,
-                },{
-                    path:'/upload-image',
-                    component:UploadImage,
+                }, {
+                    path: '/defect-distribution',
+                    component: DefectDistribution,
+                }, {
+                    path: '/upload-image',
+                    component: UploadImage,
+                }, {
+                    path: '/upload-py',
+                    component: UploadPy
                 }
             ]
         }, {
@@ -82,9 +86,9 @@ let router = new Router({
 
 // 切换页面title
 router.beforeEach((to, from, next) => {
-   if (to.meta.title) {
-       document.title = to.meta.title;
-   }
-   next();
+    if (to.meta.title) {
+        document.title = to.meta.title;
+    }
+    next();
 });
 export default router;

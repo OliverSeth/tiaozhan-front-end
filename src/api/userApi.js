@@ -10,7 +10,7 @@ export default {
         method:'post'
     },
     logout:{
-        url:BASE_URL+'/users/do-user',
+        url:BASE_URL+'/users/logout/do-user',
         method:'put'
     },
     addMachine:{
