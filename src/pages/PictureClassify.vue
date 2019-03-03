@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 80%;height:75%;position: absolute"  :data="photoTable">
+    <div style="width: 80%;height:60%;position: absolute"  :data="photoTable" >
         <div style="width: 10%;height:20%;float: left" >
             <p class="optionmenu" ><el-tag>检测设备</el-tag></p>
             <el-select v-model=" value9" clearable placeholder="请选择">
@@ -63,10 +63,17 @@
             </el-checkbox-group>
         </div>
 
-        <div style="width: 10%;height:20%;float: left;">
+        <div style="width: 30%;height:20%;float: left;" >
             <el-row>
+                <el-badge :value="total" :max="99" class="item">
+                    <el-button type="primary" @click="getPhoto()">进行筛选</el-button>
+                </el-badge>
+                <el-badge :value="total" :max="99" class="item">
+                    <el-button type="primary" @click="getAllphoto()">下载全部图片</el-button>
+                </el-badge>
 
-                <el-button type="primary" @click="getPhoto()">进行筛选</el-button>
+
+
 
             </el-row>
         </div>
@@ -177,8 +184,80 @@
             // })
         },
         methods:{
+            getAllphoto(){
+                let that=this;
+                let dataStrArr=this.toString().split(",");
+                let dataIntArr=[];
+                for(let i=0;i<this.checkList.length;i++)
+                {
+                    if(dataStrArr[i]==="横")
+                    {
+                        dataIntArr[i]=1;
+                    }
+                    if(dataStrArr[i]==="纵")
+                    {
+                        dataIntArr[i]=2;
+                    }
+                    if(dataStrArr[i]==="无")
+                    {
+                        dataIntArr[i]=0;
+                    }
+                }
+                let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
+                let dataIntArr1=[];//保存转换后的整型字符串
+                for(let i=0;i<this.checkList2.length;i++) {
+                    if (dataStrArr1[i] === "人工") {
+                        dataIntArr1[i] = 0;
+                    }
+                    if (dataStrArr1[i] === "机器") {
+                        dataIntArr1[i] = 1;
+                    }
+                }
+                let photoClass=[];
+                this.getDeviceid();
+                this.getModelid();
+                let url='http://106.12.123.92:8081/api/v1/pictures/search/do-user';
+                that.axios(url,{
+                    params:{
+                        pageSize:10000,
+
+                        types:dataIntArr.toString(),
+                        startTime:this.value7 ? this.value7[0] : null,
+                        endTime:this.value7 ? this.value7[1] : null,
+                        deviceId:this.value9,
+                        modelId:this.value10,
+                        identifyType:dataIntArr1.toString()
+                    }
+                }).then(function (response) {
+                    let data=response.data;
+                    // console.log("response");
+                    // console.log(response);
+                    if(data.code===0){
+                        that.dialogFormVisible=false;
+                        // if(data.)
+                        that.allPhototable=data.data.list;
+                        // console.log(data.data.list);
+                        console.log(that.allPhototable);
+                        console.log(that.allPhototable.length);
+
+                        // that.total=data.data.total;
+                        // console.log(response.data);
+                        // console.log(response);
+                        // for(let i=0;i<that.allPhototable.length;i++){
+                        // }
+                    }
+                    else{
+                        console.log("无查询结果");
+                        that.allPhototable=[];
+                        that.dialogVisible=true;
+                    }
+                });
+
+            },
 
             getPhoto(){
+                // this. getAllphoto();
+
                 let that =this;
                 // let dataStr=item4;//原始字符串
 
@@ -279,6 +358,7 @@
                     }
 
                 })
+
             },
             handleSizeChange: function (size) {
                 this.pagesize = size;
@@ -411,7 +491,7 @@
                     if(res.data.code===0){
                         that.modelTable=data.data.list;
 
-                        console.log(that.modelTable);
+                        // console.log(that.modelTable);
                     }
                 });
 
@@ -448,6 +528,7 @@
                 currentPage4:1,
                 dialogVisible:false,//判断是否有查询结果
                 modelTable:[],
+                allPhototable:[],
 
                 photoTable:[],
                 currentPage:1,
@@ -520,6 +601,10 @@
 <style scoped>
     .optionmenu{
         color:green;
+    }
+    .item {
+        margin-top: 10px;
+        margin-right: 40px;
     }
 
 </style>
