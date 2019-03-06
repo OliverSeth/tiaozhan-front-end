@@ -30,6 +30,7 @@
 
                     <el-table-column
                             prop="type"
+                            model="123123"
                             label="疵点种类"
                             width="180">
                     </el-table-column>
@@ -112,44 +113,76 @@
                         pageSize: 4
                     }
                 }).then(function (response) {
+                    // console.log(response.data);
+                    // console.log(response.data.list.Type);
 
                     let data=response.data;
                     // console.log(data);
 
                     if(data.code===0){
                         that.photoTable=data.data.list;
+                        // console.log(that.photoTable[1].type);
+
+
                         that.total=data.data.total;
-                        console.log(response);
+                        // console.log(response);
                         for(let i=0;i<that.photoTable.length;i++){
                             if(that.photoTable[i].updateTime===null){
                                 that.photoTable[i].updateTime=that.photoTable[i].createTime;
                             }
+                            // console.log(data.data.list.type);
+                            if(that.photoTable[i].type===0)
+                            {
+                                // console.log("12333333333333333");
+                                that.photoTable[i].type="无";
 
 
-                            switch (that.photoTable[i].Type) {
-                                case 0:{
-                                    that.photoTable[i].Type="无";
-                                    break;
-                                }
-                                case 1:{
-                                    that.photoTable[i].Type="横疵";
-                                    break;
-                                }
-                                case 2:{
-                                    that.photoTable[i].Type="纵疵";
-                                    break;
-                                }
-                                case 3:{
-                                    that.photoTable[i].Type="横纵疵";
-                                    break;
-                                }
-                                case -1:{
-                                    that.photoTable[i].Type="未检测";
-                                    break;
-                                }
-                                default:that.photoTable[i].Type="错误";
                             }
-                            console.log(that.photoTable[i].createTime);
+                            if(that.photoTable[i].type===1)
+                            {
+                                // console.log("12333333333333333");
+                                that.photoTable[i].type="横";
+
+
+                            }
+                            if(that.photoTable[i].type===2)
+                            {
+                                // console.log("12333333333333333");
+                                that.photoTable[i].type="纵";
+
+
+                            }
+                            if(that.photoTable[i].type===-1)
+                            {
+                                // console.log("12333333333333333");
+                                that.photoTable[i].type="未检测";
+
+
+                            }
+                            // switch (that.photoTable[i].type) {
+                            //     case "0":{
+                            //         that.photoTable[i].type="无";
+                            //         break;
+                            //     }
+                            //     case 1:{
+                            //         that.photoTable[i].type="横疵";
+                            //         break;
+                            //     }
+                            //     case 2:{
+                            //         that.photoTable[i].type="纵疵";
+                            //         break;
+                            //     }
+                            //     case 3:{
+                            //         that.photoTable[i].type="横纵疵";
+                            //         break;
+                            //     }
+                            //     case -1:{
+                            //         that.photoTable[i].type="未检测";
+                            //         break;
+                            //     }
+                            //     default:that.photoTable[i].type="错误";
+                            // }
+                            // console.log(that.photoTable[i].type);
 
 
 
@@ -284,29 +317,57 @@
                             if(that.photoTable[i].updateTime===null){
                                 that.photoTable[i].updateTime=that.photoTable[i].createTime;
                             }
+                            if(that.photoTable[i].type===0)
+                            {
+                                // console.log("12333333333333333");
+                                that.photoTable[i].type="无";
 
 
-                            switch (that.photoTable[i].Type) {
-                                case 0:{
-                                    that.photoTable[i].Type="无";
-                                    break;
-                                }
-                                case 1:{
-                                    that.photoTable[i].Type="横疵";
-                                    break;
-                                }
-                                case 2:{
-                                    that.photoTable[i].Type="纵疵";
-                                    break;
-                                }
-
-                                case -1:{
-                                    that.photoTable[i].Type="未检测";
-                                    break;
-                                }
-                                default:that.photoTable[i].Type="错误";
                             }
-                            console.log(that.photoTable[i].Type);
+                            if(that.photoTable[i].type===1)
+                            {
+                                // console.log("12333333333333333");
+                                that.photoTable[i].type="横";
+
+
+                            }
+                            if(that.photoTable[i].type===2)
+                            {
+                                // console.log("12333333333333333");
+                                that.photoTable[i].type="纵";
+
+
+                            }
+                            if(that.photoTable[i].type===-1)
+                            {
+                                // console.log("12333333333333333");
+                                that.photoTable[i].type="未检测";
+
+
+                            }
+
+
+                            // switch (that.photoTable[i].Type) {
+                            //     case 0:{
+                            //         that.photoTable[i].Type="无";
+                            //         break;
+                            //     }
+                            //     case 1:{
+                            //         that.photoTable[i].Type="横疵";
+                            //         break;
+                            //     }
+                            //     case 2:{
+                            //         that.photoTable[i].Type="纵疵";
+                            //         break;
+                            //     }
+                            //
+                            //     case -1:{
+                            //         that.photoTable[i].Type="未检测";
+                            //         break;
+                            //     }
+                            //     default:that.photoTable[i].Type="错误";
+                            // }
+                            // console.log(that.photoTable[i].Type);
 
                             // that.photoTable[i].picId="/../assets/1.jpg";
                             // that.photoTable[i].href='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
