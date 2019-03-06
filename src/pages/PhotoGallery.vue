@@ -29,7 +29,7 @@
 
 
                     <el-table-column
-                            prop="defectType"
+                            prop="type"
                             label="疵点种类"
                             width="180">
                     </el-table-column>
@@ -95,72 +95,82 @@
 
         name: "ClothExamine",
         mounted(){
-            // let api=this.$api.userApi.getPhotos;
-            let that =this;
+            this.showPage();
 
-            let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
-            // let photoTable = new Array();
-            that.axios(url,{
-                params:{
-                    pageNum: 1,
-                    pageSize: 4
-                }
-            }).then(function (response) {
-
-                let data=response.data;
-                // console.log(data);
-
-                if(data.code===0){
-                    that.photoTable=data.data.list;
-                    that.total=data.data.total;
-                    for(let i=0;i<that.photoTable.length;i++){
-                        if(that.photoTable[i].updateTime===null){
-                            that.photoTable[i].updateTime=that.photoTable[i].createTime;
-                        }
-
-
-                        switch (that.photoTable[i].defectType) {
-                            case 0:{
-                                that.photoTable[i].defectType="无";
-                                break;
-                            }
-                            case 1:{
-                                that.photoTable[i].defectType="横疵";
-                                break;
-                            }
-                            case 2:{
-                                that.photoTable[i].defectType="纵疵";
-                                break;
-                            }
-                            case 3:{
-                                that.photoTable[i].defectType="横纵疵";
-                                break;
-                            }
-                            case -1:{
-                                that.photoTable[i].defectType="未检测";
-                                break;
-                            }
-                            default:that.photoTable[i].defectType="错误";
-                        }
-                        // console.log(that.photoTable[i].createTime);
-
-                        // that.photoTable[i].picId="/../assets/1.jpg";
-                        // that.photoTable[i].href='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
-                        // console.log("that.photoTable[i].href=");
-                        //
-                        // console.log(that.photoTable[i].href);
-                        // console.log("i=");
-                        //
-                        // console.log(i);
-                        // console.log(that.photoTable[i]);12
-
-                        that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
-                        that.photoTable[i].updateTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].updateTime);
-                    }
-                }
-            })
         },
         methods: {
+            showPage()
+            {
+                // let api=this.$api.userApi.getPhotos;
+                let that =this;
+
+                let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
+                // let photoTable = new Array();
+                that.axios(url,{
+                    params:{
+                        pageNum: 1,
+                        pageSize: 4
+                    }
+                }).then(function (response) {
+
+                    let data=response.data;
+                    // console.log(data);
+
+                    if(data.code===0){
+                        that.photoTable=data.data.list;
+                        that.total=data.data.total;
+                        console.log(response);
+                        for(let i=0;i<that.photoTable.length;i++){
+                            if(that.photoTable[i].updateTime===null){
+                                that.photoTable[i].updateTime=that.photoTable[i].createTime;
+                            }
+
+
+                            switch (that.photoTable[i].Type) {
+                                case 0:{
+                                    that.photoTable[i].Type="无";
+                                    break;
+                                }
+                                case 1:{
+                                    that.photoTable[i].Type="横疵";
+                                    break;
+                                }
+                                case 2:{
+                                    that.photoTable[i].Type="纵疵";
+                                    break;
+                                }
+                                case 3:{
+                                    that.photoTable[i].Type="横纵疵";
+                                    break;
+                                }
+                                case -1:{
+                                    that.photoTable[i].Type="未检测";
+                                    break;
+                                }
+                                default:that.photoTable[i].Type="错误";
+                            }
+                            console.log(that.photoTable[i].createTime);
+
+
+
+
+                            // that.photoTable[i].picId="/../assets/1.jpg";
+                            // that.photoTable[i].href='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
+                            // console.log("that.photoTable[i].href=");
+                            //
+                            // console.log(that.photoTable[i].href);
+                            // console.log("i=");
+                            //
+                            // console.log(i);
+                            // console.log(that.photoTable[i]);12
+
+                            that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
+                            that.photoTable[i].updateTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].updateTime);
+                        }
+                    }
+                })
+            },
+
             modify:function(row){
                 this.row=row;
                 this.dialogFormVisible2=true;
@@ -265,7 +275,7 @@
                 }).then(function (response) {
 
                     let data=response.data;
-                    console.log(data);
+                    // console.log(data);
 
                     if(data.code===0){
                         that.photoTable=data.data.list;
@@ -276,30 +286,27 @@
                             }
 
 
-                            switch (that.photoTable[i].defectType) {
+                            switch (that.photoTable[i].Type) {
                                 case 0:{
-                                    that.photoTable[i].defectType="无";
+                                    that.photoTable[i].Type="无";
                                     break;
                                 }
                                 case 1:{
-                                    that.photoTable[i].defectType="横疵";
+                                    that.photoTable[i].Type="横疵";
                                     break;
                                 }
                                 case 2:{
-                                    that.photoTable[i].defectType="纵疵";
+                                    that.photoTable[i].Type="纵疵";
                                     break;
                                 }
-                                case 3:{
-                                    that.photoTable[i].defectType="横纵疵";
-                                    break;
-                                }
+
                                 case -1:{
-                                    that.photoTable[i].defectType="未检测";
+                                    that.photoTable[i].Type="未检测";
                                     break;
                                 }
-                                default:that.photoTable[i].defectType="错误";
+                                default:that.photoTable[i].Type="错误";
                             }
-                            // console.log(that.photoTable[i].createTime);
+                            console.log(that.photoTable[i].Type);
 
                             // that.photoTable[i].picId="/../assets/1.jpg";
                             // that.photoTable[i].href='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
@@ -366,16 +373,18 @@
                     if(flag===true){
                         // console.log("ok");
                         that.axios(api).then(function(response){
-                            console.log(response);
+                            // console.log(response);
                             if(response.data.code===0){
                                 that.$message({
                                     type:'success',
                                     message:'删除成功'});
-                                setTimeout("window.location.reload()",500);
+                                that.showPage();
+                                // setTimeout("window.location.reload()",500);
                             }
                         })
                     }
-                })
+                });
+                // console.log("good");
 
             }
         },

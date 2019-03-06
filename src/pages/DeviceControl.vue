@@ -118,36 +118,10 @@
     export default {
         name: "DeviceControl",
         mounted() {
+            this.getPage();
             // let api = this.$api.userApi.getMachines;
 
-            let url2='http://106.12.123.92:8081/api/v1/models';
-            let that=this;
-            // let size=that.pageSize*that.currentPage;
-            let url='http://106.12.123.92:8081/api/v1/devices/do-user';
-            this.axios(url, {
-                params: {
-                    pageNum: 1,
-                    pageSize: 4,
-                }
-            }).then(function (res) {
-                // console.log(res);
-                let data = res.data;
-                // console.log(data);
-                if(res.data.code===0){
-                    that.deviceTable=data.data.list;
-                    that.total=data.data.total;
-                }
-            });
-            this.axios(url2).then(function (response) {
-                // console.log(response);
-                for(let i=0;i<response.data.data.list.length;i++){
-                    // that.options[i].value=response.data.data.list[i].name;
-                    // that.options[i].label=response.data.data.list[i].name;
-                    // that.options.push(response.data.data.list[i].name);
-                    that.options=response.data.data.list;
-                }
-                // console.log(that.options);
-            })
+
 
             // this.axios(url2,{
             //     params:{
@@ -157,6 +131,37 @@
 
         },
         methods:{
+            getPage(){
+                let url2='http://106.12.123.92:8081/api/v1/models';
+                let that=this;
+                // let size=that.pageSize*that.currentPage;
+                let url='http://106.12.123.92:8081/api/v1/devices/do-user';
+                this.axios(url, {
+                    params: {
+                        pageNum: 1,
+                        pageSize: 4,
+                    }
+                }).then(function (res) {
+                    // console.log(res);
+                    let data = res.data;
+                    // console.log(data);
+                    if(res.data.code===0){
+                        that.deviceTable=data.data.list;
+                        that.total=data.data.total;
+                    }
+                });
+                this.axios(url2).then(function (response) {
+                    // console.log(response);
+                    for(let i=0;i<response.data.data.list.length;i++){
+                        // that.options[i].value=response.data.data.list[i].name;
+                        // that.options[i].label=response.data.data.list[i].name;
+                        // that.options.push(response.data.data.list[i].name);
+                        that.options=response.data.data.list;
+                    }
+                    // console.log(that.options);
+                });
+                console.log("ok");
+            },
 
             uploadModel:function(){
                 this.dialogFormVisible=true;
@@ -267,8 +272,9 @@
             },
 
             removedDevice(row){
-                var that=this;
+                let that=this;
                 let id=row.deviceId;
+                // console.log(id);
                 let api={
                     url:'http://106.12.123.92:8081/api/v1/devices/'+id+'/do-admin',
                     method:'delete',
@@ -286,7 +292,7 @@
                     type: 'warning'
                 }).then(() => {
                     flag=true;
-                    console.log(flag);
+                    // console.log(flag);
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -297,15 +303,19 @@
                         // console.log(flag);
                         that.axios(api).then(function (response) {
                             // console.log(response);
+                            that.getPage();
                             if(response.data.code===0){
                                 that.$message({
                                     type: 'success',
                                     message: '删除成功!'});
-                                location.reload();
+
+                                // location.reload();
                             }
                         })
                     }
-                })
+                });
+                // console.log("123");
+
             },
 
             addModels(row){

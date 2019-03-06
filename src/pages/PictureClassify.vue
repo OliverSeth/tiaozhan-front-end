@@ -1,5 +1,6 @@
 <template>
     <div style="width: 80%;height:60%;position: absolute"  :data="photoTable" >
+
         <div style="width: 10%;height:20%;float: left" >
             <p class="optionmenu" ><el-tag>检测设备</el-tag></p>
             <el-select v-model=" value9" clearable placeholder="请选择">
@@ -221,6 +222,7 @@
                 this.getDeviceid();
                 this.getModelid();
                 let url='http://106.12.123.92:8081/api/v1/pictures/search/do-user';
+
                 that.axios(url,{
                     params:{
                         pageSize:10000,
@@ -257,46 +259,71 @@
                     }
                 });
 
+
+                function downloadImg(){
+                    let img = document.getElementById('girlImg'); // 获取要下载的图片
+                    let url = img.src;                            // 获取图片地址
+                    let a = document.createElement('a');          // 创建一个a节点插入的document
+                    let event = new MouseEvent('click');           // 模拟鼠标click点击事件
+                    a.download = 'beautifulGirl';                  // 设置a节点的download属性值
+                    a.href = url;                                 // 将图片的src赋值给a节点的href
+                    a.dispatchEvent(event)                        // 触发鼠标点击事件
+                }
+
+
+
+
                 let zip = new JSZip();//定义一个新的压缩文件
                 let img = zip.folder("images");
                 // console.log(img);
                 let baseList = [];
+                // let src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN';
 
-                let arr = ['http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN','http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN'];
+                let arr = ['http://bigdata1:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN','http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN'];
                 for (let i = 0; i < arr.length; i++) {
 
                     let image = new Image();
-                    image.src = "http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN";
-                    // 解决跨域 Canvas 污染问题
 
-                    // image.setAttribute('crossOrigin', 'anonymous');//如在img标签加了该属性后，图片在其他网站则无法显示
+                    image.setAttribute('crossOrigin', 'anonymous');
+
+
+                    image.onerror=function requestImg(src){
+
+
+                        let img = new Image();
+                        img.setAttribute('crossOrigin', 'anonymous');//如在img标签加了该属性后，图片在其他网站则无法显示
+                        img.src ='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN';
+                        // console.log(src);
+                        img.onerror = function(){
+                            let timeStamp = new Date();
+                            requestImg(src+'?'+timeStamp);
+                        }
+                    };
                     // console.log("123");
                     image.onload = function () {
-
-
-
-
                         let canvas = document.createElement('canvas');//canvas仅仅是个图形的容器
                         canvas.width = image.width;
                         canvas.height = image.height;
+                        console.log("good");
 
                         let context = canvas.getContext('2d');//getContext() 方法返回一个用于在画布上绘图的环境。
-                        console.log("123123");
+
                         context.drawImage(image, 0, 0, image.width, image.height);//方法在画布上绘制图像、画布或视频。
+                        // console.log("12");
                         let url = canvas.toDataURL();// 得到图片的base64编码数据 let url =
                         canvas.toDataURL('image/png');//？？？跟上面的有什么不同
                         baseList.push(url.substring(22));//截取从22索引位置开始,到结束
 
-                        if (baseList.length === arr.length) {
+                        if (baseList.length === arr.length) {//检测是否把数组里的照片都进行编码并传入了baseList数组内了
                             if (baseList.length > 0) {
-                                console.log("baseList");
+                                // console.log("baseList");
                                 this.$notify({
                                     title: '成功',
                                     message: '即将下载',
                                     type: 'success'
                                 });
                                 for (let k = 0; k < baseList.length; k++) {
-                                    img.file('photo' + k + '.png', baseList[k], {base64: true});
+                                    img.file('photo' + k + '.png', baseList[k], {base64: true});//获取图片文件
                                 }
                                 img.generateAsync({type: 'blob'}).then(function (content) {
                                     // see FileSaver.js
@@ -312,9 +339,11 @@
                             }
                         }
                     };
+                    image.src = "http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN";
                     // console.log("good3");
 
                 }
+
             },
 
             getPhoto(){
@@ -397,7 +426,7 @@
                     }
                 }).then(function (response) {
 
-                    console.log(response);
+                    // console.log(response);
 
                     let data=response.data;
 
