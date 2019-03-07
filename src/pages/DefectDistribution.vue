@@ -5,6 +5,7 @@
                 <!--训练新模型-->
             <!--</el-button>-->
         <!--</div>-->
+
         <div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"
              :style="bg1">
             <span style="position:relative;top:60%;left: 31%">疵点位置：</span>

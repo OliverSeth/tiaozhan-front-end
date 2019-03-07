@@ -113,6 +113,7 @@
                         pageSize: 4
                     }
                 }).then(function (response) {
+                    console.log(response);
                     // console.log(response.data);
                     // console.log(response.data.list.Type);
 

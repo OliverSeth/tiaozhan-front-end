@@ -242,6 +242,7 @@
                         that.dialogFormVisible=false;
                         // if(data.)
                         that.allPhototable=data.data.list;
+                        console.log(response);
                         // console.log(data.data.list);
                         // console.log(that.allPhototable);
                         // console.log(that.allPhototable.length);
@@ -435,6 +436,7 @@
                         // if(data.)
                         that.photoTable=data.data.list;
                         that.total=data.data.total;
+                        console.log(response);
                         // console.log(response.data);
                         // console.log(response);
                         for(let i=0;i<that.photoTable.length;i++){
