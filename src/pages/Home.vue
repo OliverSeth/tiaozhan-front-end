@@ -22,7 +22,7 @@
                     <el-submenu>
                         <template slot="title">
                             <i class="el-icon-upload"></i>
-                            <span>上传</span>
+                            <span>上传&下载</span>
                         </template>
                         <el-menu-item index="upload-image">
                             <i class="el-icon-upload2"></i>
@@ -31,6 +31,10 @@
                         <el-menu-item index="upload-py">
                             <i class="el-icon-upload2"></i>
                             <span>上传算法</span>
+                        </el-menu-item>
+                        <el-menu-item index="download-py">
+                            <i class="el-icon-download"></i>
+                            <span>下载算法</span>
                         </el-menu-item>
                     </el-submenu>
                     <!--<el-menu-item index="user-manage">-->

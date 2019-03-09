@@ -11,6 +11,7 @@ import DefectDistribution from './pages/DefectDistribution'
 import PictureClassify from './pages/PictureClassify'
 import UploadImage from './pages/UploadImage'
 import UploadPy from './pages/UploadPy'
+import DownloadPy from './pages/DownloadPy'
 
 Vue.use(Router);
 
@@ -75,6 +76,9 @@ let router = new Router({
                 }, {
                     path: '/upload-py',
                     component: UploadPy
+                }, {
+                    path: 'download-py',
+                    component: DownloadPy
                 }
             ]
         }, {
