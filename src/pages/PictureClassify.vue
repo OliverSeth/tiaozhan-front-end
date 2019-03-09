@@ -63,22 +63,19 @@
                 <el-checkbox label="机器"></el-checkbox>
             </el-checkbox-group>
         </div>
-
         <div style="width: 30%;height:20%;float: left;" >
             <el-row>
                 <el-badge :value="total" :max="99" class="item">
                     <el-button type="primary" @click="getPhoto()">进行筛选</el-button>
                 </el-badge>
                 <el-badge :value="total" :max="99" class="item">
-                    <el-button type="primary" @click="getAllphoto()">下载全部图片</el-button>
+                    <el-button type="primary" @click="downImage()">下载全部图片</el-button>
                 </el-badge>
-
-
-
-
             </el-row>
         </div>
         <div style="width: 100%;height:85%;float: left;">
+            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+            <div style="margin: 15px 0;"></div>
             <el-row >
                 <el-dialog
                         title="提示"
@@ -91,28 +88,29 @@
                         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
                     </span>
                 </el-dialog>
-                <template>
-                    <!-- `checked` 为 true 或 false -->
-                    <el-checkbox-group v-model="photoTable">
-                    </el-checkbox-group>
+                <el-col  v-for="photo in photoTable" :span="2"   >
 
-                </template>
-
-
-                <el-col  v-for="photo in photoTable" :span="2"  >
                     <el-card  :body-style="{ padding: '0px' }">
                         <img   :src="getscr1(photo.href)" style="width: 90px;height: 90px">
 
+                        <el-checkbox-group v-model="photoTable" @change="handleCheckedCitiesChange">
+                            <!--<el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>-->
+                            <el-checkbox :label="photoTable.name" >备选项</el-checkbox>
+                        </el-checkbox-group>
 
-                        <!--<div style="padding: 14px;">-->
-                        <!--&lt;!&ndash;<span>好吃的汉堡</span>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<div class="bottom clearfix">&ndash;&gt;-->
-                        <!--&lt;!&ndash;&lt;!&ndash;<time class="time">{{ currentDate }}</time>&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;&lt;!&ndash;<el-button type="text" class="button">操作按钮</el-button>&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                        <!--</div>-->
                     </el-card>
                 </el-col>
+                <!--<el-checkbox-group v-model="checkList" v-for="photo in photoTable" :span="2" >-->
+                    <!--<el-checkbox v-model="photoTable[i]">备选项</el-checkbox>-->
+
+
+                <!--</el-checkbox-group>-->
+                <!--<el-col  v-for="photo in photoTable" :span="2"  >-->
+                    <!--<el-checkbox-group v-model="photoTable">-->
+                        <!--<el-checkbox label=""></el-checkbox>-->
+                    <!--</el-checkbox-group>-->
+                <!--</el-col>-->
+
             </el-row>
 
 
@@ -129,31 +127,13 @@
                     :total="total">
             </el-pagination>
         </div>
-
-
-
-
-
-        <!--<div name="img_div" style="width: 10%;height: 10%; display: block; float: left;margin:0 0"-->
-             <!--:style="bg1">-->
-            <!--<el-checkbox v-model="checkedD1" style="position: relative;float: right" @change="setBorder(0)"></el-checkbox>-->
-        <!--</div>-->
-
-        <!--<div class="block" style="height: 10%;margin-top: 10%;float: left">-->
-            <!--<span class="pages"></span>-->
-            <!--<el-pagination-->
-                    <!--@size-change="handleSizeChange"-->
-                    <!--@current-change="handleCurrentChange"-->
-                    <!--:current-page="currentPage"-->
-                    <!--layout="prev, pager, next"-->
-                    <!--:total="photoTable.length"-->
-                    <!--:page-size="4">-->
-            <!--</el-pagination>-->
-        <!--</div>-->
     </div>
 </template>
 
 <script>
+
+
+    const cityOptions = ['上海', '北京', '广州', '深圳'];
 
     //main引入或者是组件内引入
     let JSZip = require('jszip');
@@ -164,31 +144,71 @@
           let that =this;
           that.getDeviceid();
           that.getModelid();
-           // let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
-            // that.axios(url,{
-            //     params:{
-            //         pageNum: that.currentPage,
-            //         pageSize: 100
-            //     }
-            // }).then(function (response) {
-            //     // console.log("ok");
-            //
-            //     let data=response.data;
-            //
-            //     if(data.code===0){
-            //         // if(data.)
-            //         that.photoTable=data.data.list;
-            //         console.log(response.data);
-            //         for(let i=0;i<that.photoTable.length;i++){
-            //
-            //
-            //
-            //         }
-            //     }
-            //
-            // })
         },
         methods:{
+    //    getBase64Image(img,width,height) {
+    //     var canvas = document.createElement("canvas");
+    //     canvas.width = width ? width : img.width;
+    //     canvas.height = height ? height : img.height;
+    //
+    //     var ctx = canvas.getContext("2d");
+    //     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    //        return canvas.toDataURL();
+    // },
+    //         getBase64(img) {
+    //
+    //             var image = new Image();
+    //             image.crossOrigin = 'Anonymous';
+    //             console.log(img);
+    //             image.src = img;
+    //             var deferred=$.Deferred();
+    //
+    //             if(img){
+    //
+    //                 image.onload =function (){
+    //
+    //                     deferred.resolve(this.getBase64Image(image));
+    //                 };
+    //                 return deferred.promise();
+    //             }
+    //
+    //
+    //         },
+
+            getBase64(img){
+                // console.log(img);
+              function getBase64Image(img,width,height){
+                  let canvas=document.createElement("canvas");
+                  canvas.width = width ? width : img.width;
+                  canvas.height = height ? height : img.height;
+                  let ctx = canvas.getContext("2d");
+                  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                  return canvas.toDataURL();
+              }
+                let image = new Image();
+                image.crossOrigin = 'Anonymous';
+                image.src = img;
+                let deferred=$.Deferred();
+                if(img){
+                    // console.log("img");
+                    image.onload =function (){
+                        // console.log("okokok");
+
+                        deferred.resolve(getBase64Image(image));
+                    };
+                    image.onerror=function(){
+                        // console.log("onerror");
+
+                    }
+                    // console.log(deferred.promise());
+                    // console.log(deferred.promise());
+
+
+                }
+                // console.log(deferred);
+                return deferred.promise();
+
+            },
             getAllphoto(){
                 let that=this;
                 let dataStrArr=this.toString().split(",");
@@ -242,7 +262,7 @@
                         that.dialogFormVisible=false;
                         // if(data.)
                         that.allPhototable=data.data.list;
-                        console.log(response);
+
                         // console.log(data.data.list);
                         // console.log(that.allPhototable);
                         // console.log(that.allPhototable.length);
@@ -259,41 +279,20 @@
                         that.dialogVisible=true;
                     }
                 });
-
-
-                function downloadImg(){
-                    let img = document.getElementById('girlImg'); // 获取要下载的图片
-                    let url = img.src;                            // 获取图片地址
-                    let a = document.createElement('a');          // 创建一个a节点插入的document
-                    let event = new MouseEvent('click');           // 模拟鼠标click点击事件
-                    a.download = 'beautifulGirl';                  // 设置a节点的download属性值
-                    a.href = url;                                 // 将图片的src赋值给a节点的href
-                    a.dispatchEvent(event)                        // 触发鼠标点击事件
-                }
-
-
-
-
                 let zip = new JSZip();//定义一个新的压缩文件
                 let img = zip.folder("images");
                 // console.log(img);
                 let baseList = [];
                 // let src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN';
 
-                let arr = ['http://bigdata1:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN','http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN'];
+                let arr = ['http://106.12.123.92/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN','http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN'];
                 for (let i = 0; i < arr.length; i++) {
-
                     let image = new Image();
-
                     image.setAttribute('crossOrigin', 'anonymous');
-
-
                     image.onerror=function requestImg(src){
-
-
                         let img = new Image();
                         img.setAttribute('crossOrigin', 'anonymous');//如在img标签加了该属性后，图片在其他网站则无法显示
-                        img.src ='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN';
+                        img.src ='http://106.12.123.92/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN';
                         // console.log(src);
                         img.onerror = function(){
                             let timeStamp = new Date();
@@ -306,9 +305,7 @@
                         canvas.width = image.width;
                         canvas.height = image.height;
                         console.log("good");
-
                         let context = canvas.getContext('2d');//getContext() 方法返回一个用于在画布上绘图的环境。
-
                         context.drawImage(image, 0, 0, image.width, image.height);//方法在画布上绘制图像、画布或视频。
                         // console.log("12");
                         let url = canvas.toDataURL();// 得到图片的base64编码数据 let url =
@@ -340,12 +337,194 @@
                             }
                         }
                     };
-                    image.src = "http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN";
+                    image.src = "http://106.12.123.92/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN";
                     // console.log("good3");
 
                 }
 
             },
+            downImage(){
+                let that=this;
+                let dataStrArr=this.toString().split(",");
+                let dataIntArr=[];
+                for(let i=0;i<this.checkList.length;i++)
+                {
+                    if(dataStrArr[i]==="横")
+                    {
+                        dataIntArr[i]=1;
+                    }
+                    if(dataStrArr[i]==="纵")
+                    {
+                        dataIntArr[i]=2;
+                    }
+                    if(dataStrArr[i]==="无")
+                    {
+                        dataIntArr[i]=0;
+                    }
+                }
+                let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
+                let dataIntArr1=[];//保存转换后的整型字符串
+                for(let i=0;i<this.checkList2.length;i++) {
+                    if (dataStrArr1[i] === "人工") {
+                        dataIntArr1[i] = 0;
+                    }
+                    if (dataStrArr1[i] === "机器") {
+                        dataIntArr1[i] = 1;
+                    }
+                }
+                this.getDeviceid();
+                this.getModelid();
+                let url='http://106.12.123.92:8081/api/v1/pictures/download/do-user';
+
+                that.axios(url,{
+                    params:{
+                        pageSize:10000,
+
+                        types:dataIntArr.toString(),
+                        startTime:this.value7 ? this.value7[0] : null,
+                        endTime:this.value7 ? this.value7[1] : null,
+                        deviceId:this.value9,
+                        modelId:this.value10,
+                        identifyType:dataIntArr1.toString()
+                    }
+                }).then(function (response) {
+                    let downScr=response.data;
+                    let imgsSrc=downScr.data;
+                    let imgBase64=[];
+                    let imageSuffix=[];//图片后缀
+                    let zip=new JSZip();
+                    zip.file("readme.txt","案件详情资料\n");
+                    let img=zip.folder("images");
+
+                    for(let i=0;i<imgsSrc.length;i++)
+                    {
+
+
+                        let src="http://106.12.123.92:5555"+imgsSrc[i]+"&namenoderpcaddress=bigdata1:9000&offset=0";
+                        // console.log(src);
+                        let suffix=src.substring(src.lastIndexOf("."), src.lastIndexOf("?"));
+                        imageSuffix.push(suffix);//.jpg
+                        // console.log(imgsSrc[i]);
+                        // console.log(that.getBase64(imgsSrc[i]));
+                        that.getBase64(src)
+                            .then(function(base64){
+
+                                imgBase64.push(base64.substring(22));
+
+                            },function(err){
+                                console.log(err);//打印异常信息
+                            });
+                        // console.log(imgBase64.length);
+
+                    }
+                    function tt(){
+
+                        setTimeout(function(){
+                            // console.log(imgsSrc.length);
+
+                            // console.log("123");
+
+                            if(imgsSrc.length===imgBase64.length){
+                                for(let i=0;i<imgsSrc.length;i++)
+                                {
+
+                                    img.file(i+imageSuffix[i], imgBase64[i], {base64: true});
+                                }
+                                zip.generateAsync({type:"blob"}).then(function(content) {
+                                    saveAs(content, "images.zip");
+                                });
+                                $('#status').text('处理完成。。。。。');
+
+                            }else{
+                                $('#status').text('已完成：'+imgBase64.length+'/'+imgsSrc.length);
+                                // console.log();
+                                tt();
+                            }
+                        },100);
+                    }
+                    tt();
+
+
+
+
+                    if(downScr.code===0){
+                    }
+                    else{
+                        console.log("无下载结果");
+                    }
+                });
+
+
+
+                // console.log(imgsSrc);
+            //     let imgBase64=[];
+            //     let imageSuffix=[];//图片后缀
+            //     let zip=new JSZip();
+            //     zip.file("readme.txt","案件详情资料\n");
+            //     let img=zip.folder("images");
+            //     for(let i=0;i<imgs.legth;i++)
+            //     {
+            //         // let src = imgs[i].getAttribute("src");
+            //         let suffix = src.substring(src.lastIndexOf("."), src.lastIndexOf("?"));
+            //         imageSuffix.push(suffix);
+            //
+            //         this.getBase64(imgs[i].getAttribute("src"))
+            //             .then(function(base64){
+            //                 imgBase64.push(base64.substring(22));
+            //             },function(err){
+            //                 console.log(err);//打印异常信息
+            //             });
+            //     }
+            //
+            // },
+            // //传入图片路径，返回base64
+            // getBase64(img){
+            //     function getBase64Image(img,width,height) {
+            //         let canvas = document.createElement("canvas");
+            //         canvas.width = width ? width : img.width;
+            //         canvas.height = height ? height : img.height;
+            //
+            //         let ctx = canvas.getContext("2d");
+            //         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            //         let dataURL = canvas.toDataURL();
+            //         return dataURL;
+            //     }
+            //     let image = new Image();
+            //     image.crossOrigin = 'Anonymous';
+            //     image.src = img;
+            //     let deferred=$.Deferred();
+            //     if(img){
+            //         image.onload =function (){
+            //             deferred.resolve(getBase64Image(image));
+            //         };
+            //         return deferred.promise();
+            //     }
+
+
+            },
+
+
+            // setTimeout(){
+            //     if(imgs.length===imgBase64.length){
+            //         for(let i=0;i<imgs.length;i++){
+            //             img.file(i+imageSuffix[i],imgBase64[i],{base64:true});
+            //
+            //         }
+            //         zip.generateAsync({type:"blob"}).then(function(content){
+            //             saveAs(content,"images.zip");
+            //         });
+            //
+            //     }else{
+            //         tt();
+            //     }
+            //
+            //
+            // }
+            // tt(){
+            //
+            // },
+
+
 
             getPhoto(){
                 // this. getAllphoto();
@@ -436,10 +615,11 @@
                         // if(data.)
                         that.photoTable=data.data.list;
                         that.total=data.data.total;
-                        console.log(response);
+                        // console.log(response);
                         // console.log(response.data);
                         // console.log(response);
                         for(let i=0;i<that.photoTable.length;i++){
+                            console.log(that.photoTable[i]);
 
                         }
 
@@ -535,6 +715,7 @@
                         that.total=data.data.total;
                         // console.log(response.data);
                         for(let i=0;i<that.photoTable.length;i++){
+
                         }
                     }
                 })
@@ -611,10 +792,23 @@
             //     return true;
             //
             // },
+            handleCheckAllChange(val) {
+                this.photoTable = val ? cityOptions : [];
+                this.isIndeterminate = false;
+            },
+            handleCheckedCitiesChange(value) {
+                let checkedCount = value.length;
+                this.checkAll = checkedCount === this.photoTable.length;
+                this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+            },
         },
         data() {
             return {
                 deviceTable:[],
+                checkAll: false,
+                checkedCities: ['上海', '北京'],
+                cities: cityOptions,
+                isIndeterminate: true,
                 total:0,
                 value9: '',
                 value10:'',
@@ -669,6 +863,7 @@
                 value7: ["",""],
                 checkList:[],
                 checkList2:[],
+                checkAll: false,
                 // options: [{
                 //     value: '选项1',
                 //     label: '黄金糕'
