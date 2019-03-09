@@ -6,7 +6,7 @@
                 <el-input v-model="loginForm.account" placeholder="请输入账号" autofocus></el-input>
             </el-form-item>
             <el-form-item>
-                <el-input v-model="loginForm.passwd" placeholder="请输入密码" @keyup.enter.native="onSubmit"></el-input>
+                <el-input type="password" v-model="loginForm.passwd" placeholder="请输入密码" @keyup.enter.native="onSubmit"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" class="width50" style="position: relative;left: -5%" @click="register" round>注册</el-button>
