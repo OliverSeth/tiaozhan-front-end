@@ -45,5 +45,4 @@ export default {
         url:BASE_URL+'/models/do-admin',
         method:'post',
     },
-
 }

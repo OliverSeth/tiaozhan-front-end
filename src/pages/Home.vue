@@ -19,7 +19,7 @@
                         <i class="el-icon-document"></i>
                         <span slot="title">分类</span>
                     </el-menu-item>
-                    <el-submenu>
+                    <el-submenu index="">
                         <template slot="title">
                             <i class="el-icon-upload"></i>
                             <span>上传&下载</span>
