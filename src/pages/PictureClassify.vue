@@ -65,16 +65,25 @@
         </div>
         <div style="width: 30%;height:20%;float: left;" >
             <el-row>
-                <el-badge :value="total" :max="99" class="item">
+                <!--<el-badge :value="total" :max="99" class="item">-->
                     <el-button type="primary" @click="getPhoto()">进行筛选</el-button>
-                </el-badge>
-                <el-badge :value="total" :max="99" class="item">
-                    <el-button type="primary" @click="downImage()">下载全部图片</el-button>
-                </el-badge>
+                <!--</el-badge>-->
+                <!--<el-badge :value="total" :max="99" class="item">-->
+                <div v-if="downButton">
+                    <el-button type="primary" @click="downImage()"  >下载全部图片</el-button>
+
+                </div>
+                <div v-else>
+                    <el-button type="primary" @click="downImage()"  disabled>下载全部图片</el-button>
+
+                </div>
+
+
+                <!--</el-badge>-->
             </el-row>
         </div>
         <div style="width: 100%;height:85%;float: left;">
-            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+            <!--<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>-->
             <div style="margin: 15px 0;"></div>
             <el-row >
                 <el-dialog
@@ -93,10 +102,10 @@
                     <el-card  :body-style="{ padding: '0px' }">
                         <img   :src="getscr1(photo.href)" style="width: 90px;height: 90px">
 
-                        <el-checkbox-group v-model="photoTable" @change="handleCheckedCitiesChange">
-                            <!--<el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>-->
-                            <el-checkbox :label="photoTable.name" >备选项</el-checkbox>
-                        </el-checkbox-group>
+                        <!--<el-checkbox-group v-model="photoTable" @change="handleCheckedCitiesChange">-->
+                            <!--&lt;!&ndash;<el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>&ndash;&gt;-->
+                            <!--<el-checkbox :label="photoTable.name" >备选项</el-checkbox>-->
+                        <!--</el-checkbox-group>-->
 
                     </el-card>
                 </el-col>
@@ -131,13 +140,8 @@
 </template>
 
 <script>
-
-
-    const cityOptions = ['上海', '北京', '广州', '深圳'];
-
     //main引入或者是组件内引入
     let JSZip = require('jszip');
-
     export default {
         name: "PictureClassify",
         mounted(){
@@ -174,7 +178,6 @@
     //
     //
     //         },
-
             getBase64(img){
                 // console.log(img);
               function getBase64Image(img,width,height){
@@ -198,16 +201,12 @@
                     };
                     image.onerror=function(){
                         // console.log("onerror");
-
                     }
                     // console.log(deferred.promise());
                     // console.log(deferred.promise());
-
-
                 }
                 // console.log(deferred);
                 return deferred.promise();
-
             },
             getAllphoto(){
                 let that=this;
@@ -375,11 +374,9 @@
                 this.getDeviceid();
                 this.getModelid();
                 let url='http://106.12.123.92:8081/api/v1/pictures/download/do-user';
-
                 that.axios(url,{
                     params:{
                         pageSize:10000,
-
                         types:dataIntArr.toString(),
                         startTime:this.value7 ? this.value7[0] : null,
                         endTime:this.value7 ? this.value7[1] : null,
@@ -398,8 +395,6 @@
 
                     for(let i=0;i<imgsSrc.length;i++)
                     {
-
-
                         let src="http://106.12.123.92:5555"+imgsSrc[i]+"&namenoderpcaddress=bigdata1:9000&offset=0";
                         // console.log(src);
                         let suffix=src.substring(src.lastIndexOf("."), src.lastIndexOf("?"));
@@ -408,33 +403,25 @@
                         // console.log(that.getBase64(imgsSrc[i]));
                         that.getBase64(src)
                             .then(function(base64){
-
                                 imgBase64.push(base64.substring(22));
-
                             },function(err){
                                 console.log(err);//打印异常信息
                             });
                         // console.log(imgBase64.length);
-
                     }
                     function tt(){
-
                         setTimeout(function(){
                             // console.log(imgsSrc.length);
-
                             // console.log("123");
-
                             if(imgsSrc.length===imgBase64.length){
                                 for(let i=0;i<imgsSrc.length;i++)
                                 {
-
                                     img.file(i+imageSuffix[i], imgBase64[i], {base64: true});
                                 }
                                 zip.generateAsync({type:"blob"}).then(function(content) {
                                     saveAs(content, "images.zip");
                                 });
                                 $('#status').text('处理完成。。。。。');
-
                             }else{
                                 $('#status').text('已完成：'+imgBase64.length+'/'+imgsSrc.length);
                                 // console.log();
@@ -443,19 +430,12 @@
                         },100);
                     }
                     tt();
-
-
-
-
                     if(downScr.code===0){
                     }
                     else{
                         console.log("无下载结果");
                     }
                 });
-
-
-
                 // console.log(imgsSrc);
             //     let imgBase64=[];
             //     let imageSuffix=[];//图片后缀
@@ -541,12 +521,6 @@
                 // arryy=item4;
                 let dataStrArr=this.value9.toString().split(",");//分割成字符串数组
                 let dataIntArr=[];//保存转换后的整型字符串
-                // dataStrArr.forEach(function(data,index,arr){
-                //     dataIntArr.push(+data);
-                // });
-                // // console.log(this.value7);
-
-                // console.log(dataStrArr);
                 for(let i=0;i<this.checkList.length;i++)
                 {
                     if(dataStrArr[i]==="横")
@@ -618,8 +592,10 @@
                         // console.log(response);
                         // console.log(response.data);
                         // console.log(response);
+                        console.log(that.downButton);
+                        that.downButton=true;
                         for(let i=0;i<that.photoTable.length;i++){
-                            console.log(that.photoTable[i]);
+                            // console.log(that.photoTable[i]);
 
                         }
 
@@ -792,22 +768,23 @@
             //     return true;
             //
             // },
-            handleCheckAllChange(val) {
-                this.photoTable = val ? cityOptions : [];
-                this.isIndeterminate = false;
-            },
-            handleCheckedCitiesChange(value) {
-                let checkedCount = value.length;
-                this.checkAll = checkedCount === this.photoTable.length;
-                this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
-            },
+            // handleCheckAllChange(val) {
+            //     this.photoTable = val ? cityOptions : [];
+            //     this.isIndeterminate = false;
+            // },
+            // handleCheckedCitiesChange(value) {
+            //     let checkedCount = value.length;
+            //     this.checkAll = checkedCount === this.photoTable.length;
+            //     this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+            // },
         },
         data() {
             return {
+                downButton:false,
                 deviceTable:[],
-                checkAll: false,
-                checkedCities: ['上海', '北京'],
-                cities: cityOptions,
+                // checkAll: false,
+                // checkedCities: ['上海', '北京'],
+                // cities: cityOptions,
                 isIndeterminate: true,
                 total:0,
                 value9: '',
