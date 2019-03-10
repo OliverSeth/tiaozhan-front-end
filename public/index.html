@@ -8,6 +8,7 @@
     <title>大数据驱动的面料瑕疵检测</title>
 </head>
 <body>
+<button>000</button>
 <noscript>
     <strong>We're sorry but tiaozhan-front-end doesn't work properly without JavaScript enabled. Please enable it to
         continue.</strong>
@@ -16,6 +17,32 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 <script type="text/javascript" src="socket.js"></script>
+<script>
+    // socket连接建立
+    let socket = new WebSocket('ws://kufs5n.natappfree.cc?1');
+    // socket方法绑定
+    {
+        socket.onmessage = res => {
+            console.log(res.data);
+        };
+
+        socket.onopen = () => {
+            console.log('连接成功');
+        };
+
+        socket.onclose = () => {
+            console.log('连接中断');
+        };
+
+        socket.onerror = () => {
+            console.log('连接失败，请刷新重试');
+        }
+    }
+    document.getElementById('send').addEventListener("click", () => {
+        socket.send('cao ni ma');
+    })
+</script>
+
 <div id="app"></div>
 <!-- built files will be auto injected -->
 </body>

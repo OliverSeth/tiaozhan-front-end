@@ -107,29 +107,29 @@
             for (let index in divs) {
                 divs[index].style.backgroundSize = '100% 100%';
             }
-            // socket连接建立
-            let socket = new WebSocket('ws://kufs5n.natappfree.cc?1');
-            // socket方法绑定
-            {
-                socket.onmessage = res => {
-                    console.log(res.data);
-                };
-
-                socket.onopen = () => {
-                    console.log('连接成功');
-                };
-
-                socket.onclose = () => {
-                    console.log('连接中断');
-                };
-
-                socket.onerror = () => {
-                    console.log('连接失败，请刷新重试');
-                }
-            }
-            document.getElementById('send').addEventListener("click", () => {
-                socket.send('cao ni ma');
-            })
+            // // socket连接建立
+            // let socket = new WebSocket('ws://kufs5n.natappfree.cc?1');
+            // // socket方法绑定
+            // {
+            //     socket.onmessage = res => {
+            //         console.log(res.data);
+            //     };
+            //
+            //     socket.onopen = () => {
+            //         console.log('连接成功');
+            //     };
+            //
+            //     socket.onclose = () => {
+            //         console.log('连接中断');
+            //     };
+            //
+            //     socket.onerror = () => {
+            //         console.log('连接失败，请刷新重试');
+            //     }
+            // }
+            // document.getElementById('send').addEventListener("click", () => {
+            //     socket.send('cao ni ma');
+            // })
         }
     }
 </script>
