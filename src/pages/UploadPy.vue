@@ -18,9 +18,9 @@
         <div class="upCard">
             <el-card>
                 <div slot="header">
-                    <span>文件内容</span>
+                    <span>代码内容</span>
                 </div>
-                <div>{{lmessage}}</div>
+                <div><pre>{{message}}</pre></div>
             </el-card>
         </div>
     </div>
@@ -34,7 +34,7 @@
         data() {
             return {
                 file: '',
-                lmessage: '',
+                message: '',
                 cardVisible: false
             }
         },
@@ -61,7 +61,6 @@
                     this.file = file;
                 } else {
                     this.$message.error('上传文件只能是 py 格式!');
-                    ;
                 }
                 return isPy;
             },
@@ -125,12 +124,11 @@
                 let r = new FileReader();
                 r.readAsText(f, "UTF-8");
                 r.onload = function () {
-                    m = this.result;
-                    // console.log(this.result);
-                    console.log(m);
+                    that.message = this.result;
+                    //document.getElementById('msg').innerText = that.message;
                 };
-                that.message = m;
-                console.log(that.message);
+                // that.message = m;
+                // console.log(that.message);
             }
         }
     }

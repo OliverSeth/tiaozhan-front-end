@@ -160,7 +160,7 @@
                     }
                     // console.log(that.options);
                 });
-                console.log("ok");
+                // console.log("ok");
             },
 
             uploadModel:function(){
