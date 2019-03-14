@@ -19,28 +19,28 @@
 <script type="text/javascript" src="socket.js"></script>
 <script>
     // socket连接建立
-    let socket = new WebSocket('ws://106.12.123.92:5929');
-    // socket方法绑定
-    {
-        socket.onmessage = res => {
-            console.log(res.data);
-        };
-
-        socket.onopen = () => {
-            console.log('连接成功');
-        };
-
-        socket.onclose = () => {
-            console.log('连接中断');
-        };
-
-        socket.onerror = () => {
-            console.log('连接失败，请刷新重试');
-        }
-    }
-    document.getElementById('send').addEventListener("click", () => {
-        socket.send('cao ni ma');
-    })
+    // let socket = new WebSocket('ws://106.12.123.92:5929');
+    // // socket方法绑定
+    // {
+    //     socket.onmessage = res => {
+    //         console.log(res.data);
+    //     };
+    //
+    //     socket.onopen = () => {
+    //         console.log('连接成功');
+    //     };
+    //
+    //     socket.onclose = () => {
+    //         console.log('连接中断');
+    //     };
+    //
+    //     socket.onerror = () => {
+    //         console.log('连接失败，请刷新重试');
+    //     }
+    // }
+    // document.getElementById('send').addEventListener("click", () => {
+    //     socket.send('cao ni ma');
+    // })
 </script>
 
 <div id="app"></div>
