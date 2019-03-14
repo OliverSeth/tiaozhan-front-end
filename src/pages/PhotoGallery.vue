@@ -403,7 +403,7 @@
             //获取图片路径
             getscr1(item){
                 // document.images.imgInit.src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
-                return ('http://148.70.63.35:50070'+item);
+                return ('http://106.12.123.92:5555'+item);
             },
             removePhoto(row){
                 // console.log(row);
