@@ -1,12 +1,18 @@
 <template>
     <div style="width: 80%;height: 88%;position: absolute">
-        <div style="width: 100%;height: 100%;position:absolute" v-for="pictures in picArr">
-            <!--<img :src="pictures" alt="no picture">-->
-            <div name="img_div"
-                 style="width: 30%;height: 30%; display: block;margin-left: 3%;margin-top: 1%"
-                 :style="{background: 'url(' + pictures + ')', backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%'}">
-                <!--<el-checkbox v-model="checked" style="position: relative;float: right"></el-checkbox>-->
-            </div>
+        <div id="msg" style="width: 100%;height: 100%;position:absolute" v-for="pictures in picArr">
+            <!--<el-card :body-style="{padding:'0px'}">-->
+                <!--<img src=pictures.toString() alt="no picture" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">-->
+            <!--<img src="pictures.toString()" alt="no picture" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">-->
+            <!--<img :src="pictures" alt="no picture" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">-->
+            <!--<img :src="pictures" alt="no picture" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">-->
+            <!--</el-card>-->
+
+            <!--<div id="imgs" name="img_div"-->
+                 <!--style="width: 30%;height: 30%; display: block;margin-left: 3%;margin-top: 1%"-->
+                 <!--:style="{background: 'url('     + pictures + ')', backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%'}">-->
+                <!--&lt;!&ndash;<el-checkbox v-model="checked" style="position: relative;float: right"></el-checkbox>&ndash;&gt;-->
+            <!--</div>-->
         </div>
 
         <!--<div style="margin-top: -75px">-->
@@ -15,7 +21,7 @@
         <!--</el-button>-->
         <!--</div>-->
 
-        <!--<div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-t op: 1%"-->
+        <!--<div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"-->
         <!--:style="bg1">-->
         <!--<span style="position:relative;top:60%;left: 31%">疵点位置：</span>-->
         <!--<span style="position:relative;top: 75%;left: 8%">疵点种类：</span>-->
@@ -78,8 +84,8 @@
                 let head = part[0].split(",");
                 let pos = parseInt(head[1]) - 1;
                 let len = parseInt(head[2]);
-                console.log(head);
-                console.log(this.segcnt[head[0]]);
+                //console.log(head);
+                //console.log(this.segcnt[head[0]]);
                 if (head[0] in this.segs) {
                     this.segs[head[0]][pos] = part[1];
                     this.segcnt[head[0]]++;
@@ -91,7 +97,16 @@
                 if (this.segcnt[head[0]] === len) {
                     let imgdata = this.segs[head[0]][0];
                     for (let i = 1; i < len; i++) imgdata += this.segs[head[0]][i];
-                    // $('#msg').append('<p>< img src="' + imgdata + '"/></p >')
+                    console.log(head[0]);
+                    // try{
+                    //     document.getElementById("msg").append('<p><img src="' + imgdata + '"/></p>');
+                    // }catch(e){
+                    //     console.log(e.toString());
+                    // }
+                    //$('#msg').append('<p><img src="' + imgdata + '"/></p>');
+                    let newImg=document.createElement("img");
+                    newImg.src=imgdata;
+                    document.getElementById("msg").appendChild(newImg);
                     this.picArr.push(imgdata);
                     console.log(this.picArr);
                 }

@@ -12,6 +12,14 @@
             <el-button size="small" type="info" @click="preview">查看</el-button>
             <el-button size="small" type="primary" v-on:click="downloadModel">下载</el-button>
         </div>
+        <div class="upCard">
+            <el-card>
+                <div slot="header">
+                    <span>代码内容</span>
+                </div>
+                <div><pre>{{message}}</pre></div>
+            </el-card>
+        </div>
         <!--<a href="http://bigdata1:50070/webhdfs/v1/upload/model-py/19-02/23/bb83d19c-2696-4884-baa0-2de7dc99d1ea-1.py?op=OPEN">下载图片</a>-->
     </div>
 </template>
@@ -33,7 +41,8 @@
         data(){
             return{
                 options:[],
-                value:''
+                value:'',
+                message:'',
             }
         },
         methods:{

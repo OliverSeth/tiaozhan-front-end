@@ -15,14 +15,14 @@
             <el-button size="small" type="info" style="margin-top: 20px" @click="preview">查看</el-button>
             <el-button size="small" type="primary" style="margin-top: 20px" v-on:click="saveModel">上传</el-button>
         </div>
-        <div class="upCard">
-            <el-card>
-                <div slot="header">
-                    <span>代码内容</span>
-                </div>
-                <div><pre>{{message}}</pre></div>
-            </el-card>
-        </div>
+            <div class="upCard">
+                <el-card>
+                    <div slot="header">
+                        <span>代码内容</span>
+                    </div>
+                    <div><pre>{{message}}</pre></div>
+                </el-card>
+            </div>
     </div>
 </template>
 
