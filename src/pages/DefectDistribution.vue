@@ -1,6 +1,7 @@
 <template>
     <div style="width: 80%;height: 88%;position: absolute">
-        <div id="msg" style="width: 100%;height: 100%;position:absolute" v-for="pictures in picArr">
+        <div id="msg" style="width: 100%;height: 100%;position:absolute">
+            <img v-for="pictures in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">
             <!--<el-card :body-style="{padding:'0px'}">-->
                 <!--<img src=pictures.toString() alt="no picture" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">-->
             <!--<img src="pictures.toString()" alt="no picture" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">-->
@@ -104,9 +105,9 @@
                     //     console.log(e.toString());
                     // }
                     //$('#msg').append('<p><img src="' + imgdata + '"/></p>');
-                    let newImg=document.createElement("img");
-                    newImg.src=imgdata;
-                    document.getElementById("msg").appendChild(newImg);
+                    // let newImg=document.createElement("img");
+                    // newImg.src=imgdata;
+                    // document.getElementById("msg").appendChild(newImg);
                     this.picArr.push(imgdata);
                     console.log(this.picArr);
                 }
