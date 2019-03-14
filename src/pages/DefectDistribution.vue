@@ -8,6 +8,7 @@
                 <!--<el-checkbox v-model="checked" style="position: relative;float: right"></el-checkbox>-->
             </div>
         </div>
+
         <!--<div style="margin-top: -75px">-->
         <!--<el-button type="primary">-->
         <!--训练新模型-->
