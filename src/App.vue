@@ -11,6 +11,20 @@
 </script>
 
 <style>
+    /* css reset */
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html, body {
+        height: 100%;
+    }
+
+    body {
+        background: #fafafa;
+    }
+
     /* common css */
     #app {
         height: 100%;
@@ -28,21 +42,6 @@
         margin-top: 30px;
         text-align: center;
     }
-
-    /* css reset */
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
-    html, body {
-        height: 100%;
-    }
-
-    body {
-        background: #fafafa;
-    }
-
     .left {
         float: left;
     }

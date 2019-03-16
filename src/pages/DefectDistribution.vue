@@ -1,77 +1,9 @@
 <template>
     <div style="width: 80%;height: 88%;position: absolute">
+        <div style="position:absolute;margin-top: -60px">{{msg1}}</div>
         <div id="msg" style="width: 100%;height: 100%;position:absolute">
-            <img v-for="pictures in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">
-            <!--<el-card :body-style="{padding:'0px'}">-->
-                <!--<img src=pictures.toString() alt="no picture" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">-->
-            <!--<img src="pictures.toString()" alt="no picture" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">-->
-            <!--<img :src="pictures" alt="no picture" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">-->
-            <!--<img :src="pictures" alt="no picture" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%">-->
-            <!--</el-card>-->
-
-            <!--<div id="imgs" name="img_div"-->
-                 <!--style="width: 30%;height: 30%; display: block;margin-left: 3%;margin-top: 1%"-->
-                 <!--:style="{background: 'url('     + pictures + ')', backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%'}">-->
-                <!--&lt;!&ndash;<el-checkbox v-model="checked" style="position: relative;float: right"></el-checkbox>&ndash;&gt;-->
-            <!--</div>-->
+            <img v-for="pictures in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">
         </div>
-
-        <!--<div style="margin-top: -75px">-->
-        <!--<el-button type="primary">-->
-        <!--训练新模型-->
-        <!--</el-button>-->
-        <!--</div>-->
-
-        <!--<div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"-->
-        <!--:style="bg1">-->
-        <!--<span style="position:relative;top:60%;left: 31%">疵点位置：</span>-->
-        <!--<span style="position:relative;top: 75%;left: 8%">疵点种类：</span>-->
-        <!--<span style="position:relative;top: 90%;left: -15%">检测时间：</span>-->
-        <!--<el-checkbox v-model="checked1" style="position: relative;float: right"-->
-        <!--@change="setBorder(0)"></el-checkbox>-->
-        <!--</div>-->
-        <!--<div name="img_div" style="width: 30%;height: 30%; display: block; float: left; margin-left: 1%;margin-top: 1%"-->
-        <!--:style="bg2">-->
-        <!--<span style="position:relative;top:60%;left: 31%">疵点位置：</span>-->
-        <!--<span style="position:relative;top: 75%;left: 8%">疵点种类：</span>-->
-        <!--<span style="position:relative;top: 90%;left: -15%">检测时间：</span>-->
-        <!--<el-checkbox v-model="checked" style="position: relative;float: right"></el-checkbox>-->
-        <!--</div>-->
-        <!--<div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"-->
-        <!--:style="bg3">-->
-        <!--<el-checkbox v-model="checked" style="position: relative;float: right"></el-checkbox>-->
-        <!--</div>-->
-        <!--<div style="height: 32%;width: 32%"></div>-->
-        <!--<div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"-->
-        <!--:style="bg4">-->
-        <!--<el-checkbox v-model="checked" style="position: relative;float: right"></el-checkbox>-->
-        <!--</div>-->
-        <!--<div name="img_div"-->
-        <!--style="width: 30%;height: 30%; display: block; float: left;background-size: 100% 100%;margin-left: 1%;margin-top: 1%"-->
-        <!--:style="bg5">-->
-        <!--<el-checkbox v-model="checked" style="position: relative;float: right"></el-checkbox>-->
-        <!--</div>-->
-        <!--<div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"-->
-        <!--:style="bg6">-->
-        <!--<el-checkbox v-model="checked" style="position: relative;float: right"></el-checkbox>-->
-        <!--</div>-->
-        <!--<div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"-->
-        <!--:style="bg7">-->
-        <!--<el-checkbox v-model="checked" style="position: relative;float: right"></el-checkbox>-->
-        <!--</div>-->
-        <!--<div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%"-->
-        <!--:style="{background: 'url(' + this.pictures + ')', backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%'}">-->
-        <!--&lt;!&ndash;<el-checkbox v-model="checked" style="position: relative;float: right"></el-checkbox>&ndash;&gt;-->
-        <!--</div>-->
-        <!--<el-button type="primary" id="send"></el-button>-->
-        <!--<div  name="img_div" style="width: 30%;height: 30%; display: block; float: left;background-size: 100% 100%;margin-left: 1%;margin-top: 1%"-->
-        <!--:style="bg1">-->
-        <!--<el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>-->
-        <!--</div>-->
-        <!--<div name="img_div" style="width: 30%;height: 30%; display: block; float: left;margin-left: 1%;margin-top: 1%" :style="bg1">-->
-        <!--<el-checkbox v-model="checked" style="position: relative;float: right" ></el-checkbox>-->
-        <!--</div>-->
-
     </div>
 </template>
 
@@ -85,6 +17,34 @@
                 let head = part[0].split(",");
                 let pos = parseInt(head[1]) - 1;
                 let len = parseInt(head[2]);
+                if(part.length===1){
+                    // console.log(head[0]);
+                    if(head[0]==='test_connection'){
+                        console.log('连接成功！');
+                    }else{
+                        let msg=head[0].split(':');
+                        if(msg[0]==='PlcWorkState'){
+                            if(msg[1]==='Stop'){
+                                this.msg1='PLC未启动';
+                            }else if(msg[1]==='Waiting'){
+                                this.msg1='PLC等待运行';
+                            }else if(msg[1]==='Rotating'){
+                                this.msg1='PLC正转';
+                            }else if(msg[1]==='Reversing'){
+                                this.msg1='PLC反转';
+                            }else if(msg[1]==='Disconnected'){
+                                this.msg1='PLC未连接';
+                            }else{
+                                this.msg1='未知状态'
+                            }
+                            console.log(this.msg1);
+                        }else{
+                            this.msg1='没有PLC状态';
+                            console.log('没有PLC状态');
+                        }
+                    }
+                    return;
+                }
                 //console.log(head);
                 //console.log(this.segcnt[head[0]]);
                 if (head[0] in this.segs) {
@@ -131,6 +91,7 @@
         },
         data() {
             return {
+                msg1:'PLC未连接',
                 segs: {},
                 segcnt: {},
                 plcState: "",
