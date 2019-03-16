@@ -18,7 +18,7 @@
                 let pos = parseInt(head[1]) - 1;
                 let len = parseInt(head[2]);
                 if(part.length===1){
-                    // console.log(head[0]);
+                    console.log(head[0]);
                     if(head[0]==='test_connection'){
                         console.log('连接成功！');
                     }else{
@@ -37,6 +37,7 @@
                             }else{
                                 this.msg1='未知状态'
                             }
+                            console.log(msg[1]);
                             console.log(this.msg1);
                         }else{
                             this.msg1='没有PLC状态';
