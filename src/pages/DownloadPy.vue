@@ -9,7 +9,7 @@
                         :value="item.modelId">
                 </el-option>
             </el-select>
-            <div style="margin-top: 20px">
+            <div style="margin-top: 50px">
                 <el-button size="small" type="info" @click="preview">查看</el-button>
                 <el-button size="small" type="primary" v-on:click="downloadModel">下载</el-button>
             </div>
@@ -76,7 +76,7 @@
 
                 document.getElementById('div1').innerHTML = '读取中...';
                 $(document).ready(function(){
-                    $("#div1").load('http://106.12.123.92:5555'+'/webhdfs/v1/upload/model-py/19-02/23/bb83d19c-2696-4884-baa0-2de7dc99d1ea-1.py?op=OPEN');
+                    $("#div1").load('http://106.12.123.92:5555/webhdfs/v1/upload/model-py/19-03/16/1d819852-5578-4c07-bf5d-0465218903b0-test.py?op=OPEN');
                 });
                 // $(document).ready(function(){
                 //     $.ajax({async: true, url:'http://bigdata1:50070'+url,success:function(result){

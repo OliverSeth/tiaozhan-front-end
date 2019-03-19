@@ -1,6 +1,6 @@
 <template style="padding-left: 217px">
     <div id="clothExamine" :style="bg" style="background-size: cover">
-        <div style="position: absolute;right: 15%;bottom: 34%">
+        <div style="position: relative;left: 76%;top: 61%;">
             <router-link to="device-control">上海</router-link>
         </div>
     </div>
