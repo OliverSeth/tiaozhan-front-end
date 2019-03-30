@@ -8,6 +8,10 @@ import axiosInstance from "./utils/axios"
 import VueAxios from 'vue-axios'
 import VueCookies from 'vue-cookies'
 import utils from '@/utils'
+import echarts from 'echarts'
+import 'echarts/map/js/china'
+
+Vue.prototype.$echarts = echarts;
 
 Vue.config.productionTip = false;
 Vue.prototype.$api=api;
