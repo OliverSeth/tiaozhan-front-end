@@ -83,7 +83,10 @@
                                 borderColor: "#3CC3FF"
                             },
                             emphasis: {
-                                areaColor: "#3EF3F4"
+                                areaColor: "#3EF3F4",
+                                label:{
+                                    show:true
+                                }
                             }
                         }
                     },
@@ -149,6 +152,30 @@
                         }
                     ]
                 };
+                mapChart.on('click',param=>{
+                    let selected=param.name;
+                    if(selected){
+                        switch (selected) {
+                            case '上海':
+                                this.$router.push('/device-control');
+                                break;
+                            case '湖北':
+                                this.$router.push('/device-control');
+                                break;
+                            case '武汉':
+                                this.$router.push('/device-control');
+                                break;
+                            case '福建':
+                                this.$router.push('/device-control');
+                                break;
+                            case '泉州':
+                                this.$router.push('/device-control');
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
                 mapChart.setOption(option);
                 mapChart.resize();
             }
