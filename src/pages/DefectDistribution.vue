@@ -1,8 +1,23 @@
 <template>
     <div style="width: 80%;height: 88%;position: absolute">
-        <div style="position:absolute;margin-top: -60px">{{msg1}}</div>
-        <div id="msg" style="width: 100%;height: 100%;position:absolute">
+        <!--<div style="position:absolute;margin-top: -60px">{{msg1}}</div>-->
+        <div id="msg" style="width: 70%;height: 100%;position:absolute">
+            <!--<div :style="bg">-->
+            <!--</div>-->
             <img v-for="pictures in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">
+            <!--<span>疵点类型：</span>-->
+        </div>
+        <div id="info" style="width: 30%;height: 100%;position: absolute;right: 0">
+            <div style="width: 100%;height: 100%;position: absolute">
+                <img src="../assets/device.jpg" style="width: 100%;height: 30%;position: absolute">
+            </div>
+            <div id="word" style="width: 100%;height: 70%;position: absolute;bottom: 0">
+                <br><p><span style="font-size: 24px">PLC状态：{{plc}}</span></p><br>
+                <p><span style="font-size: 24px">转向：{{turn}}</span></p><br>
+                <p><span style="font-size: 24px">转速：{{speed}}</span></p><br>
+                <p><span style="font-size: 24px">光源：{{light}}</span></p><br>
+                <p><span style="font-size: 24px">{{alarm}}</span></p><br>
+            </div>
         </div>
     </div>
 </template>
@@ -25,22 +40,24 @@
                         let msg=head[0].split(':');
                         if(msg[0]==='PlcWorkState'){
                             if(msg[1]==='Stop'){
-                                this.msg1='PLC未启动';
+                                this.plc='未启动';
                             }else if(msg[1]==='Waiting'){
-                                this.msg1='PLC等待运行';
+                                this.plc='等待运行';
                             }else if(msg[1]==='Rotating'){
-                                this.msg1='PLC正转';
+                                this.plc='运行中';
+                                this.turn='正转';
                             }else if(msg[1]==='Reversing'){
-                                this.msg1='PLC反转';
+                                this.plc='运行中';
+                                this.turn='反转';
                             }else if(msg[1]==='Disconnected'){
-                                this.msg1='PLC未连接';
+                                this.plc='未连接';
                             }else{
-                                this.msg1='未知状态'
+                                this.plc='未知状态'
                             }
                             console.log(msg[1]);
-                            console.log(this.msg1);
+                            // console.log(this.plc);
                         }else{
-                            this.msg1='没有PLC状态';
+                            this.plc='没有PLC状态';
                             console.log('没有PLC状态');
                         }
                     }
@@ -92,6 +109,11 @@
         },
         data() {
             return {
+                plc:'未连接',
+                turn:'无',
+                speed:0,
+                light:'关',
+                alarm:'',
                 msg1:'PLC未连接',
                 segs: {},
                 segcnt: {},
