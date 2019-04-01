@@ -4,8 +4,8 @@
         <div id="msg" style="width: 70%;height: 100%;position:absolute">
             <!--<div :style="bg">-->
             <!--</div>-->
-            <img v-for="pictures in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">
-            <!--<span>疵点类型：</span>-->
+            <img v-for="(pictures,index) in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">
+            <!--<span>疵点类型：{{infoArr[index]}}</span>-->
         </div>
         <div id="info" style="width: 30%;height: 100%;position: absolute;right: 0">
             <div style="width: 100%;height: 100%;position: absolute">
@@ -29,61 +29,63 @@
         name: "DefectDistribution",
         methods: {
             parseSegment(seg) {
-                console.log(seg);
+                //console.log(seg);
                 let part = seg.split("@");
-                let head = part[0].split(",");
-                let pos = parseInt(head[1]) - 1;
-                let len = parseInt(head[2]);
                 if(part.length===1){
-                    console.log(head[0]);
-                    if(head[0]==='test_connection'){
+                    console.log(part[0]);
+                    if(part[0]==='test_connection'){
                         console.log('连接成功！');
                     }else{
-                        let msg=head[0].split(':');
+                        let msg=part[0].split(':');
                         if(msg[0]==='PlcWorkState'){
                             let info=msg[1].split(',');
+                            if(info[4]==='1'){
+                                this.alarm='报警';
+                            }else if(info[4]==='0'){
+                                this.alarm='';
+                            }
                             if(info[0]==='0'){
                                 this.plc='未连接';
                             }else if(info[0]==='1'){
                                 this.plc='已连接';
                                 if(info[1]==='-1'){
                                     this.state='未启动';
-                                }else if(info[1]==='0'){
+                                }else{
                                     this.state='已启动';
-                                    if(info[2]==='1'){
-                                        this.light='开';
-                                    }else if(info[2]==='0'){
-                                        this.light='关';
-                                    }
-                                }else if(info[1]==='1'){
-                                    this.state='正转';
-                                    if(info[2]==='0'){
-                                        this.light='关';
-                                    }else if(info[2]==='1'){
-                                        this.light='开';
-                                    }
-                                    if(info[3]==='0'){
-                                        this.speed='低速';
-                                    }else if(info[3]==='1'){
-                                        this.speed='高速';
-                                    }
-                                    if(info[4]==='1'){
-                                        this.alarm='报警';
-                                    }
-                                }else if(info[1]==='2'){
-                                    this.state='反转';
-                                    if(info[2]==='0'){
-                                        this.light='关';
-                                    }else if(info[2]==='1'){
-                                        this.light='开';
-                                    }
-                                    if(info[3]==='0'){
-                                        this.speed='低速';
-                                    }else if(info[3]==='1'){
-                                        this.speed='高速';
-                                    }
-                                    if(info[4]==='1'){
-                                        this.alarm='报警';
+                                    if(info[1]==='1'){
+                                        this.turn='正转';
+                                        if(info[2]==='0'){
+                                            this.light='关';
+                                        }else if(info[2]==='1'){
+                                            this.light='开';
+                                        }
+                                        if(info[3]==='0'){
+                                            this.speed='低速';
+                                        }else if(info[3]==='1'){
+                                            this.speed='高速';
+                                        }
+                                        if(info[4]==='1'){
+                                            this.alarm='报警';
+                                        }else if(info[4]==='0'){
+                                            this.alarm='';
+                                        }
+                                    }else if(info[1]==='2'){
+                                        this.turn='反转';
+                                        if(info[2]==='0'){
+                                            this.light='关';
+                                        }else if(info[2]==='1'){
+                                            this.light='开';
+                                        }
+                                        if(info[3]==='0'){
+                                            this.speed='低速';
+                                        }else if(info[3]==='1'){
+                                            this.speed='高速';
+                                        }
+                                        if(info[4]==='1'){
+                                            this.alarm='报警';
+                                        }else  if(info[4]==='0'){
+                                            this.alarm='';
+                                        }
                                     }
                                 }
                             }
@@ -100,10 +102,31 @@
                     }
                     return;
                 }
+                let head = part[0].split(",");
+                let pos = parseInt(head[1]) - 1;
+                let len = parseInt(head[2]);
                 //console.log(head);
                 //console.log(this.segcnt[head[0]]);
                 if (head[1] === '0'){
-
+                    console.log(part[1]);
+                    switch (part[1]) {
+                        case 'heng':
+                            this.infoArr.push('横疵点');
+                            break;
+                        case 'zong':
+                            this.infoArr.push('纵疵点');
+                            break;
+                        case 'dong':
+                            this.infoArr.push('破洞疵点');
+                            break;
+                        case 'none':
+                            this.infoArr.push('无');
+                            break;
+                        default:
+                            this.infoArr.push('无');
+                            break;
+                    }
+                    this.infoArr.push(part[1]);
                     return;
                 }
                 if (head[0] in this.segs) {
@@ -128,7 +151,7 @@
                     // newImg.src=imgdata;
                     // document.getElementById("msg").appendChild(newImg);
                     this.picArr.push(imgdata);
-                    console.log(this.picArr);
+                    // console.log(this.picArr);
                 }
             },
             // setBorder(index) {
@@ -162,6 +185,7 @@
                 plcState: "",
                 pictures: "",
                 picArr: [],
+                infoArr:[],
                 // checked1: false,
                 bg1: {
                     background: 'url(' + require('../assets/1.jpg') + ')',
