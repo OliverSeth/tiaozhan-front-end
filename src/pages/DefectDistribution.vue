@@ -13,6 +13,7 @@
             </div>
             <div id="word" style="width: 100%;height: 70%;position: absolute;bottom: 0">
                 <br><p><span style="font-size: 24px">PLC状态：{{plc}}</span></p><br>
+                <p><span style="font-size: 24px">工控机状态：{{state}}</span></p><br>
                 <p><span style="font-size: 24px">转向：{{turn}}</span></p><br>
                 <p><span style="font-size: 24px">转速：{{speed}}</span></p><br>
                 <p><span style="font-size: 24px">光源：{{light}}</span></p><br>
@@ -28,6 +29,7 @@
         name: "DefectDistribution",
         methods: {
             parseSegment(seg) {
+                console.log(seg);
                 let part = seg.split("@");
                 let head = part[0].split(",");
                 let pos = parseInt(head[1]) - 1;
@@ -39,28 +41,51 @@
                     }else{
                         let msg=head[0].split(':');
                         if(msg[0]==='PlcWorkState'){
-                            if(msg[1]==='Stop'){
-                                this.plc='未启动';
-                            }else if(msg[1]==='Waiting'){
-                                this.plc='等待运行';
-                            }else if(msg[1]==='Rotating'){
-                                this.plc='运行中';
-                                this.turn='正转';
-                            }else if(msg[1]==='Reversing'){
-                                this.plc='运行中';
-                                this.turn='反转';
-                            }else if(msg[1]==='Disconnected'){
+                            let info=msg[1].split(',');
+                            if(info[0]==='0'){
                                 this.plc='未连接';
-                                this.turn='无';
-                                this.speed=0;
-                                this.light='关';
-                                this.alarm='';
-                            }else{
-                                this.plc='未知状态';
-                                this.turn='无';
-                                this.speed=0;
-                                this.light='关';
-                                this.alarm='';
+                            }else if(info[0]==='1'){
+                                this.plc='已连接';
+                                if(info[1]==='-1'){
+                                    this.state='未启动';
+                                }else if(info[1]==='0'){
+                                    this.state='已启动';
+                                    if(info[2]==='1'){
+                                        this.light='开';
+                                    }else if(info[2]==='0'){
+                                        this.light='关';
+                                    }
+                                }else if(info[1]==='1'){
+                                    this.state='正转';
+                                    if(info[2]==='0'){
+                                        this.light='关';
+                                    }else if(info[2]==='1'){
+                                        this.light='开';
+                                    }
+                                    if(info[3]==='0'){
+                                        this.speed='低速';
+                                    }else if(info[3]==='1'){
+                                        this.speed='高速';
+                                    }
+                                    if(info[4]==='1'){
+                                        this.alarm='报警';
+                                    }
+                                }else if(info[1]==='2'){
+                                    this.state='反转';
+                                    if(info[2]==='0'){
+                                        this.light='关';
+                                    }else if(info[2]==='1'){
+                                        this.light='开';
+                                    }
+                                    if(info[3]==='0'){
+                                        this.speed='低速';
+                                    }else if(info[3]==='1'){
+                                        this.speed='高速';
+                                    }
+                                    if(info[4]==='1'){
+                                        this.alarm='报警';
+                                    }
+                                }
                             }
                             console.log(msg[1]);
                             // console.log(this.plc);
@@ -77,6 +102,10 @@
                 }
                 //console.log(head);
                 //console.log(this.segcnt[head[0]]);
+                if (head[1] === '0'){
+
+                    return;
+                }
                 if (head[0] in this.segs) {
                     this.segs[head[0]][pos] = part[1];
                     this.segcnt[head[0]]++;
@@ -122,6 +151,7 @@
         data() {
             return {
                 plc:'未连接',
+                state:'未启动',
                 turn:'无',
                 speed:0,
                 light:'关',
