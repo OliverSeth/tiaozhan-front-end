@@ -796,6 +796,7 @@
                 // cities: cityOptions,
                 isIndeterminate: true,
                 total:0,
+
                 value9: '',
                 value10:'',
                 currentPage4:1,
