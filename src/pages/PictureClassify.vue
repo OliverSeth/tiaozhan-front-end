@@ -12,7 +12,6 @@
                 </el-option>
             </el-select>
         </div>
-
         <div style="width: 30%;height:20%;float: left">
             <p class="optionmenu" ><el-tag>检测时间</el-tag></p>
             <div class="block">
@@ -44,7 +43,7 @@
                 </el-option>
             </el-select>
         </div>
-        <div style="width: 20%;height:20%;float: left;">
+        <div style="width: 25%;height:20%;float: left;">
             <p class="optionmenu" > <el-tag>疵点类型</el-tag></p>
             <el-checkbox-group v-model="checkList">
                 <!--<el-checkbox label="横疵" v-model="checked1"></el-checkbox>-->
@@ -53,6 +52,7 @@
                 <!--<el-checkbox label="无" v-model="checked0"></el-checkbox>-->
                 <el-checkbox label="横"></el-checkbox>
                 <el-checkbox label="纵"></el-checkbox>
+                <el-checkbox label="破洞"></el-checkbox>
                 <el-checkbox label="无"></el-checkbox>
             </el-checkbox-group>
         </div>
@@ -66,25 +66,34 @@
         <div style="width: 30%;height:20%;float: left;" >
             <el-row>
                 <!--<el-badge :value="total" :max="99" class="item">-->
-                    <el-button type="primary" @click="getPhoto()">进行筛选</el-button>
-                <!--</el-badge>-->
-                <!--<el-badge :value="total" :max="99" class="item">-->
+
                 <div v-if="downButton">
-                    <el-button type="primary" @click="downImage()"  >下载全部图片</el-button>
+
+                    <el-button type="primary" icon="el-icon-search" @click="getPhoto()">进行筛选</el-button>
+                    <el-button type="primary" @click="downImage()" :loading="loading">下载全部图片</el-button>
 
                 </div>
                 <div v-else>
-                    <el-button type="primary" @click="downImage()"  disabled>下载全部图片</el-button>
+                    <el-button type="primary"  icon="el-icon-search" @click="getPhoto()">进行筛选</el-button>
+                    <el-button type="primary" @click="downImage()" :loading="loading" disabled>下载全部图片</el-button>
 
                 </div>
+                <!--</el-badge>-->
+                <!--<el-badge :value="total" :max="99" class="item">-->
+
 
 
                 <!--</el-badge>-->
             </el-row>
         </div>
-        <div style="width: 100%;height:85%;float: left;">
-            <!--<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>-->
-            <div style="margin: 15px 0;"></div>
+        <!--<div style="width: 10%;height: 10%;">-->
+
+            <!--<div id="photo" style="width: 10%;height: 10%;">-->
+                <!--<img v-for="photo in photoTable" :src="getscr1(photo.href)" alt="no"  style="float:left; width: 90px;height: 90px">-->
+                <!---->
+            <!--</div>-->
+        <!--</div>-->
+        <div style="width: 100%;height:85%;float: left;" id="photo">
             <el-row >
                 <el-dialog
                         title="提示"
@@ -99,30 +108,15 @@
                 </el-dialog>
                 <el-col  v-for="photo in photoTable" :span="2"   >
 
+                    <!--<el-checkbox :checked="true">备选项</el-checkbox>-->
                     <el-card  :body-style="{ padding: '0px' }">
-                        <img   :src="getscr1(photo.href)" style="width: 90px;height: 90px">
-
-                        <!--<el-checkbox-group v-model="photoTable" @change="handleCheckedCitiesChange">-->
-                            <!--&lt;!&ndash;<el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>&ndash;&gt;-->
-                            <!--<el-checkbox :label="photoTable.name" >备选项</el-checkbox>-->
-                        <!--</el-checkbox-group>-->
-
+                        <img   :src="getscr1(photo.href)" name= 'img' style="width: 90px;height: 90px">
+                        <el-checkbox  :checked="photo.checked"  ></el-checkbox>
                     </el-card>
+
                 </el-col>
-                <!--<el-checkbox-group v-model="checkList" v-for="photo in photoTable" :span="2" >-->
-                    <!--<el-checkbox v-model="photoTable[i]">备选项</el-checkbox>-->
-
-
-                <!--</el-checkbox-group>-->
-                <!--<el-col  v-for="photo in photoTable" :span="2"  >-->
-                    <!--<el-checkbox-group v-model="photoTable">-->
-                        <!--<el-checkbox label=""></el-checkbox>-->
-                    <!--</el-checkbox-group>-->
-                <!--</el-col>-->
 
             </el-row>
-
-
         </div>
         <div style="width: 100%;height:65%;float: left;" class="block">
             <!--<span class="demonstration">完整功能</span>-->
@@ -146,10 +140,12 @@
         name: "PictureClassify",
         mounted(){
           let that =this;
+          this.
           that.getDeviceid();
           that.getModelid();
         },
         methods:{
+
     //    getBase64Image(img,width,height) {
     //     var canvas = document.createElement("canvas");
     //     canvas.width = width ? width : img.width;
@@ -206,7 +202,9 @@
                     // console.log(deferred.promise());
                 }
                 // console.log(deferred);
+
                 return deferred.promise();
+
             },
             getAllphoto(){
                 let that=this;
@@ -225,6 +223,10 @@
                     if(dataStrArr[i]==="无")
                     {
                         dataIntArr[i]=0;
+                    }
+                    if(dataStrArr[i]==="破洞")
+                    {
+                        dataIntArr[i]=3;
                     }
                 }
                 let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
@@ -311,6 +313,7 @@
                         canvas.toDataURL('image/png');//？？？跟上面的有什么不同
                         baseList.push(url.substring(22));//截取从22索引位置开始,到结束
 
+
                         if (baseList.length === arr.length) {//检测是否把数组里的照片都进行编码并传入了baseList数组内了
                             if (baseList.length > 0) {
                                 // console.log("baseList");
@@ -323,6 +326,7 @@
                                     img.file('photo' + k + '.png', baseList[k], {base64: true});//获取图片文件
                                 }
                                 img.generateAsync({type: 'blob'}).then(function (content) {
+
                                     // see FileSaver.js
                                     saveAs(content,"photo.zip");
                                     // showMessage("done !");
@@ -336,6 +340,7 @@
                             }
                         }
                     };
+
                     image.src = "http://106.12.123.92/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN";
                     // console.log("good3");
 
@@ -343,6 +348,7 @@
 
             },
             downImage(){
+                this.loading=true;
                 let that=this;
                 let dataStrArr=this.toString().split(",");
                 let dataIntArr=[];
@@ -359,6 +365,10 @@
                     if(dataStrArr[i]==="无")
                     {
                         dataIntArr[i]=0;
+                    }
+                    if(dataStrArr[i]==="破洞")
+                    {
+                        dataIntArr[i]=3;
                     }
                 }
                 let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
@@ -422,6 +432,9 @@
                                     saveAs(content, "images.zip");
                                 });
                                 $('#status').text('处理完成。。。。。');
+                                console.log("下载完成123456");
+                                that.loading=false;
+                                console.log(this.loading);
                             }else{
                                 $('#status').text('已完成：'+imgBase64.length+'/'+imgsSrc.length);
                                 // console.log();
@@ -482,8 +495,6 @@
 
 
             },
-
-
             // setTimeout(){
             //     if(imgs.length===imgBase64.length){
             //         for(let i=0;i<imgs.length;i++){
@@ -503,17 +514,10 @@
             // tt(){
             //
             // },
-
-
-
             getPhoto(){
                 // this. getAllphoto();
-
                 let that =this;
                 // let dataStr=item4;//原始字符串
-
-
-
                 // let arryy = [];
                 // item4 = item4.replace(/"([^"]*)"/g, "'$1'");
                 // let array = eval('(' + item4 + ')');//封装成数
@@ -554,7 +558,6 @@
                     {
                         dataIntArr1[i]=1;
                     }
-
                 }
                 // console.log(dataIntArr);
                 // if(dataIntArr==="1")
@@ -579,9 +582,7 @@
                         identifyType:dataIntArr1.toString()
                     }
                 }).then(function (response) {
-
                     // console.log(response);
-
                     let data=response.data;
 
                     if(data.code===0){
@@ -592,11 +593,12 @@
                         // console.log(response);
                         // console.log(response.data);
                         // console.log(response);
-                        console.log(that.downButton);
+                        console.log(that.photoTable);
                         that.downButton=true;
-                        for(let i=0;i<that.photoTable.length;i++){
-                            // console.log(that.photoTable[i]);
 
+                        for(let i=0;i<that.photoTable.length;i++){
+                            that.photoTable[i]['checked'] = true;
+                            // console.log(that.photoTable[i]);
                         }
 
                     }
@@ -606,7 +608,8 @@
                         that.dialogVisible=true;
                     }
 
-                })
+                });
+
 
             },
             handleSizeChange: function (size) {
@@ -628,7 +631,6 @@
                 //     dataIntArr.push(+data);
                 // });
                 // // console.log(this.value7);
-
                 // console.log(dataStrArr);
                 for(let i=0;i<this.checkList.length;i++)
                 {
@@ -643,6 +645,10 @@
                     if(dataStrArr[i]==="无")
                     {
                         dataIntArr[i]=0;
+                    }
+                    if(dataStrArr[i]==="破洞")
+                    {
+                        dataIntArr[i]=3;
                     }
                 }
                 let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
@@ -691,8 +697,10 @@
                         that.total=data.data.total;
                         // console.log(response.data);
                         for(let i=0;i<that.photoTable.length;i++){
+                            that.photoTable[i]['checked'] = true;
 
                         }
+                        console.log(that.photoTable);
                     }
                 })
                 // console.log(this.currentPage)  //点击第几页
@@ -710,7 +718,7 @@
                 this.axios(url, {
                     params: {
                         pageNum: that.currentPage,
-                        pageSize: 100,
+                        pageSize: 10,
                     }
                 }).then(function (res) {
                     // console.log(res);
@@ -732,7 +740,7 @@
                 this.axios(url, {
                     params: {
                         pageNum: that.currentPage,
-                        pageSize: 100,
+                        pageSize: 10,
                     }
                 }).then(function (res) {
                     // console.log(res);
@@ -781,6 +789,7 @@
         data() {
             return {
                 downButton:false,
+                loading:false,
                 deviceTable:[],
                 // checkAll: false,
                 // checkedCities: ['上海', '北京'],
@@ -803,7 +812,7 @@
                 //     backgroundRepeat:"no-repeat",
                 // },
                 url:'',
-                checked: true,
+
                 checked1:false,
                 checked2:false,
                 checked3:false,
