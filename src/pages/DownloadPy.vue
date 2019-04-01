@@ -1,7 +1,7 @@
 <template>
-    <div style="height: 80%">
-        <div style="width: 30%;float: left">
-            <el-select v-model="value" placeholder="请选择">
+    <div id="1" style="height: 80%">
+        <div id="2" style="width: 30%;float: left">
+            <el-select v-model="value" placeholder="请选择" multiple clearable filterable @change="showInfo">
                 <el-option
                         v-for="item in options"
                         :key="item.modelId"
@@ -9,19 +9,28 @@
                         :value="item.modelId">
                 </el-option>
             </el-select>
-            <div style="margin-top: 50px">
+            <div style="margin-top: 30px">
                 <el-button size="small" type="info" @click="preview">查看</el-button>
                 <el-button size="small" type="primary" v-on:click="downloadModel">下载</el-button>
             </div>
-        </div>
-        <div class="upCard">
-            <el-card>
+            <el-card shadow="hover" style="margin-top: 100px;width: 80%">
                 <div slot="header">
-                    <span>代码内容</span>
+                    <span>模型信息</span>
                 </div>
-                <div><pre id="div1">{{message}}</pre></div>
+                <span>母模型：{{parentModel}}</span><br><br>
+                <span>修改设备：{{deviceName}}</span>
             </el-card>
         </div>
+
+        <!--<div id="2" class="upCard">-->
+        <el-card style="position: relative;margin-left: -20%;width: 60%" shadow="hover">
+            <div slot="header">
+                <span>代码内容</span>
+            </div>
+            <pre id="div1" style="overflow: auto;height: 550px;overflow-x: hidden">{{message}}</pre>
+        </el-card>
+        <!--</div>-->
+        <!--<div id="1" style="width: 23%;position: absolute;height: 40%;float: left"></div>-->
         <!--<a href="http://bigdata1:50070/webhdfs/v1/upload/model-py/19-02/23/bb83d19c-2696-4884-baa0-2de7dc99d1ea-1.py?op=OPEN">下载图片</a>-->
     </div>
 </template>
@@ -29,35 +38,69 @@
 <script>
     export default {
         name: "DownloadPy",
-        mounted(){
-            let url='http://106.12.123.92:8081/api/v1/models';
-            let that=this;
+        created() {
+            let url = 'http://106.12.123.92:8081/api/v1/models';
+            let that = this;
             this.axios(url).then(function (response) {
                 // console.log(response);
-                if(response.data.code===0){
-                    that.options=response.data.data.list;
+                if (response.data.code === 0) {
+                    that.options = response.data.data.list;
+                    that.modelTable=response.data.data.list;
+                    // console.log(that.modelTable);
                     // console.log(that.options);
                 }
+            });
+            let api=this.$api.userApi.getMachines;
+            this.axios(api).then(response=>{
+                this.deviceTable=response.data.data.list;
+                // console.log(this.deviceTable);
             })
         },
-        data(){
-            return{
-                options:[],
-                value:'',
-                message:'',
-                file:''
+        data() {
+            return {
+                options: [],
+                value: '',
+                message: '',
+                file: '',
+                parentModel: '',
+                deviceName: '',
+                modelTable:[],
+                deviceTable:[]
             }
         },
-        methods:{
-            downloadModel:function () {
-                let url;
-                for(let i=0;i<this.options.length;i++){
-                    // console.log(i);
-                    if(this.options[i].modelId===this.value){
-                        url=this.options[i].pyUrl;
+        methods: {
+            showInfo(){
+                // console.log('111');
+                // console.log(this.value[0]);
+                let deviceId;
+                for(let i=0;i<this.modelTable.length;i++){
+                    if(this.modelTable[i].modelId===this.value[0]){
+                        if(this.modelTable[i].parentModel===0){
+                            this.parentModel='无';
+                        }else{
+                            this.parentModel=this.modelTable[i].parentModel;
+                        }
+                        deviceId=this.modelTable[i].deviceId;
+                        // console.log(deviceId);
+                        break;
                     }
                 }
-                window.location.href='http://106.12.123.92:5555'+url;
+                for(let i=0;i<this.deviceTable.length;i++){
+                    if(this.deviceTable[i].deviceId===deviceId){
+                        this.deviceName=this.deviceTable[i].name;
+                        break;
+                    }
+                }
+            },
+            downloadModel() {
+                let url;
+                for (let i = 0; i < this.options.length; i++) {
+                    // console.log(i);
+                    if (this.options[i].modelId === this.value) {
+                        url = this.options[i].pyUrl;
+                    }
+                }
+                window.location.href = 'http://106.12.123.92:5555' + url;
                 // this.axios({
                 //     // url:'http://bigdata1:50070/webhdfs/v1/upload/model-py/19-02/23/bb83d19c-2696-4884-baa0-2de7dc99d1ea-1.py?op=OPEN',
                 // }).then(()=>{
@@ -67,15 +110,15 @@
             preview() {
                 // this.cardVisible = true;
                 let url;
-                for(let i=0;i<this.options.length;i++){
+                for (let i = 0; i < this.options.length; i++) {
                     // console.log(i);
-                    if(this.options[i].modelId===this.value){
-                        url=this.options[i].pyUrl;
+                    if (this.options[i].modelId === this.value) {
+                        url = this.options[i].pyUrl;
                     }
                 }
 
                 document.getElementById('div1').innerHTML = '读取中...';
-                $(document).ready(function(){
+                $(document).ready(function () {
                     $("#div1").load('http://106.12.123.92:5555/webhdfs/v1/upload/model-py/19-03/16/1d819852-5578-4c07-bf5d-0465218903b0-test.py?op=OPEN');
                 });
                 // $(document).ready(function(){
@@ -102,7 +145,7 @@
 <style scoped>
     .upCard {
         width: 60%;
-        height: 80%;
+        height: 100%;
         float: left;
     }
 </style>
