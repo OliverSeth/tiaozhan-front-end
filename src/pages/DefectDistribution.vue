@@ -16,7 +16,7 @@
                 <p><span style="font-size: 24px">转向：{{turn}}</span></p><br>
                 <p><span style="font-size: 24px">转速：{{speed}}</span></p><br>
                 <p><span style="font-size: 24px">光源：{{light}}</span></p><br>
-                <p><span style="font-size: 24px">{{alarm}}</span></p><br>
+                <p><span style="font-size: 30px;color: red;font-weight: bold">{{alarm}}</span></p><br>
             </div>
         </div>
     </div>
@@ -51,13 +51,25 @@
                                 this.turn='反转';
                             }else if(msg[1]==='Disconnected'){
                                 this.plc='未连接';
+                                this.turn='无';
+                                this.speed=0;
+                                this.light='关';
+                                this.alarm='';
                             }else{
-                                this.plc='未知状态'
+                                this.plc='未知状态';
+                                this.turn='无';
+                                this.speed=0;
+                                this.light='关';
+                                this.alarm='';
                             }
                             console.log(msg[1]);
                             // console.log(this.plc);
                         }else{
                             this.plc='没有PLC状态';
+                            this.turn='无';
+                            this.speed=0;
+                            this.light='关';
+                            this.alarm='';
                             console.log('没有PLC状态');
                         }
                     }
