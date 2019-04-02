@@ -114,9 +114,9 @@
         name: "DefectDistribution",
         methods: {
             parseSegment(seg) {
-                console.log(this.picArr);
-                console.log(this.infoArr);
-                console.log(this.infoArr[this.index]);
+                // console.log(this.picArr);
+                // console.log(this.infoArr);
+                // console.log(this.infoArr[this.index]);
                 //console.log(seg);
                 let part = seg.split("@");
                 if (part.length === 1) {
