@@ -42,7 +42,7 @@
             let url = 'http://106.12.123.92:8081/api/v1/models';
             let that = this;
             this.axios(url).then(function (response) {
-                // console.log(response);
+                console.log(response);
                 if (response.data.code === 0) {
                     that.options = response.data.data.list;
                     that.modelTable=response.data.data.list;
