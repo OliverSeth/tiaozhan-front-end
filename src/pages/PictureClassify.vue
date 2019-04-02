@@ -124,9 +124,9 @@
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="currentPage4"
-                    :page-sizes="[10, 20, 30, 40]"
+
                     :page-size="10"
-                    layout="total, sizes, prev, pager, next, jumper"
+                    layout=" prev, pager, next, jumper"
                     :total="total">
             </el-pagination>
         </div>
@@ -523,13 +523,20 @@
                 // let array = eval('(' + item4 + ')');//封装成数
                 // console.log(array);
                 // arryy=item4;
-                let dataStrArr=this.value9.toString().split(",");//分割成字符串数组
+                let dataStrArr=this.checkList.toString().split(",");//分割成字符串数组
+                // let dataInArr=this.checkList.toString().split(",");//分割成字符串数组
+                // console.log(dataInArr);
                 let dataIntArr=[];//保存转换后的整型字符串
+                // console.log(that.checkList);
+
                 for(let i=0;i<this.checkList.length;i++)
                 {
+
                     if(dataStrArr[i]==="横")
                     {
                         dataIntArr[i]=1;
+                        // console.log("dayin");
+
                     }
                     if(dataStrArr[i]==="纵")
                     {
@@ -539,9 +546,14 @@
                     {
                         dataIntArr[i]=0;
                     }
+                    if(dataStrArr[i]==="破洞")
+                    {
+                        dataIntArr[i]=3;
+                    }
                 }
                 let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
                 let dataIntArr1=[];//保存转换后的整型字符串
+
                 // dataStrArr.forEach(function(data,index,arr){
                 //     dataIntArr.push(+data);
                 // });
@@ -552,11 +564,14 @@
                 {
                     if(dataStrArr1[i]==="人工")
                     {
+
                         dataIntArr1[i]=0;
+                        // console.log(dataIntArr1[i]);
                     }
                     if(dataStrArr1[i]==="机器")
                     {
                         dataIntArr1[i]=1;
+                        // console.log(dataIntArr1[i]);
                     }
                 }
                 // console.log(dataIntArr);
@@ -565,6 +580,7 @@
                 //     console.log("good");
                 // }
                 // console.log();
+                console.log(dataIntArr1);
                 let photoClass=[];
                 this.getDeviceid();
                 this.getModelid();
@@ -582,7 +598,7 @@
                         identifyType:dataIntArr1.toString()
                     }
                 }).then(function (response) {
-                    // console.log(response);
+                    console.log(response);
                     let data=response.data;
 
                     if(data.code===0){
