@@ -4,7 +4,13 @@
         <div id="msg" style="width: 70%;height: 100%;position:absolute">
             <!--<div :style="bg">-->
             <!--</div>-->
-            <img v-for="(pictures,index) in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">
+            <div v-for="(pictures,index) in picArr"
+                 style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%"
+                 :style="{'backgroundImage':pictures}">
+                <!--<img :src="pictures">-->
+                <span>{{infoArr[index]}}</span>
+            </div>
+            <!--<img v-for="(pictures,index) in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
             <!--<span>疵点类型：{{infoArr[index]}}</span>-->
         </div>
         <div id="info" style="width: 30%;height: 100%;position: absolute;right: 0">
@@ -12,12 +18,36 @@
                 <img src="../assets/device.jpg" style="width: 100%;height: 30%;position: absolute">
             </div>
             <div id="word" style="width: 100%;height: 70%;position: absolute;bottom: 0">
-                <br><p><span style="font-size: 24px">PLC状态：{{plc}}</span></p><br>
-                <p><span style="font-size: 24px">工控机状态：{{state}}</span></p><br>
-                <p><span style="font-size: 24px">转向：{{turn}}</span></p><br>
-                <p><span style="font-size: 24px">转速：{{speed}}</span></p><br>
-                <p><span style="font-size: 24px">光源：{{light}}</span></p><br>
-                <p><span style="font-size: 30px;color: red;font-weight: bold">{{alarm}}</span></p><br>
+                <el-row>
+                    <el-col span="12">
+                        <el-row :gutter="20"><span style="font-size: 24px">PLC状态：</span></el-row>
+                        <el-row :gutter="20"><span style="font-size: 24px">工控机状态：</span></el-row>
+                        <el-row :gutter="20"><span style="font-size: 24px">转向：</span></el-row>
+                        <el-row :gutter="20"><span style="font-size: 24px">转速：</span></el-row>
+                        <el-row :gutter="20"><span style="font-size: 24px">光源：</span></el-row>
+                        <el-row :gutter="20"><span style="font-size: 30px;color: red;font-weight: bold"></span></el-row>
+                    </el-col>
+                    <el-col span="12">
+                        <el-row :gutter="20">
+                            <el-switch
+                                    disabled
+                                    style="display: block;font-size: 24px"
+                                    v-model="plc"
+                                    active-value="已连接"
+                                    inactive-value="未连接"
+                                    active-color="#13ce66"
+                                    inactive-color="#ff4949"
+                                    active-text="已连接"
+                                    inactive-text="未连接">
+                            </el-switch>
+                        </el-row>
+                        <el-row :gutter="20"></el-row>
+                        <el-row :gutter="20"></el-row>
+                        <el-row :gutter="20"></el-row>
+                        <el-row :gutter="20"></el-row>
+                    </el-col>
+                </el-row>
+                <br>
             </div>
         </div>
     </div>
@@ -31,72 +61,72 @@
             parseSegment(seg) {
                 //console.log(seg);
                 let part = seg.split("@");
-                if(part.length===1){
+                if (part.length === 1) {
                     console.log(part[0]);
-                    if(part[0]==='test_connection'){
+                    if (part[0] === 'test_connection') {
                         console.log('连接成功！');
-                    }else{
-                        let msg=part[0].split(':');
-                        if(msg[0]==='PlcWorkState'){
-                            let info=msg[1].split(',');
-                            if(info[4]==='1'){
-                                this.alarm='报警';
-                            }else if(info[4]==='0'){
-                                this.alarm='';
+                    } else {
+                        let msg = part[0].split(':');
+                        if (msg[0] === 'PlcWorkState') {
+                            let info = msg[1].split(',');
+                            if (info[4] === '1') {
+                                this.alarm = '报警';
+                            } else if (info[4] === '0') {
+                                this.alarm = '';
                             }
-                            if(info[0]==='0'){
-                                this.plc='未连接';
-                            }else if(info[0]==='1'){
-                                this.plc='已连接';
-                                if(info[1]==='-1'){
-                                    this.state='未启动';
-                                }else{
-                                    this.state='已启动';
-                                    if(info[1]==='1'){
-                                        this.turn='正转';
-                                        if(info[2]==='0'){
-                                            this.light='关';
-                                        }else if(info[2]==='1'){
-                                            this.light='开';
+                            if (info[0] === '0') {
+                                this.plc = '未连接';
+                            } else if (info[0] === '1') {
+                                this.plc = '已连接';
+                                if (info[1] === '-1') {
+                                    this.state = '未启动';
+                                } else {
+                                    this.state = '已启动';
+                                    if (info[1] === '1') {
+                                        this.turn = '正转';
+                                        if (info[2] === '0') {
+                                            this.light = '关';
+                                        } else if (info[2] === '1') {
+                                            this.light = '开';
                                         }
-                                        if(info[3]==='0'){
-                                            this.speed='低速';
-                                        }else if(info[3]==='1'){
-                                            this.speed='高速';
+                                        if (info[3] === '0') {
+                                            this.speed = '低速';
+                                        } else if (info[3] === '1') {
+                                            this.speed = '高速';
                                         }
-                                        if(info[4]==='1'){
-                                            this.alarm='报警';
-                                        }else if(info[4]==='0'){
-                                            this.alarm='';
+                                        if (info[4] === '1') {
+                                            this.alarm = '报警';
+                                        } else if (info[4] === '0') {
+                                            this.alarm = '';
                                         }
-                                    }else if(info[1]==='2'){
-                                        this.turn='反转';
-                                        if(info[2]==='0'){
-                                            this.light='关';
-                                        }else if(info[2]==='1'){
-                                            this.light='开';
+                                    } else if (info[1] === '2') {
+                                        this.turn = '反转';
+                                        if (info[2] === '0') {
+                                            this.light = '关';
+                                        } else if (info[2] === '1') {
+                                            this.light = '开';
                                         }
-                                        if(info[3]==='0'){
-                                            this.speed='低速';
-                                        }else if(info[3]==='1'){
-                                            this.speed='高速';
+                                        if (info[3] === '0') {
+                                            this.speed = '低速';
+                                        } else if (info[3] === '1') {
+                                            this.speed = '高速';
                                         }
-                                        if(info[4]==='1'){
-                                            this.alarm='报警';
-                                        }else  if(info[4]==='0'){
-                                            this.alarm='';
+                                        if (info[4] === '1') {
+                                            this.alarm = '报警';
+                                        } else if (info[4] === '0') {
+                                            this.alarm = '';
                                         }
                                     }
                                 }
                             }
                             console.log(msg[1]);
                             // console.log(this.plc);
-                        }else{
-                            this.plc='没有PLC状态';
-                            this.turn='无';
-                            this.speed=0;
-                            this.light='关';
-                            this.alarm='';
+                        } else {
+                            this.plc = '没有PLC状态';
+                            this.turn = '无';
+                            this.speed = 0;
+                            this.light = '关';
+                            this.alarm = '';
                             console.log('没有PLC状态');
                         }
                     }
@@ -107,7 +137,7 @@
                 let len = parseInt(head[2]);
                 //console.log(head);
                 //console.log(this.segcnt[head[0]]);
-                if (head[1] === '0'){
+                if (head[1] === '0') {
                     console.log(part[1]);
                     switch (part[1]) {
                         case 'heng':
@@ -173,19 +203,20 @@
         },
         data() {
             return {
-                plc:'未连接',
-                state:'未启动',
-                turn:'无',
-                speed:0,
-                light:'关',
-                alarm:'',
-                msg1:'PLC未连接',
+                value4: '',
+                plc: '未连接',
+                state: '未启动',
+                turn: '无',
+                speed: 0,
+                light: '关',
+                alarm: '',
+                msg1: 'PLC未连接',
                 segs: {},
                 segcnt: {},
                 plcState: "",
                 pictures: "",
                 picArr: [],
-                infoArr:[],
+                infoArr: [],
                 // checked1: false,
                 bg1: {
                     background: 'url(' + require('../assets/1.jpg') + ')',
