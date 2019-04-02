@@ -58,7 +58,7 @@
         </div>
         <div style="width: 15%;height:20%;float: left;">
             <p class="optionmenu" > <el-tag>检测类型</el-tag></p>
-            <el-checkbox-group v-model="checkList2">
+            <el-checkbox-group v-model="checkList2" :max="1">
                 <el-checkbox label="人工"></el-checkbox>
                 <el-checkbox label="机器"></el-checkbox>
 
@@ -862,29 +862,11 @@
                             picker.$emit('pick', [start, end]);
                         }
                     }]
-
                 },
                 value7: ["",""],
                 checkList:[],
                 checkList2:[],
                 checkAll: false,
-                // options: [{
-                //     value: '选项1',
-                //     label: '黄金糕'
-                // }, {
-                //     value: '选项2',
-                //     label: '双皮奶'
-                // }, {
-                //     value: '选项3',
-                //     label: '蚵仔煎'
-                // }, {
-                //     value: '选项4',
-                //     label: '龙须面'
-                // }, {
-                //     value: '选项5',
-                //     label: '北京烤鸭'
-                // }],
-                // value8: '',
             };
         },
     }

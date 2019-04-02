@@ -24,83 +24,148 @@
             <div style="width: 100%;height: 100%;position: absolute">
                 <img src="../assets/device.jpg" style="width: 100%;height: 30%;position: absolute">
             </div>
-            <div id="word" style="width: 100%;height: 70%;position: absolute;bottom: 0">
+            <div id="word" style="width: 100%;height: 70%;position: absolute;bottom: 0" >
                 <el-row>
                     <el-col span="12">
-                        <el-row :gutter="20"><span style="font-size: 24px">PLC状态：</span></el-row>
+                        <el-row  :gutter="20"><span style="font-size: 24px" >PLC状态：</span></el-row>
+
                         <el-row :gutter="20"><span style="font-size: 24px">工控机状态：</span></el-row>
                         <el-row :gutter="20"><span style="font-size: 24px">转向：</span></el-row>
-                        <el-row :gutter="20"><span style="font-size: 24px">转速：</span></el-row>
-                        <el-row :gutter="20"><span style="font-size: 24px">光源：</span></el-row>
-                        <el-row :gutter="20"><span style="font-size: 30px;color: red;font-weight: bold">{{alarm}}</span></el-row>
-                    </el-col>
-                    <el-col span="12">
-                        <el-row :gutter="20">
-                            <el-switch
-                                    disabled
-                                    style="display: block;font-size: 24px"
-                                    v-model="plc"
-                                    active-value="已连接"
-                                    inactive-value="未连接"
-                                    active-color="#13ce66"
-                                    inactive-color="#ff4949"
-                                    active-text="已连接"
-                                    inactive-text="未连接">
-                            </el-switch>
-                        </el-row>
-                        <el-row :gutter="20">
-                            <el-switch
-                                    disabled
-                                    style="display: block;font-size: 24px"
-                                    v-model="state"
-                                    active-value="已启动"
-                                    inactive-value="未启动"
-                                    active-color="#13ce66"
-                                    inactive-color="#ff4949"
-                                    active-text="已启动"
-                                    inactive-text="未启动">
-                            </el-switch>
-                        </el-row>
-                        <el-row :gutter="20">
-                            <el-switch
-                                    disabled
-                                    style="display: block;font-size: 24px"
-                                    v-model="turn"
-                                    active-value="正转"
-                                    inactive-value="反转"
-                                    active-color="#13ce66"
-                                    inactive-color="#ff4949"
-                                    active-text="正转"
-                                    inactive-text="反转">
-                            </el-switch>
-                        </el-row>
-                        <el-row :gutter="20">
 
-                            <el-switch
-                                    disabled
-                                    style="display: block;font-size: 24px"
-                                    v-model="speed"
-                                    active-value="高速"
-                                    inactive-value="低速"
-                                    active-color="#13ce66"
-                                    inactive-color="#ff4949"
-                                    active-text="高速"
-                                    inactive-text="低速">
-                            </el-switch>
-                        </el-row>
-                        <el-row :gutter="20">
-                            <el-switch
-                                    disabled
-                                    style="display: block;font-size: 24px"
-                                    v-model="light"
-                                    active-value="开"
-                                    inactive-value="关"
-                                    active-color="#13ce66"
-                                    inactive-color="#ff4949"
-                                    active-text="开"
-                                    inactive-text="关">
-                            </el-switch>
-                        </el-row>
+                        <el-row :gutter="20"><span style="font-size: 24px">转速：</span></el-row>
+
+                        <el-row :gutter="20"><span style="font-size: 24px">光源：</span></el-row>
+                        <el-row :gutter="20"><span style="font-size: 42px;color: red;font-weight: bold">{{alarm}}</span></el-row>
+                    </el-col>
+                    <el-col span="12" >
+
+                        <div class="wt-switch" >开
+
+
+                            <label   class="label-switch">
+
+                                <input type="checkbox"   :disabled="isable" @click="Switch" :checked="checked">
+
+                                <div class="checkbox"></div>
+                            </label>
+                            关
+                        </div>
+                        <div class="wt-switch" >开
+
+
+                            <label   class="label-switch">
+
+                                <input type="checkbox"   :disabled="isable" @click="Switch" :checked="checked">
+
+                                <div class="checkbox"></div>
+                            </label>
+                            关
+                        </div>
+                        <div class="wt-switch" >开
+
+
+                            <label   class="label-switch">
+
+                                <input type="checkbox"   :disabled="isable" @click="Switch" :checked="checked">
+
+                                <div class="checkbox"></div>
+                            </label>
+                            关
+                        </div>
+                        <div class="wt-switch" >开
+
+
+                            <label   class="label-switch">
+
+                                <input type="checkbox"   :disabled="isable" @click="Switch" :checked="checked">
+
+                                <div class="checkbox"></div>
+                            </label>
+                            关
+                        </div>
+                        <div class="wt-switch" >开
+
+
+                            <label   class="label-switch">
+
+                                <input type="checkbox"   :disabled="isable" @click="Switch" :checked="checked">
+
+                                <div class="checkbox"></div>
+                            </label>
+                            关
+                        </div>
+
+
+
+                        <!--<el-row :gutter="20">-->
+                            <!--<el-switch-->
+
+                                    <!--width="24"-->
+
+                                    <!--disabled-->
+                                    <!--style=" font-size: 24px"-->
+                                    <!--v-model="plc"-->
+                                    <!--active-value="已连接"-->
+                                    <!--inactive-value="未连接"-->
+                                    <!--active-color="#13ce66"-->
+                                    <!--inactive-color="#ff4949"-->
+                                    <!--active-text="已连接"-->
+                                    <!--inactive-text="未连接">-->
+                            <!--</el-switch>-->
+                        <!--</el-row>-->
+                        <!--<el-row :gutter="20">-->
+                            <!--<el-switch-->
+                                    <!--disabled-->
+                                    <!--style="display: block;font-size: 24px"-->
+                                    <!--v-model="state"-->
+                                    <!--active-value="已启动"-->
+                                    <!--inactive-value="未启动"-->
+                                    <!--active-color="#13ce66"-->
+                                    <!--inactive-color="#ff4949"-->
+                                    <!--active-text="已启动"-->
+                                    <!--inactive-text="未启动">-->
+                            <!--</el-switch>-->
+                        <!--</el-row>-->
+                        <!--<el-row :gutter="20">-->
+                            <!--<el-switch-->
+                                    <!--disabled-->
+                                    <!--style="display: block;font-size: 24px"-->
+                                    <!--v-model="turn"-->
+                                    <!--active-value="正转"-->
+                                    <!--inactive-value="反转"-->
+                                    <!--active-color="#13ce66"-->
+                                    <!--inactive-color="#ff4949"-->
+                                    <!--active-text="正转"-->
+                                    <!--inactive-text="反转">-->
+                            <!--</el-switch>-->
+                        <!--</el-row>-->
+                        <!--<el-row :gutter="20">-->
+
+                            <!--<el-switch-->
+                                    <!--disabled-->
+                                    <!--style="display: block;font-size: 24px"-->
+                                    <!--v-model="speed"-->
+                                    <!--active-value="高速"-->
+                                    <!--inactive-value="低速"-->
+                                    <!--active-color="#13ce66"-->
+                                    <!--inactive-color="#ff4949"-->
+                                    <!--active-text="高速"-->
+                                    <!--inactive-text="低速">-->
+                            <!--</el-switch>-->
+                        <!--</el-row>-->
+                        <!--<el-row :gutter="20">-->
+                            <!--<el-switch-->
+                                    <!--disabled-->
+                                    <!--style="display: block;font-size: 24px"-->
+                                    <!--v-model="light"-->
+                                    <!--active-value="开"-->
+                                    <!--inactive-value="关"-->
+                                    <!--active-color="#13ce66"-->
+                                    <!--inactive-color="#ff4949"-->
+                                    <!--active-text="开"-->
+                                    <!--inactive-text="关">-->
+                            <!--</el-switch>-->
+                        <!--</el-row>-->
                     </el-col>
                 </el-row>
                 <br>
@@ -113,7 +178,26 @@
 
     export default {
         name: "DefectDistribution",
+        props: {
+            isable: {
+                type: Boolean,
+                default: function () {
+                    return false;
+                }
+            },
+            checked: {
+                type: Boolean,
+                default: function () {
+                    return false;
+                }
+            }
+        },
         methods: {
+            Switch () {
+                this.$emit('switch', event.target.checked);
+            },
+
+
             parseSegment(seg) {
                 // console.log(this.picArr);
                 // console.log(this.infoArr);
@@ -375,6 +459,210 @@
     }
 </script>
 
-<style scoped>
+
+
+
+
+
+<style>
+    .wt-switch .label-switch {
+
+        display: inline-block;
+
+        vertical-align: middle;
+
+        width: 3.1rem;/* 整个控件的大小*/
+
+        border-radius: 0.8rem;
+
+        box-sizing: border-box;
+
+        height: 2.1rem;
+
+        position: relative;
+
+        cursor: pointer;
+
+        -ms-flex-item-align: center;
+
+        -webkit-align-self: center;
+
+        align-self: center}
+
+    input[type="checkbox"] {
+
+        display: none;
+
+    }
+
+    input[type="checkbox"]:checked + .checkbox {
+
+        background: #4cd964;
+
+    }
+
+    input[type="checkbox"]:checked + .checkbox:after {
+
+        transform: translateX(1.1rem);
+
+    }
+
+    .checkbox {/* 容器的大小*/
+
+        width: 3.1rem;
+
+        border-radius: 0.8rem;
+
+        box-sizing: border-box;
+
+        height: 1.8rem;
+
+        background: #e5e5e5;
+
+        z-index: 0;
+
+        margin: 0;
+
+        padding: 0;
+
+        -webkit-appearance: none;
+
+        -moz-appearance: none;
+
+        -ms-appearance: none;
+
+        appearance: none;
+
+        border: none;
+
+        cursor: pointer;
+
+        position: relative;
+
+        -webkit-transition-duration: 300ms;
+
+        transition-duration: 300ms}
+
+    .checkbox:before {
+
+         content: ' ';
+
+         position: absolute;
+
+         left: 0.1rem;
+
+         top: 0.1rem;
+
+         width:3.3rem;
+
+         border-radius: 0.8rem;
+
+         box-sizing: border-box;
+
+         height: 2.1rem;
+
+         z-index: 1;
+
+         -webkit-transition-duration: 300ms;
+
+         transition-duration: 300ms;
+
+         -webkit-transform: scale(1);
+
+         transform: scale(1);
+
+     }
+
+    .checkbox:after {
+
+         content: ' ';
+        /* 球的大小*/
+
+         height: 1.6rem;
+
+         width: 1.6rem;
+
+         border-radius: 1.4rem;
+
+         background: #fff;
+
+         position: absolute;
+
+         z-index: 2;
+
+         top: 0.1rem;
+
+         left: 0.1rem;
+
+         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+
+         -webkit-transform: translateX(0px);
+
+         transform: translateX(0px);
+
+         -webkit-transition-duration: 300ms;
+
+         transition-duration: 300ms;
+
+     }
+
+
+
+
+
+    /*.el-switch__core {*/
+        /*height: 1px;*/
+    /*}*/
+    /*.switchStyle{*/
+        /*width: 100px;*/
+
+    /*}*/
+    /*.switchStyle .el-switch__label {*/
+        /*position: absolute;*/
+        /*display: none;*/
+        /*color: #ff8ba7;*/
+    /*}*/
+    /*.switchStyle .el-switch__label--left {*/
+        /*z-index: 9;*/
+        /*left: 111px;*/
+    /*}*/
+    /*.switchStyle .el-switch__label--right {*/
+        /*z-index: 24;*/
+        /*left: -24px;*/
+    /*}*/
+    /*.switchStyle .el-switch__label--top {*/
+        /*z-index: 24;*/
+        /*top: -111px;*/
+    /*}*/
+    /*.switchStyle .el-switch__label.is-active {*/
+        /*display: block;*/
+    /*}*/
+    /*.switchStyle.el-switch .el-switch__core,*/
+    /*.el-switch .el-switch__label {*/
+        /*width: 100px !important;*/
+    /*}*/
+    /*.el-switch__label {*/
+        /*position: absolute;*/
+        /*display: none;*/
+        /*color: #ff38cb;*/
+    /*}*/
+    /*!*打开时文字位置设置*!*/
+    /*.demo .el-switch__label--right {*/
+        /*z-index: 1;*/
+        /*right: -3px;*/
+    /*}*/
+    /*!*关闭时文字位置设置*!*/
+    /*.demo .el-switch__label--left {*/
+        /*z-index: 1;*/
+        /*left: 19px;*/
+    /*}*/
+    /*!*显示文字*!*/
+    /*.demo .el-switch__label.is-active {*/
+        /*display: block;*/
+    /*}*/
+    /*.demo.el-switch .el-switch__core,*/
+    /*.el-switch .el-switch__label {*/
+        /*width: 50px !important;*/
+    /*}*/
 
 </style>
