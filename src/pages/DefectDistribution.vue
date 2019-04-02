@@ -32,7 +32,7 @@
                         <el-row :gutter="20"><span style="font-size: 24px">转向：</span></el-row>
                         <el-row :gutter="20"><span style="font-size: 24px">转速：</span></el-row>
                         <el-row :gutter="20"><span style="font-size: 24px">光源：</span></el-row>
-                        <el-row :gutter="20"><span style="font-size: 30px;color: red;font-weight: bold"></span></el-row>
+                        <el-row :gutter="20"><span style="font-size: 30px;color: red;font-weight: bold">{{alarm}}</span></el-row>
                     </el-col>
                     <el-col span="12">
                         <el-row :gutter="20">
@@ -48,10 +48,58 @@
                                     inactive-text="未连接">
                             </el-switch>
                         </el-row>
-                        <el-row :gutter="20"></el-row>
-                        <el-row :gutter="20"></el-row>
-                        <el-row :gutter="20"></el-row>
-                        <el-row :gutter="20"></el-row>
+                        <el-row :gutter="20">
+                            <el-switch
+                                    disabled
+                                    style="display: block;font-size: 24px"
+                                    v-model="state"
+                                    active-value="已启动"
+                                    inactive-value="未启动"
+                                    active-color="#13ce66"
+                                    inactive-color="#ff4949"
+                                    active-text="已启动"
+                                    inactive-text="未启动">
+                            </el-switch>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-switch
+                                    disabled
+                                    style="display: block;font-size: 24px"
+                                    v-model="turn"
+                                    active-value="正转"
+                                    inactive-value="反转"
+                                    active-color="#13ce66"
+                                    inactive-color="#ff4949"
+                                    active-text="正转"
+                                    inactive-text="反转">
+                            </el-switch>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-switch
+                                    disabled
+                                    style="display: block;font-size: 24px"
+                                    v-model="speed"
+                                    active-value="高速"
+                                    inactive-value="低速"
+                                    active-color="#13ce66"
+                                    inactive-color="#ff4949"
+                                    active-text="高速"
+                                    inactive-text="低速">
+                            </el-switch>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-switch
+                                    disabled
+                                    style="display: block;font-size: 24px"
+                                    v-model="light"
+                                    active-value="开"
+                                    inactive-value="关"
+                                    active-color="#13ce66"
+                                    inactive-color="#ff4949"
+                                    active-text="开"
+                                    inactive-text="关">
+                            </el-switch>
+                        </el-row>
                     </el-col>
                 </el-row>
                 <br>
