@@ -47,7 +47,7 @@
                         <el-row :gutter="20">
                             <div class="wt-switch" >未启动
                                 <label   class="label-switch">
-                                    <input type="checkbox"   disabled @click="Switch" :checked="checked">
+                                    <!--<input type="checkbox"   disabled @click="Switch" :checked="checked">-->
                                     <div class="checkbox"></div>
                                 </label>
                                 已启动
