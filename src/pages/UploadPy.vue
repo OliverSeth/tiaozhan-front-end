@@ -75,12 +75,12 @@
                 let fileValue = file.name;
                 // console.log(fileValue);
                 let index = fileValue.lastIndexOf('.');
-                const isPy = fileValue.substring(index) === '.py'||fileValue.substring(index) ==='.zip'||fileValue.substring(index) ==='.rar';
+                const isPy = fileValue.substring(index) === '.py'||fileValue.substring(index) ==='.zip'||fileValue.substring(index) ==='.rar'||fileValue.substring(index) ==='.h5';
                 // console.log(index);
                 if (isPy) {
                     this.file = file;
                 } else {
-                    this.$message.error('上传文件只能是 .py 或 .zip 或 .rar 格式!');
+                    this.$message.error('上传文件只能是 .py 或 .zip 或 .rar 或 .h5 格式!');
                 }
                 return isPy;
             },
