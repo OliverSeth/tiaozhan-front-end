@@ -7,7 +7,7 @@
                 <!--<img :src="pictures" style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
                 <!--<span>{{infoArr[index]}}</span>-->
             <!--</div>-->
-             <el-scrollbar style="overflow-x: hidden;overflow: auto"><div v-for="(pictures,index) in picArr"
+             <div v-for="(pictures,index) in picArr"
              style="float:left;width: 30%;height: 25%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">
 
                  <div style="position:relative;">
@@ -16,7 +16,7 @@
                  </div>
                  <!--<img :src="pictures" style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
                  <!--<span>{{infoArr[index]}}</span>-->
-             </div></el-scrollbar>
+             </div>
             <!--<img v-for="(pictures,index) in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
             <!--<span>疵点类型：{{infoArr[index]}}</span>-->
         </div>
