@@ -38,7 +38,7 @@
                         <el-row :gutter="20">
                             <br><div class="wt-switch" >未连接
                                 <label   class="label-switch">
-                                    <input type="checkbox"  disabled @click="Switch" :checked="checked">
+                                    <input type="checkbox"  disabled @click="Switch" :checked="checked1">
                                     <div class="checkbox"></div>
                                 </label>
                                 已连接
@@ -47,7 +47,7 @@
                         <el-row :gutter="20">
                             <div class="wt-switch" >未启动
                                 <label   class="label-switch">
-                                    <!--<input type="checkbox"   disabled @click="Switch" :checked="checked">-->
+                                    <input type="checkbox"   disabled @click="Switch" :checked="checked2">
                                     <div class="checkbox"></div>
                                 </label>
                                 已启动
@@ -56,7 +56,7 @@
                         <el-row :gutter="20">
                             <div class="wt-switch" >&nbsp;&nbsp;&nbsp;反转
                                 <label   class="label-switch">
-                                    <input type="checkbox"   disabled @click="Switch" :checked="checked">
+                                    <input type="checkbox"   disabled @click="Switch" :checked="checked3">
                                     <div class="checkbox"></div>
                                 </label>
                                 正转
@@ -65,7 +65,7 @@
                         <el-row :gutter="20">
                             <div class="wt-switch" >&nbsp;&nbsp;&nbsp;低速
                                 <label   class="label-switch">
-                                    <input type="checkbox"   disabled @click="Switch" :checked="checked">
+                                    <input type="checkbox"   disabled @click="Switch" :checked="checked4">
                                     <div class="checkbox"></div>
                                 </label>
                                 高速
@@ -74,7 +74,7 @@
                         <el-row :gutter="20">
                             <div class="wt-switch" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关
                                 <label   class="label-switch">
-                                    <input type="checkbox"   disabled @click="Switch" :checked="checked">
+                                    <input type="checkbox"   disabled @click="Switch" :checked="checked5">
                                     <div class="checkbox"></div>
                                 </label>
                                 开
@@ -160,16 +160,40 @@
     export default {
         name: "DefectDistribution",
         props: {
-            isable: {
+            // isable: {
+            //     type: Boolean,
+            //     default: function () {
+            //         return false;
+            //     }
+            // },
+            checked1: {
                 type: Boolean,
                 default: function () {
-                    return false;
+                    return this.plc;
                 }
             },
-            checked: {
+            checked2: {
                 type: Boolean,
                 default: function () {
-                    return false;
+                    return this.state;
+                }
+            },
+            checked3: {
+                type: Boolean,
+                default: function () {
+                    return this.turn;
+                }
+            },
+            checked4: {
+                type: Boolean,
+                default: function () {
+                    return this.speed;
+                }
+            },
+            checked5: {
+                type: Boolean,
+                default: function () {
+                    return this.light;
                 }
             }
         },
@@ -199,24 +223,24 @@
                                 this.alarm = '';
                             }
                             if (info[0] === '0') {
-                                this.plc = '未连接';
+                                this.plc = true;
                             } else if (info[0] === '1') {
-                                this.plc = '已连接';
+                                this.plc = false;
                                 if (info[1] === '-1') {
-                                    this.state = '未启动';
+                                    this.state = false;
                                 } else {
-                                    this.state = '已启动';
+                                    this.state = true;
                                     if (info[1] === '1') {
-                                        this.turn = '正转';
+                                        this.turn = true;
                                         if (info[2] === '0') {
-                                            this.light = '关';
+                                            this.light = false;
                                         } else if (info[2] === '1') {
-                                            this.light = '开';
+                                            this.light = true;
                                         }
                                         if (info[3] === '0') {
-                                            this.speed = '低速';
+                                            this.speed = false;
                                         } else if (info[3] === '1') {
-                                            this.speed = '高速';
+                                            this.speed = true;
                                         }
                                         if (info[4] === '1') {
                                             this.alarm = '报警';
@@ -224,16 +248,16 @@
                                             this.alarm = '';
                                         }
                                     } else if (info[1] === '2') {
-                                        this.turn = '反转';
+                                        this.turn = false;
                                         if (info[2] === '0') {
-                                            this.light = '关';
+                                            this.light = false;
                                         } else if (info[2] === '1') {
-                                            this.light = '开';
+                                            this.light = true;
                                         }
                                         if (info[3] === '0') {
-                                            this.speed = '低速';
+                                            this.speed = false;
                                         } else if (info[3] === '1') {
-                                            this.speed = '高速';
+                                            this.speed = true;
                                         }
                                         if (info[4] === '1') {
                                             this.alarm = '报警';
@@ -246,11 +270,11 @@
                             console.log(msg[1]);
                             // console.log(this.plc);
                         } else {
-                            this.plc = '没有PLC状态';
-                            this.turn = '无';
-                            this.speed = 0;
-                            this.light = '关';
-                            this.alarm = '';
+                            // this.plc = '没有PLC状态';
+                            // this.turn = '无';
+                            // this.speed = 0;
+                            // this.light = '关';
+                            // this.alarm = '';
                             console.log('没有PLC状态');
                         }
                     }
@@ -328,11 +352,11 @@
         data() {
             return {
                 value4: '',
-                plc: '未连接',
-                state: '未启动',
-                turn: '无',
-                speed: 0,
-                light: '关',
+                plc: false,
+                state: false,
+                turn: false,
+                speed: false,
+                light: false,
                 alarm: '',
                 msg1: 'PLC未连接',
                 segs: {},
