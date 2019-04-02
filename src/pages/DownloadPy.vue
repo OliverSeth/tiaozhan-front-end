@@ -39,13 +39,13 @@
     export default {
         name: "DownloadPy",
         created() {
-            let url = 'http://106.12.123.92:8081/api/v1/models';
+            let url = 'http://106.12.123.92:8081/api/v1/models/all';
             let that = this;
             this.axios(url).then(function (response) {
                 console.log(response);
                 if (response.data.code === 0) {
-                    that.options = response.data.data.list;
-                    that.modelTable=response.data.data.list;
+                    that.options = response.data.data;
+                    that.modelTable=response.data.data;
                     // console.log(that.modelTable);
                     // console.log(that.options);
                 }
@@ -112,14 +112,16 @@
                 let url;
                 for (let i = 0; i < this.options.length; i++) {
                     // console.log(i);
-                    if (this.options[i].modelId === this.value) {
+                    // console.log(this.value[0]);
+                    if (this.options[i].modelId === this.value[0]) {
                         url = this.options[i].pyUrl;
                     }
                 }
+                // console.log(url);
 
                 document.getElementById('div1').innerHTML = '读取中...';
                 $(document).ready(function () {
-                    $("#div1").load('http://106.12.123.92:5555/webhdfs/v1/upload/model-py/19-03/16/1d819852-5578-4c07-bf5d-0465218903b0-test.py?op=OPEN');
+                    $("#div1").load('http://106.12.123.92:5555'+url);
                 });
                 // $(document).ready(function(){
                 //     $.ajax({async: true, url:'http://bigdata1:50070'+url,success:function(result){

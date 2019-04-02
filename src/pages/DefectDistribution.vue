@@ -27,81 +27,63 @@
             <div id="word" style="width: 100%;height: 70%;position: absolute;bottom: 0" >
                 <el-row>
                     <el-col span="12">
-                        <el-row  :gutter="20"><span style="font-size: 24px" >PLC状态：</span></el-row>
-
-                        <el-row :gutter="20"><span style="font-size: 24px">工控机状态：</span></el-row>
-                        <el-row :gutter="20"><span style="font-size: 24px">转向：</span></el-row>
-
-                        <el-row :gutter="20"><span style="font-size: 24px">转速：</span></el-row>
-
-                        <el-row :gutter="20"><span style="font-size: 24px">光源：</span></el-row>
+                        <br><el-row :gutter="20"><span style="font-size: 24px" >PLC状态：</span></el-row><br>
+                        <el-row :gutter="20"><span style="font-size: 24px">工控机状态：</span></el-row><br>
+                        <el-row :gutter="20"><span style="font-size: 24px">转向：</span></el-row><br>
+                        <el-row :gutter="20"><span style="font-size: 24px">转速：</span></el-row><br>
+                        <el-row :gutter="20"><span style="font-size: 24px">光源：</span></el-row><br>
                         <el-row :gutter="20"><span style="font-size: 42px;color: red;font-weight: bold">{{alarm}}</span></el-row>
                     </el-col>
                     <el-col span="12" >
-
-                        <div class="wt-switch" >开
-
-
-                            <label   class="label-switch">
-
-                                <input type="checkbox"   :disabled="isable" @click="Switch" :checked="checked">
-
-                                <div class="checkbox"></div>
-                            </label>
-                            关
-                        </div>
-                        <div class="wt-switch" >开
-
-
-                            <label   class="label-switch">
-
-                                <input type="checkbox"   :disabled="isable" @click="Switch" :checked="checked">
-
-                                <div class="checkbox"></div>
-                            </label>
-                            关
-                        </div>
-                        <div class="wt-switch" >开
-
-
-                            <label   class="label-switch">
-
-                                <input type="checkbox"   :disabled="isable" @click="Switch" :checked="checked">
-
-                                <div class="checkbox"></div>
-                            </label>
-                            关
-                        </div>
-                        <div class="wt-switch" >开
-
-
-                            <label   class="label-switch">
-
-                                <input type="checkbox"   :disabled="isable" @click="Switch" :checked="checked">
-
-                                <div class="checkbox"></div>
-                            </label>
-                            关
-                        </div>
-                        <div class="wt-switch" >开
-
-
-                            <label   class="label-switch">
-
-                                <input type="checkbox"   :disabled="isable" @click="Switch" :checked="checked">
-
-                                <div class="checkbox"></div>
-                            </label>
-                            关
-                        </div>
-
-
-
+                        <el-row :gutter="20">
+                            <br><div class="wt-switch" >未连接
+                                <label   class="label-switch">
+                                    <input type="checkbox"  disabled @click="Switch" :checked="checked">
+                                    <div class="checkbox"></div>
+                                </label>
+                                已连接
+                            </div><br>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <div class="wt-switch" >未启动
+                                <label   class="label-switch">
+                                    <input type="checkbox"   disabled @click="Switch" :checked="checked">
+                                    <div class="checkbox"></div>
+                                </label>
+                                已启动
+                            </div><br>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <div class="wt-switch" >&nbsp;&nbsp;&nbsp;反转
+                                <label   class="label-switch">
+                                    <input type="checkbox"   disabled @click="Switch" :checked="checked">
+                                    <div class="checkbox"></div>
+                                </label>
+                                正转
+                            </div><br>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <div class="wt-switch" >&nbsp;&nbsp;&nbsp;低速
+                                <label   class="label-switch">
+                                    <input type="checkbox"   disabled @click="Switch" :checked="checked">
+                                    <div class="checkbox"></div>
+                                </label>
+                                高速
+                            </div><br>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <div class="wt-switch" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关
+                                <label   class="label-switch">
+                                    <input type="checkbox"   disabled @click="Switch" :checked="checked">
+                                    <div class="checkbox"></div>
+                                </label>
+                                开
+                            </div><br>
+                        </el-row>
+                    </el-col>
                         <!--<el-row :gutter="20">-->
                             <!--<el-switch-->
-
                                     <!--width="24"-->
-
                                     <!--disabled-->
                                     <!--style=" font-size: 24px"-->
                                     <!--v-model="plc"-->
@@ -166,7 +148,6 @@
                                     <!--inactive-text="关">-->
                             <!--</el-switch>-->
                         <!--</el-row>-->
-                    </el-col>
                 </el-row>
                 <br>
             </div>
