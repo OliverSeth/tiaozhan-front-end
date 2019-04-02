@@ -71,12 +71,12 @@
                 <div v-if="downButton">
 
                     <el-button type="primary" icon="el-icon-search" @click="getPhoto()">进行筛选</el-button>
-                    <el-button type="primary" @click="downImage()" :loading="loading">下载全部图片</el-button>
+                    <el-button type="primary" icon="el-icon-download" @click="downImage()" :loading="loading">下载全部图片</el-button>
 
                 </div>
                 <div v-else>
                     <el-button type="primary"  icon="el-icon-search" @click="getPhoto()">进行筛选</el-button>
-                    <el-button type="primary" @click="downImage()" :loading="loading" disabled>下载全部图片</el-button>
+                    <el-button type="primary"  icon="el-icon-download" @click="downImage()" :loading="loading" disabled>下载全部图片</el-button>
 
                 </div>
                 <!--</el-badge>-->
