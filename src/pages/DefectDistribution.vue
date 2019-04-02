@@ -75,6 +75,7 @@
                             </el-switch>
                         </el-row>
                         <el-row :gutter="20">
+
                             <el-switch
                                     disabled
                                     style="display: block;font-size: 24px"
