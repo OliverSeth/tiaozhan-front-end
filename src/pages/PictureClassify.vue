@@ -61,6 +61,7 @@
             <el-checkbox-group v-model="checkList2">
                 <el-checkbox label="人工"></el-checkbox>
                 <el-checkbox label="机器"></el-checkbox>
+
             </el-checkbox-group>
         </div>
         <div style="width: 30%;height:20%;float: left;" >
