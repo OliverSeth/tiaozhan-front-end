@@ -1,15 +1,22 @@
 <template>
-    <div style="width: 80%;height: 88%;position: absolute">
+    <div style="width: 84%;height: 88%;position: absolute">
         <!--<div style="position:absolute;margin-top: -60px">{{msg1}}</div>-->
-        <div id="msg" style="width: 70%;height: 100%;position:absolute">
-            <!--<div :style="bg">-->
+        <div id="msg" style="float:left;width: 74%;height: 100%;">
+            <!--<div v-for="(pictures,index) in picArr"-->
+                 <!--style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
+                <!--<img :src="pictures" style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
+                <!--<span>{{infoArr[index]}}</span>-->
             <!--</div>-->
-            <div v-for="(pictures,index) in picArr"
-                 style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%"
-                 :style="{'backgroundImage':pictures}">
-                <!--<img :src="pictures">-->
-                <span>{{infoArr[index]}}</span>
-            </div>
+             <div v-for="(pictures,index) in picArr"
+             style="float:left;width: 30%;height: 25%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">
+
+                 <div style="position:relative;">
+                     　　<img :src="pictures" style="float:left;width: 100%;height: 100%;margin-top: 1%;" />
+                     　　<div style="position:absolute; z-index:2; left:10px;">{{infoArr[index]}}</div>
+                 </div>
+                 <!--<img :src="pictures" style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
+                 <!--<span>{{infoArr[index]}}</span>-->
+             </div>
             <!--<img v-for="(pictures,index) in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
             <!--<span>疵点类型：{{infoArr[index]}}</span>-->
         </div>
@@ -59,6 +66,9 @@
         name: "DefectDistribution",
         methods: {
             parseSegment(seg) {
+                console.log(this.picArr);
+                console.log(this.infoArr);
+                console.log(this.infoArr[this.index]);
                 //console.log(seg);
                 let part = seg.split("@");
                 if (part.length === 1) {
