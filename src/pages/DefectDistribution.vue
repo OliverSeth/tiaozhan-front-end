@@ -26,61 +26,61 @@
             </div>
             <div id="word" style="width: 100%;height: 70%;position: absolute;bottom: 0" >
                 <el-row>
-                    <el-col span="12">
-                        <br><el-row :gutter="20"><span style="font-size: 24px" >PLC状态：</span></el-row><br>
-                        <el-row :gutter="20"><span style="font-size: 24px">工控机状态：</span></el-row><br>
-                        <el-row :gutter="20"><span style="font-size: 24px">转向：</span></el-row><br>
-                        <el-row :gutter="20"><span style="font-size: 24px">转速：</span></el-row><br>
-                        <el-row :gutter="20"><span style="font-size: 24px">光源：</span></el-row><br>
+                    <el-col span="24">
+                        <br><el-row :gutter="20"><span style="font-size: 24px" >PLC状态：{{plc}}</span></el-row><br>
+                        <el-row :gutter="20"><span style="font-size: 24px">工控机状态：{{state}}</span></el-row><br>
+                        <el-row :gutter="20"><span style="font-size: 24px">转向：{{turn}}</span></el-row><br>
+                        <el-row :gutter="20"><span style="font-size: 24px">转速：{{speed}}</span></el-row><br>
+                        <el-row :gutter="20"><span style="font-size: 24px">光源：{{light}}</span></el-row><br>
                         <el-row :gutter="20"><span style="font-size: 42px;color: red;font-weight: bold">{{alarm}}</span></el-row>
                     </el-col>
-                    <el-col span="12" >
-                        <el-row :gutter="20">
-                            <br><div class="wt-switch" >未连接
-                                <label   class="label-switch">
-                                    <input type="checkbox"  disabled @click="Switch" :checked="checked1">
-                                    <div class="checkbox"></div>
-                                </label>
-                                已连接
-                            </div><br>
-                        </el-row>
-                        <el-row :gutter="20">
-                            <div class="wt-switch" >未启动
-                                <label   class="label-switch">
-                                    <input type="checkbox"   disabled @click="Switch" :checked="checked2">
-                                    <div class="checkbox"></div>
-                                </label>
-                                已启动
-                            </div><br>
-                        </el-row>
-                        <el-row :gutter="20">
-                            <div class="wt-switch" >&nbsp;&nbsp;&nbsp;反转
-                                <label   class="label-switch">
-                                    <input type="checkbox"   disabled @click="Switch" :checked="checked3">
-                                    <div class="checkbox"></div>
-                                </label>
-                                正转
-                            </div><br>
-                        </el-row>
-                        <el-row :gutter="20">
-                            <div class="wt-switch" >&nbsp;&nbsp;&nbsp;低速
-                                <label   class="label-switch">
-                                    <input type="checkbox"   disabled @click="Switch" :checked="checked4">
-                                    <div class="checkbox"></div>
-                                </label>
-                                高速
-                            </div><br>
-                        </el-row>
-                        <el-row :gutter="20">
-                            <div class="wt-switch" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关
-                                <label   class="label-switch">
-                                    <input type="checkbox"   disabled @click="Switch" :checked="checked5">
-                                    <div class="checkbox"></div>
-                                </label>
-                                开
-                            </div><br>
-                        </el-row>
-                    </el-col>
+                    <!--<el-col span="12" >-->
+                        <!--<el-row :gutter="20">-->
+                            <!--<br><div class="wt-switch" >未连接-->
+                                <!--<label   class="label-switch">-->
+                                    <!--<input type="checkbox"  disabled @click="Switch" :checked="checked1">-->
+                                    <!--<div class="checkbox"></div>-->
+                                <!--</label>-->
+                                <!--已连接-->
+                            <!--</div><br>-->
+                        <!--</el-row>-->
+                        <!--<el-row :gutter="20">-->
+                            <!--<div class="wt-switch" >未启动-->
+                                <!--<label   class="label-switch">-->
+                                    <!--<input type="checkbox"   disabled @click="Switch" :checked="checked2">-->
+                                    <!--<div class="checkbox"></div>-->
+                                <!--</label>-->
+                                <!--已启动-->
+                            <!--</div><br>-->
+                        <!--</el-row>-->
+                        <!--<el-row :gutter="20">-->
+                            <!--<div class="wt-switch" >&nbsp;&nbsp;&nbsp;反转-->
+                                <!--<label   class="label-switch">-->
+                                    <!--<input type="checkbox"   disabled @click="Switch" :checked="checked3">-->
+                                    <!--<div class="checkbox"></div>-->
+                                <!--</label>-->
+                                <!--正转-->
+                            <!--</div><br>-->
+                        <!--</el-row>-->
+                        <!--<el-row :gutter="20">-->
+                            <!--<div class="wt-switch" >&nbsp;&nbsp;&nbsp;低速-->
+                                <!--<label   class="label-switch">-->
+                                    <!--<input type="checkbox"   disabled @click="Switch" :checked="checked4">-->
+                                    <!--<div class="checkbox"></div>-->
+                                <!--</label>-->
+                                <!--高速-->
+                            <!--</div><br>-->
+                        <!--</el-row>-->
+                        <!--<el-row :gutter="20">-->
+                            <!--<div class="wt-switch" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关-->
+                                <!--<label   class="label-switch">-->
+                                    <!--<input type="checkbox"   disabled @click="Switch" :checked="checked5">-->
+                                    <!--<div class="checkbox"></div>-->
+                                <!--</label>-->
+                                <!--开-->
+                            <!--</div><br>-->
+                        <!--</el-row>-->
+                    <!--</el-col>-->
                         <!--<el-row :gutter="20">-->
                             <!--<el-switch-->
                                     <!--width="24"-->
@@ -223,24 +223,24 @@
                                 this.alarm = '';
                             }
                             if (info[0] === '0') {
-                                this.plc = true;
+                                this.plc = '未连接';
                             } else if (info[0] === '1') {
-                                this.plc = false;
+                                this.plc = '已连接';
                                 if (info[1] === '-1') {
-                                    this.state = false;
+                                    this.state = '未启动';
                                 } else {
-                                    this.state = true;
+                                    this.state = '已启动';
+                                    if (info[2] === '0') {
+                                        this.light = '关';
+                                    } else if (info[2] === '1') {
+                                        this.light = '开';
+                                    }
                                     if (info[1] === '1') {
-                                        this.turn = true;
-                                        if (info[2] === '0') {
-                                            this.light = false;
-                                        } else if (info[2] === '1') {
-                                            this.light = true;
-                                        }
+                                        this.turn = '正转';
                                         if (info[3] === '0') {
-                                            this.speed = false;
+                                            this.speed = '低速';
                                         } else if (info[3] === '1') {
-                                            this.speed = true;
+                                            this.speed = '高速';
                                         }
                                         if (info[4] === '1') {
                                             this.alarm = '报警';
@@ -248,16 +248,11 @@
                                             this.alarm = '';
                                         }
                                     } else if (info[1] === '2') {
-                                        this.turn = false;
-                                        if (info[2] === '0') {
-                                            this.light = false;
-                                        } else if (info[2] === '1') {
-                                            this.light = true;
-                                        }
+                                        this.turn = '反转';
                                         if (info[3] === '0') {
-                                            this.speed = false;
+                                            this.speed = '低速';
                                         } else if (info[3] === '1') {
-                                            this.speed = true;
+                                            this.speed = '高速';
                                         }
                                         if (info[4] === '1') {
                                             this.alarm = '报警';
@@ -304,7 +299,7 @@
                             this.infoArr.push('无');
                             break;
                     }
-                    this.infoArr.push(part[1]);
+                    // this.infoArr.push(part[1]);
                     return;
                 }
                 if (head[0] in this.segs) {
@@ -352,11 +347,11 @@
         data() {
             return {
                 value4: '',
-                plc: false,
-                state: false,
-                turn: false,
-                speed: false,
-                light: false,
+                plc: '未连接',
+                state: '未启动',
+                turn: '无',
+                speed: '无',
+                light: '关',
                 alarm: '',
                 msg1: 'PLC未连接',
                 segs: {},

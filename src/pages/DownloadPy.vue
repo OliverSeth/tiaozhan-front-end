@@ -73,12 +73,21 @@
                 // console.log('111');
                 // console.log(this.value[0]);
                 let deviceId;
+                let name;
                 for(let i=0;i<this.modelTable.length;i++){
                     if(this.modelTable[i].modelId===this.value[0]){
+                        name=this.modelTable[i].parentModel;
+                        // console.log(name);
                         if(this.modelTable[i].parentModel===0){
                             this.parentModel='无';
                         }else{
-                            this.parentModel=this.modelTable[i].parentModel;
+                            for(let j=0;j<this.modelTable.length;j++){
+                                if(name===this.modelTable[j].modelId){
+                                    this.parentModel=this.modelTable[j].name;
+                                    // console.log(this.parentModel);
+                                    break;
+                                }
+                            }
                         }
                         deviceId=this.modelTable[i].deviceId;
                         // console.log(deviceId);

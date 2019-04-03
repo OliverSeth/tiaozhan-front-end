@@ -18,12 +18,12 @@
             <el-button size="small" type="primary" style="margin-top: 20px" v-on:click="saveModel">上传</el-button>
         </div>
         <div class="upCard">
-            <el-card>
+            <el-card shadow="hover" >
                 <div slot="header">
                     <span>代码内容</span>
                 </div>
                 <div>
-                    <pre>{{message}}</pre>
+                    <pre style="overflow: auto;height: 550px;overflow-x: hidden">{{message}}</pre>
                 </div>
             </el-card>
         </div>
@@ -75,12 +75,12 @@
                 let fileValue = file.name;
                 // console.log(fileValue);
                 let index = fileValue.lastIndexOf('.');
-                const isPy = fileValue.substring(index) === '.py'||fileValue.substring(index) ==='.zip'||fileValue.substring(index) ==='.rar';
+                const isPy = fileValue.substring(index) === '.py'||fileValue.substring(index) ==='.zip'||fileValue.substring(index) ==='.rar'||fileValue.substring(index) ==='.h5'||fileValue.substring(index) ==='.exe';
                 // console.log(index);
                 if (isPy) {
                     this.file = file;
                 } else {
-                    this.$message.error('上传文件只能是 .py 或 .zip 或 .rar 格式!');
+                    this.$message.error('上传文件只能是 .py 或 .zip 或 .rar 或 .h5 或 .exe 格式!');
                 }
                 return isPy;
             },
