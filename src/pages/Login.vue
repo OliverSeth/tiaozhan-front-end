@@ -18,6 +18,7 @@
     </div>
 </template>
 
+
 <script>
     import VueCanvasNest from 'vue-canvas-nest'
 
