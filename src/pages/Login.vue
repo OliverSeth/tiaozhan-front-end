@@ -1,7 +1,7 @@
 <template>
     <div id="login">
         <el-form ref="form" :model="loginForm" id="loginForm">
-            <img alt="logo" src="../assets/logo2.jpg" class="logo">
+            <img alt="logo" src="../assets/logo2.jpg.png" class="logo">
 
             <el-form-item>
                 <el-input v-model="loginForm.account" placeholder="请输入账号" autofocus></el-input>
