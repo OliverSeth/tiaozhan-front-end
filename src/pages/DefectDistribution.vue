@@ -11,7 +11,7 @@
              style="float:left;width: 30%;height: 25%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">
 
                  <div style="position:relative;">
-                     　　<img :src="pictures" style="float:left;width: 100%;height: 100%;margin-top: 1%;" />
+                     　　<img :src="pictures" style="float:left;width: 100%;height: 100%;margin-top: 1%;"/>
                      　　<div style="position:absolute;color:black; z-index:2; left:10px;">{{infoArr[index]}}</div>
                  </div>
                  <!--<img :src="pictures" style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
