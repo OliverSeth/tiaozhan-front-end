@@ -2,6 +2,7 @@
     <div id="login">
         <el-form ref="form" :model="loginForm" id="loginForm">
             <img alt="logo" src="../assets/logo2.jpg" class="logo">
+            <el-row :gutter="300"><span style="color: black;font-size: 30px;font-family:sans-serif">东华大学面料疵点检测综合管理平台</span></el-row><br>
 
             <el-form-item>
                 <el-input v-model="loginForm.account" placeholder="请输入账号" autofocus></el-input>
@@ -15,6 +16,17 @@
             </el-form-item>
         </el-form>
         <VueCanvasNest :config="{color:'0,0,0', count: 100}"/>
+        <div id="word" style="width: 100%;height: 70%;position: absolute;margin-top:600px" >
+            <el-row>
+                <el-col :span="4" push="19">
+                    <br><el-row :gutter="13"><span style="font-size: 18px" >团队名称：DHU-Cloud</span></el-row><br>
+
+                </el-col>
+
+            </el-row>
+            <br>
+
+        </div>
     </div>
 </template>
 
