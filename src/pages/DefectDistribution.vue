@@ -183,7 +183,7 @@
                             this.infoArr.push('无');
                             break;
                         default:
-                            this.infoArr.push('无');
+                            this.infoArr.push('');
                             break;
                     }
                     // this.infoArr.push(part[1]);
