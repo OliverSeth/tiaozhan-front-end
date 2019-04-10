@@ -50,7 +50,7 @@
                 <el-menu :default-active="activeIndex" mode="horizontal" class="right">
                     <el-submenu index="1">
                         <template slot="title">
-                            <img src="../assets/logo2.jpg" class="headpic" alt=""/>
+                            <img src="../assets/dhu.png" class="headpic" alt=""/>
                             {{userName}}
                         </template>
                         <el-menu-item index="1-1">个人</el-menu-item>
