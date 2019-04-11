@@ -141,7 +141,6 @@
         name: "PictureClassify",
         mounted(){
           let that =this;
-          this.
           that.getDeviceid();
           that.getModelid();
         },
