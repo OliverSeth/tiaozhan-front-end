@@ -19,6 +19,10 @@
                         <i class="el-icon-document"></i>
                         <span slot="title">分类</span>
                     </el-menu-item>
+                    <el-menu-item index="algorithm-migration">
+                        <i class="el-icon-copy-document"></i>
+                        <span slot="title">算法迁移</span>
+                    </el-menu-item>
                     <el-submenu index="">
                         <template slot="title">
                             <i class="el-icon-upload"></i>

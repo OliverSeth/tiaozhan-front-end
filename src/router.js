@@ -12,6 +12,7 @@ import PictureClassify from './pages/PictureClassify'
 import UploadImage from './pages/UploadImage'
 import UploadPy from './pages/UploadPy'
 import DownloadPy from './pages/DownloadPy'
+import AlgorithmMigration from './pages/AlgorithmMigration'
 
 Vue.use(Router);
 
@@ -50,6 +51,12 @@ let router = new Router({
                     }
                 },
                 {
+                    path: '/algorithm-migration',
+                    component: AlgorithmMigration,
+                    meta: {
+                        title: '算法迁移'
+                    }
+                }, {
                     path: '/photo-gallery',
                     component: PhotoGallery,
                     meta: {
