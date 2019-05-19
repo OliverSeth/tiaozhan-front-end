@@ -77,7 +77,7 @@
         <el-dialog title="上传算法" :visible.sync="dialogFormVisible" width="30%">
             <el-upload
                     class="upload-demo"
-                    action="http://106.12.123.92:8081/api/v1/models/upload/py/do-admin"
+                    action="http://10.199.172.62:8081/api/v1/models/upload/py/do-admin"
                     :on-preview="handlePreview"
                     :on-remove="handleRemove"
                     :before-upload="handleBefore"
@@ -132,10 +132,10 @@
         },
         methods:{
             getPage(){
-                let url2='http://106.12.123.92:8081/api/v1/models';
+                let url2='http://10.199.172.62:8081/api/v1/models';
                 let that=this;
                 // let size=that.pageSize*that.currentPage;
-                let url='http://106.12.123.92:8081/api/v1/devices/do-user';
+                let url='http://10.199.172.62:8081/api/v1/devices/do-user';
                 this.axios(url, {
                     params: {
                         pageNum: 1,
@@ -175,7 +175,7 @@
                 fileName=fileName.slice(0,index);
                 let xhr=new XMLHttpRequest();
                 let that=this;
-                xhr.open("post",'http://106.12.123.92:8081/api/v1/models/upload/py/do-admin',true);
+                xhr.open("post",'http://10.199.172.62:8081/api/v1/models/upload/py/do-admin',true);
                 xhr.send(fd);
                 xhr.onload = function () {
                     if (xhr.readyState === xhr.DONE) {
@@ -224,7 +224,7 @@
 
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
-                let url='http://106.12.123.92:8081/api/v1/devices/do-user';
+                let url='http://10.199.172.62:8081/api/v1/devices/do-user';
                 let that=this;
                 this.axios(url, {
                     params: {
@@ -276,7 +276,7 @@
                 let id=row.deviceId;
                 // console.log(id);
                 let api={
-                    url:'http://106.12.123.92:8081/api/v1/devices/'+id+'/do-admin',
+                    url:'http://10.199.172.62:8081/api/v1/devices/'+id+'/do-admin',
                     method:'delete',
                 };
                 let flag=false;
@@ -385,7 +385,7 @@
                 //     if(flag===true){
                 //         // console.log(that.deviceTable);
                 //         let api={
-                //             url:'http://106.12.123.92:8081/api/v1/devices/'+row.deviceId+'/models/do-admin',
+                //             url:'http://10.199.172.62:8081/api/v1/devices/'+row.deviceId+'/models/do-admin',
                 //             method:'put'
                 //         };
                 //         console.log(row.models);
@@ -400,7 +400,7 @@
                 //     }
                 // })
                 let api = {
-                    url: 'http://106.12.123.92:8081/api/v1/devices/' + row.deviceId + '/models/do-admin',
+                    url: 'http://10.199.172.62:8081/api/v1/devices/' + row.deviceId + '/models/do-admin',
                     method: 'put'
                 };
                 console.log(row.models);
@@ -468,7 +468,7 @@
                 }).then(()=>{
                     if(flag===true){
                         let api={
-                            url:'http://106.12.123.92:8081/api/v1/devices/'+row.deviceId+'/do-admin',
+                            url:'http://10.199.172.62:8081/api/v1/devices/'+row.deviceId+'/do-admin',
                             method:'put'
                         };
                         console.log(v);

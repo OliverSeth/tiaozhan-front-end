@@ -287,7 +287,7 @@
             let cnt = -1;
             let segs = "";
             // socket连接建立
-            let socket = new WebSocket('ws://106.12.123.92:5929');
+            let socket = new WebSocket('ws://10.199.172.62:5929');
             // socket方法绑定
             {
                 socket.onmessage = res => {

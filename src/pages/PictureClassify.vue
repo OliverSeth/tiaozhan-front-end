@@ -50,8 +50,8 @@
                 <!--<el-checkbox label="纵疵" v-model="checked2"></el-checkbox>-->
                 <!--<el-checkbox label="横纵疵" v-model="checked3"></el-checkbox>-->
                 <!--<el-checkbox label="无" v-model="checked0"></el-checkbox>-->
-                <el-checkbox label="横"></el-checkbox>
-                <el-checkbox label="纵"></el-checkbox>
+                <el-checkbox label="缺纬"></el-checkbox>
+                <el-checkbox label="缺经"></el-checkbox>
                 <el-checkbox label="破洞"></el-checkbox>
                 <el-checkbox label="无"></el-checkbox>
             </el-checkbox-group>
@@ -212,11 +212,11 @@
                 let dataIntArr=[];
                 for(let i=0;i<this.checkList.length;i++)
                 {
-                    if(dataStrArr[i]==="横")
+                    if(dataStrArr[i]==="缺纬")
                     {
                         dataIntArr[i]=1;
                     }
-                    if(dataStrArr[i]==="纵")
+                    if(dataStrArr[i]==="缺经")
                     {
                         dataIntArr[i]=2;
                     }
@@ -242,7 +242,7 @@
                 let photoClass=[];
                 this.getDeviceid();
                 this.getModelid();
-                let url='http://106.12.123.92:8081/api/v1/pictures/search/do-user';
+                let url='http://10.199.172.62:8081/api/v1/pictures/search/do-user';
 
                 that.axios(url,{
                     params:{
@@ -286,14 +286,14 @@
                 let baseList = [];
                 // let src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN';
 
-                let arr = ['http://106.12.123.92/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN','http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN'];
+                let arr = ['http://10.199.172.62/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN','http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN'];
                 for (let i = 0; i < arr.length; i++) {
                     let image = new Image();
                     image.setAttribute('crossOrigin', 'anonymous');
                     image.onerror=function requestImg(src){
                         let img = new Image();
                         img.setAttribute('crossOrigin', 'anonymous');//如在img标签加了该属性后，图片在其他网站则无法显示
-                        img.src ='http://106.12.123.92/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN';
+                        img.src ='http://10.199.172.62/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN';
                         // console.log(src);
                         img.onerror = function(){
                             let timeStamp = new Date();
@@ -341,7 +341,7 @@
                         }
                     };
 
-                    image.src = "http://106.12.123.92/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN";
+                    image.src = "http://10.199.172.62/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN";
                     // console.log("good3");
 
                 }
@@ -354,11 +354,11 @@
                 let dataIntArr=[];
                 for(let i=0;i<this.checkList.length;i++)
                 {
-                    if(dataStrArr[i]==="横")
+                    if(dataStrArr[i]==="缺纬")
                     {
                         dataIntArr[i]=1;
                     }
-                    if(dataStrArr[i]==="纵")
+                    if(dataStrArr[i]==="缺经")
                     {
                         dataIntArr[i]=2;
                     }
@@ -383,7 +383,7 @@
                 }
                 this.getDeviceid();
                 this.getModelid();
-                let url='http://106.12.123.92:8081/api/v1/pictures/download/do-user';
+                let url='http://10.199.172.62:8081/api/v1/pictures/download/do-user';
                 that.axios(url,{
                     params:{
                         pageSize:10000,
@@ -405,7 +405,7 @@
 
                     for(let i=0;i<imgsSrc.length;i++)
                     {
-                        let src="http://106.12.123.92:5555"+imgsSrc[i]+"&namenoderpcaddress=bigdata1:9000&offset=0";
+                        let src="http://10.199.172.62:5555"+imgsSrc[i]+"&namenoderpcaddress=bigdata1:9000&offset=0";
                         // console.log(src);
                         let suffix=src.substring(src.lastIndexOf("."), src.lastIndexOf("?"));
                         imageSuffix.push(suffix);//.jpg
@@ -585,7 +585,7 @@
                 this.getDeviceid();
                 this.getModelid();
                 // console.log(item1);
-                let url='http://106.12.123.92:8081/api/v1/pictures/search/do-user';
+                let url='http://10.199.172.62:8081/api/v1/pictures/search/do-user';
                 that.axios(url,{
                     params:{
                         pageNum: 1,
@@ -688,7 +688,7 @@
 
                 }
                 let that =this;
-                let url='http://106.12.123.92:8081/api/v1/pictures/search/do-user';
+                let url='http://10.199.172.62:8081/api/v1/pictures/search/do-user';
                 that.axios(url,{
                     params:{
                         pageNum: currentPage,
@@ -728,7 +728,7 @@
             //
             getDeviceid:function() {
                 // let api = this.$api.userApi.getMachines;
-                let url='http://106.12.123.92:8081/api/v1/devices/do-user';
+                let url='http://10.199.172.62:8081/api/v1/devices/do-user';
                 let that=this;
                 let size=that.pageSize*that.currentPage;
                 this.axios(url, {
@@ -750,7 +750,7 @@
             },
             getModelid:function() {
                 // let api = this.$api.userApi.getMachines;
-                let url='http://106.12.123.92:8081//api/v1/models';
+                let url='http://10.199.172.62:8081//api/v1/models';
                 let that=this;
                 let size=that.pageSize*that.currentPage;
                 this.axios(url, {
@@ -775,7 +775,7 @@
             getscr1(item){
                 // document.images.imgInit.src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
                 // return ('http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/ef941f06-7d1f-43ab-b6a0-28275be153e7-153314543.jpg?op=OPEN');
-                return ('http://106.12.123.92:5555'+item);
+                return ('http://10.199.172.62:5555'+item);
             },
             // getflage(item){
             //
@@ -870,7 +870,6 @@
         },
     }
 </script>
-
 <style scoped>
     .optionmenu{
         color:green;

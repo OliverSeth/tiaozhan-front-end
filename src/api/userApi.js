@@ -1,4 +1,4 @@
-    const BASE_URL = 'http://106.12.123.92:8081/api/v1';
+    const BASE_URL = 'http://10.199.172.62:8081/api/v1';
 
 export default {
     login:{

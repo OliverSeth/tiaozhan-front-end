@@ -139,13 +139,13 @@
                 // let that=this;
                 // console.log(this.row.picId);
                 // let api={
-                //     url:'http://106.12.123.92:8081/api/v1/pictures/'+this.id+'/do-admin',
+                //     url:'http://10.199.172.62:8081/api/v1/pictures/'+this.id+'/do-admin',
                 //     method:'put'
                 // };
                 fd.append("xmlFile", this.file2);
                 let xhr=new XMLHttpRequest();
                 let that=this;
-                xhr.open("put",'http://106.12.123.92:8081/api/v1/pictures/upload/xml/'+this.id+'/do-admin',true);
+                xhr.open("put",'http://10.199.172.62:8081/api/v1/pictures/upload/xml/'+this.id+'/do-admin',true);
                 xhr.setRequestHeader('token',cookies.get('token'));
                 xhr.send(fd);
                 xhr.onload = function () {
@@ -216,7 +216,7 @@
                 // }
                 fd.append("picture", this.file);
                 // console.log(this.file);
-                // let url='http://106.12.123.92:8081/api/v1/pictures/upload/do-admin';
+                // let url='http://10.199.172.62:8081/api/v1/pictures/upload/do-admin';
                 // let config = {
                 //     headers: {
                 //         'Content-Type': 'multipart/form-data'
@@ -236,7 +236,7 @@
                 // fileName=fileName.slice(0,index);
                 // console.log(fileName);
                 // sessionStorage.setItem("name",fileName);
-                xhr.open("post", 'http://106.12.123.92:8081/api/v1/pictures/upload/do-admin', true);
+                xhr.open("post", 'http://10.199.172.62:8081/api/v1/pictures/upload/do-admin', true);
                 xhr.setRequestHeader('token', cookies.get('token'));
                 // console.log(fd.get("picture"));
                 xhr.send(fd);

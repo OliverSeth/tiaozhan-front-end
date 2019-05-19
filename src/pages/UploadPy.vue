@@ -3,7 +3,7 @@
         <div style="width: 30%;float: left">
             <el-upload
                     class="upload-demo"
-                    action="http://106.12.123.92:8081/api/v1/models/upload/py/do-admin"
+                    action="http://10.199.172.62:8081/api/v1/models/upload/py/do-admin"
                     :on-remove="handleRemove"
                     :before-upload="handleBefore"
                     multiple
@@ -41,7 +41,7 @@
                 // console.log(response);
                 this.deviceTable=response.data.data.list;
             });
-            let url='http://106.12.123.92:8081/api/v1/models';
+            let url='http://10.199.172.62:8081/api/v1/models';
             this.axios(url).then(response=>{
                 // console.log(response);
                 this.modelTable=response.data.data.list;
@@ -107,7 +107,7 @@
                         break;
                     }
                 }
-                xhr.open("post", 'http://106.12.123.92:8081/api/v1/models/upload/py/do-admin', true);
+                xhr.open("post", 'http://10.199.172.62:8081/api/v1/models/upload/py/do-admin', true);
                 xhr.setRequestHeader('token', cookies.get('token'));
                 xhr.send(fd);
                 xhr.onload = function () {

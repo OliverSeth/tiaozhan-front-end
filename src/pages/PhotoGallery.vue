@@ -56,7 +56,7 @@
                                 <el-upload
                                         class="upload-demo"
                                         ref="upload"
-                                        action="http://106.12.123.92:8081/api/v1/pictures/upload/xml/do-admin"
+                                        action="http://10.199.172.62:8081/api/v1/pictures/upload/xml/do-admin"
                                         :on-preview="handlePreview"
                                         :on-remove="handleRemove"
                                         :before-upload="handleBefore"
@@ -105,7 +105,7 @@
                 // let api=this.$api.userApi.getPhotos;
                 let that =this;
 
-                let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
+                let url='http://10.199.172.62:8081/api/v1/pictures/do-user';
                 // let photoTable = new Array();
                 that.axios(url,{
                     params:{
@@ -214,13 +214,13 @@
                 let fd=new FormData();
                 // console.log(this.row.picId);
                 let api={
-                    url:'http://106.12.123.92:8081/api/v1/pictures/'+this.row.picId+'/do-admin',
+                    url:'http://10.199.172.62:8081/api/v1/pictures/'+this.row.picId+'/do-admin',
                     method:'put'
                 };
                 fd.append("xmlFile", this.file);
                 let xhr=new XMLHttpRequest();
                 let that=this;
-                xhr.open("post",'http://106.12.123.92:8081/api/v1/pictures/upload/xml/do-admin',true);
+                xhr.open("post",'http://10.199.172.62:8081/api/v1/pictures/upload/xml/do-admin',true);
                 xhr.setRequestHeader('token',cookies.get('token'));
                 xhr.send(fd);
                 xhr.onload = function () {
@@ -299,7 +299,7 @@
                 this.currentPage = currentPage;
                 let that =this;
 
-                let url='http://106.12.123.92:8081/api/v1/pictures/do-user';
+                let url='http://10.199.172.62:8081/api/v1/pictures/do-user';
                 // let photoTable = new Array();
                 that.axios(url,{
                     params:{
@@ -403,14 +403,14 @@
             //获取图片路径
             getscr1(item){
                 // document.images.imgInit.src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
-                return ('http://106.12.123.92:5555'+item);
+                return ('http://10.199.172.62:5555'+item);
             },
             removePhoto(row){
                 // console.log(row);
                 let that=this;
                 let id=row.picId;
                 let api={
-                    url:'http://106.12.123.92:8081/api/v1/pictures/'+id+'/do-admin',
+                    url:'http://10.199.172.62:8081/api/v1/pictures/'+id+'/do-admin',
                     method:'delete',
                 };
                 let flag=false;

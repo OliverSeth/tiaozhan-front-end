@@ -39,7 +39,7 @@
     export default {
         name: "DownloadPy",
         created() {
-            let url = 'http://106.12.123.92:8081/api/v1/models/all';
+            let url = 'http://10.199.172.62:8081/api/v1/models/all';
             let that = this;
             this.axios(url).then(function (response) {
                 console.log(response);
@@ -110,7 +110,7 @@
                     }
                 }
                 console.log(url);
-                window.location.href = 'http://106.12.123.92:5555' + url;
+                window.location.href = 'http://10.199.172.62:5555' + url;
                 // this.axios({
                 //     // url:'http://bigdata1:50070/webhdfs/v1/upload/model-py/19-02/23/bb83d19c-2696-4884-baa0-2de7dc99d1ea-1.py?op=OPEN',
                 // }).then(()=>{
@@ -131,7 +131,7 @@
 
                 document.getElementById('div1').innerHTML = '读取中...';
                 $(document).ready(function () {
-                    $("#div1").load('http://106.12.123.92:5555'+url);
+                    $("#div1").load('http://10.199.172.62:5555'+url);
                 });
                 // $(document).ready(function(){
                 //     $.ajax({async: true, url:'http://bigdata1:50070'+url,success:function(result){

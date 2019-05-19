@@ -88,7 +88,7 @@
             download(){
                 let url='/webhdfs/v1/upload/model-py/19-05/11/3eb9b142-a9b3-4174-9ec0-53a12a6e1250-newModel.h5?op=OPEN';
                 if(this.percent===100){
-                    window.location.href = 'http://106.12.123.92:5555' + url;
+                    window.location.href = 'http://10.199.172.62:5555' + url;
                 }
             },
         }
