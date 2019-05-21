@@ -88,7 +88,7 @@
         </div>
         <div class="top">
             <span style="font-size: 18px;color: #06050e">共{{total}}张图片</span>
-            <!--<el-button type="primary">共{{total}}张图片</el-button>-->
+
         </div>
     </div>
 </template>
