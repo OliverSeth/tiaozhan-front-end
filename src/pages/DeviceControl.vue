@@ -145,6 +145,7 @@
                     params: {
                         pageNum: 1,
                         pageSize: 4,
+                        location: localStorage.getItem('city')
                     }
                 }).then(function (res) {
                     // console.log(res);

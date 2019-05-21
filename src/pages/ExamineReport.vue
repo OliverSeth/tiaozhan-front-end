@@ -159,18 +159,23 @@
                         switch (selected) {
                             case '上海':
                                 this.$router.push('/device-control');
+                                localStorage.setItem('city','上海');
                                 break;
                             case '湖北':
                                 this.$router.push('/device-control');
+                                localStorage.setItem('city','湖北');
                                 break;
                             case '武汉':
                                 this.$router.push('/device-control');
+                                localStorage.setItem('city','武汉');
                                 break;
                             case '福建':
                                 this.$router.push('/device-control');
+                                localStorage.setItem('city','福建');
                                 break;
                             case '泉州':
                                 this.$router.push('/device-control');
+                                localStorage.setItem('city','泉州');
                                 break;
                             default:
                                 break;
