@@ -113,7 +113,7 @@
 
                     <!--<el-checkbox :checked="true">备选项</el-checkbox>-->
                     <el-card  :body-style="{ padding: '0px' }">
-                        <img   :src="getscr1(photo.href)" name= 'img' style="width: 90px;height: 90px">
+                        <img   :src="photo" name= 'img' style="width: 90px;height: 90px">
                         <el-checkbox  :checked="photo.checked"  ></el-checkbox>
                     </el-card>
 
@@ -518,6 +518,7 @@
             // },
             getPhoto(){
                 // this. getAllphoto();
+                this.photoTable=[];
                 let that =this;
                 // let dataStr=item4;//原始字符串
                 // let arryy = [];
@@ -587,7 +588,7 @@
                 this.getDeviceid();
                 this.getModelid();
                 // console.log(item1);
-                let url='http://10.199.172.62:8081/api/v1/pictures/search/do-user';
+                let url='http://10.199.172.62:8081/api/v1/pictures/do-user';
                 that.axios(url,{
                     params:{
                         pageNum: 1,
@@ -606,17 +607,20 @@
                     if(data.code===0){
                         that.dialogFormVisible=false;
                         // if(data.)
-                        that.photoTable=data.data.list;
-                        for(let i=0;i<6;i++){
-                            localStorage.setItem('photo'+i.toString(),that.photoTable[i].href);
+                        for(let i=0;i<response.data.data.list.length;i++){
+                            that.photoTable.push(that.getscr1(response.data.data.list[i].href));
                         }
-                        localStorage.setItem('photoTable',that.photoTable);
-                        console.log(localStorage.getItem('photoTable'));
+                        console.log(that.photoTable[0].href);
+                        for(let i=0;i<6;i++){
+                            localStorage.setItem('photo'+i.toString(),that.photoTable[i]);
+                        }
+                        // localStorage.setItem('photoTable',that.photoTable);
+                        // console.log(localStorage.getItem('photoTable'));
                         that.total=data.data.total;
                         // console.log(response);
                         // console.log(response.data);
                         // console.log(response);
-                        // console.log(that.photoTable);
+                        console.log(that.photoTable);
                         that.downButton=true;
 
                         for(let i=0;i<that.photoTable.length;i++){

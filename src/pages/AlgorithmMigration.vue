@@ -77,6 +77,7 @@
                             this.photoTable.push(this.getscr1(response.data.data.list[i].href));
                         }
                     }
+                    console.log(this.photoTable);
                 })
             // }else if(this.photoTable.length>6){
             //     this.photoTable.splice(6,this.photoTable.length-6);
