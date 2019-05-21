@@ -121,10 +121,16 @@
                             }
                             if (info[0] === '0') {
                                 this.plc = '未连接';
+                                this.state = '未启动';
+                                this.speed='无';
+                                this.turn='无';
+                                this.light='关';
                             } else if (info[0] === '1') {
                                 this.plc = '已连接';
                                 if (info[1] === '-1') {
                                     this.state = '未启动';
+                                    this.speed='无';
+                                    this.turn='无';
                                 } else {
                                     this.state = '已启动';
                                     if (info[2] === '0') {
