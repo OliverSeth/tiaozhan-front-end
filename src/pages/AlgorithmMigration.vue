@@ -55,6 +55,7 @@
                 photoTable: []
             }
         },
+
         mounted() {
             // if(localStorage.getItem('photo0')!==null){
             //     for(let i=0;i<6;i++){
