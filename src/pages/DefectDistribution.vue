@@ -1,14 +1,14 @@
 <template>
     <div style="width: 84%;height: 88%;position: absolute">
         <!--<div style="position:absolute;margin-top: -60px">{{msg1}}</div>-->
-        <div id="msg" style="float:left;width: 74%;height: 100%;">
+        <div id="msg" style="float:left;width: 65%;height: 100%;">
             <!--<div v-for="(pictures,index) in picArr"-->
                  <!--style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
                 <!--<img :src="pictures" style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
                 <!--<span>{{infoArr[index]}}</span>-->
             <!--</div>-->
              <div v-for="(pictures,index) in picArr"
-             style="float:left;width: 8%;height: 8%;margin-top: 0.6%;margin-bottom: 1%">
+             style="float:left;width: 12%;height: 12%;margin-left:0.1%;margin-top: 0%;margin-bottom: 0%">
 
                  <div style="position:relative;">
                      　　<img :src="pictures" style="float:left;width: 100%;height: 100%;margin-top: 1%;"/>
@@ -25,17 +25,17 @@
                 <div style="width: 100%;height: 100%;position: absolute">
                     <img src="../assets/device.jpg" style="width: 100%;height: 30%;position: absolute">
                 </div>
-                <div id="word" style="width: 100%;height: 70%;position: absolute;bottom: 0" >
-                    <el-row>
+                <div id="word" style="width: 80%;height: 70%;position: absolute;bottom: 0" >
+                    <!--<el-row>-->
                         <el-col span="24">
-                            <br><el-row :gutter="20"><span style="font-size: 24px" >PLC状态：{{plc}}</span></el-row><br>
-                            <el-row :gutter="20"><span style="font-size: 24px">工控机状态：{{state}}</span></el-row><br>
-                            <el-row :gutter="20"><span style="font-size: 24px">转向：{{turn}}</span></el-row><br>
-                            <el-row :gutter="20"><span style="font-size: 24px">转速：{{speed}}</span></el-row><br>
-                            <el-row :gutter="20"><span style="font-size: 24px">光源：{{light}}</span></el-row><br>
-                            <el-row :gutter="20"><span style="font-size: 42px;color: red;font-weight: bold">{{alarm}}</span></el-row>
+                            <br><el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px" >PLC状态：{{plc}}</span></el-row><br>
+                            <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px">工控机状态：{{state}}</span></el-row><br>
+                            <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px">转向：{{turn}}</span></el-row><br>
+                            <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px">转速：{{speed}}</span></el-row><br>
+                            <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px">光源：{{light}}</span></el-row><br>
+                            <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 42px;color: red;font-weight: bold">{{alarm}}</span></el-row>
                         </el-col>
-                    </el-row>
+                    <!--</el-row>-->
                     <br>
                 </div>
             </div>
@@ -378,23 +378,23 @@
 
         align-self: center}
 
-    input[type="checkbox"] {
+    /*input[type="checkbox"] {*/
 
-        display: none;
+        /*display: none;*/
 
-    }
+    /*}*/
 
-    input[type="checkbox"]:checked + .checkbox {
+    /*input[type="checkbox"]:checked + .checkbox {*/
 
-        background: #4cd964;
+        /*background: #4cd964;*/
 
-    }
+    /*}*/
 
-    input[type="checkbox"]:checked + .checkbox:after {
+    /*input[type="checkbox"]:checked + .checkbox:after {*/
 
-        transform: translateX(1.1rem);
+        /*transform: translateX(1.1rem);*/
 
-    }
+    /*}*/
 
     .checkbox {/* 容器的大小*/
 
