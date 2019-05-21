@@ -64,7 +64,7 @@
 
             </el-checkbox-group>
         </div>
-        <div style="width: 30%;height:20%;float: left;" >
+        <div style="width: 50%;height:20%;float: left;" >
             <el-row>
                 <!--<el-badge :value="total" :max="99" class="item">-->
 
@@ -72,13 +72,15 @@
 
                     <el-button type="primary" icon="el-icon-search" @click="getPhoto()">进行筛选</el-button>
                     <el-button type="primary" icon="el-icon-download" @click="downImage()" :loading="loading">下载全部图片</el-button>
-
+                    <el-button type="primary">迁移训练</el-button>
                 </div>
                 <div v-else>
                     <el-button type="primary"  icon="el-icon-search" @click="getPhoto()">进行筛选</el-button>
                     <el-button type="primary"  icon="el-icon-download" @click="downImage()" :loading="loading" disabled>下载全部图片</el-button>
-
+                    <el-button type="primary" @click="$router.push('/algorithm-migration')">迁移训练</el-button>
                 </div>
+
+
                 <!--</el-badge>-->
                 <!--<el-badge :value="total" :max="99" class="item">-->
 

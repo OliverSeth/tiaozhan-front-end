@@ -27,7 +27,7 @@
                                 type="primary"
                                 size="mini"
                                 icon="el-icon-circle-plus-outline"
-                                @click="dialogFormVisible2=true">
+                                @click="add(scope2.row)">
                         </el-button>
                         <el-button
                                 type="danger"
@@ -131,6 +131,11 @@
 
         },
         methods:{
+            add(row){
+                this.row=row;
+                console.log(this.row);
+                this.dialogFormVisible2=true;
+            },
             getPage(){
                 let url2='http://10.199.172.62:8081/api/v1/models';
                 let that=this;
@@ -147,6 +152,27 @@
                     // console.log(data);
                     if(res.data.code===0){
                         that.deviceTable=data.data.list;
+                        for(let i=0;i<that.deviceTable.length;i++){
+                            // console.log(that.deviceTable[i].models);
+                            that.deviceTable[i].models=that.deviceTable[i].models.substring(2,that.deviceTable[i].models.length-2);
+                            // console.log(that.deviceTable[i].models);
+                            let arr=that.deviceTable[i].models.split(',');
+                            that.deviceTable[i].models='';
+                            for(let j=0;j<arr.length;j++){
+                                let url='http://10.199.172.62:8081/api/v1/models';
+                                that.axios(url,{
+                                    params:{
+                                        modelId:arr[j]
+                                    }
+                                }).then(response=>{
+                                    arr[j]=response.data.data.list[0].name;
+                                    that.deviceTable[i].models+=arr[j]+' ';
+                                    console.log(arr[j]);
+                                })
+                            }
+                            console.log(arr);
+                            // that.deviceTable[i].models=arr.join(',');
+                        }
                         that.total=data.data.total;
                     }
                 });
@@ -318,7 +344,7 @@
 
             },
 
-            addModels(row){
+            addModels(){
                 // let flag=false;
                 // let that=this;
                 // let arr=[];
@@ -399,18 +425,35 @@
                 //         })
                 //     }
                 // })
+                console.log(this.row);
                 let api = {
-                    url: 'http://10.199.172.62:8081/api/v1/devices/' + row.deviceId + '/models/do-admin',
+                    url: 'http://10.199.172.62:8081/api/v1/devices/' + this.row.deviceId + '/models/do-admin',
                     method: 'put'
                 };
-                console.log(row.models);
+                console.log(this.value);
                 // console.log(arr);
+                // for(let i=0;i<this.options.length;i++){
+                //     if(this.options[i].mo)
+                // }
                 api.data = {
-                    models: row.models,
+                    models: this.value,
                 };
                 // console.log(arr);
-                this.axios(api).then(function (response) {
+                this.axios(api).then(response=> {
                     console.log(response);
+                    if(response.data.code===0){
+                        this.$message({
+                            type: 'success',
+                            message: '添加成功!'
+                        });
+                        this.dialogFormVisible2=false;
+                        location.reload();
+                    }else{
+                        this.$message({
+                            type: 'error',
+                            message: '添加失败!'
+                        });
+                    }
                 })
             },
 
@@ -523,6 +566,7 @@
                 file:'',
                 fileList:[],
                 options:[],
+                row:'',
             }
         }
     }
