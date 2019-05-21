@@ -56,13 +56,13 @@
             }
         },
         mounted() {
-            if(localStorage.getItem('photo0')!==null){
-                for(let i=0;i<6;i++){
-                    this.photoTable.push(this.getscr1(localStorage.getItem('photo'+i.toString())));
-                }
-            }
-            console.log(this.photoTable);
-            if (this.photoTable.length === 0) {
+            // if(localStorage.getItem('photo0')!==null){
+            //     for(let i=0;i<6;i++){
+            //         this.photoTable.push(this.getscr1(localStorage.getItem('photo'+i.toString())));
+            //     }
+            // }
+            // console.log(this.photoTable);
+            // if (this.photoTable.length === 0) {
                 let url = 'http://10.199.172.62:8081/api/v1/pictures/do-user';
                 this.axios(url, {
                     params: {
@@ -78,9 +78,9 @@
                         }
                     }
                 })
-            }else if(this.photoTable.length>6){
-                this.photoTable.splice(6,this.photoTable.length-6);
-            }
+            // }else if(this.photoTable.length>6){
+            //     this.photoTable.splice(6,this.photoTable.length-6);
+            // }
         },
             methods:{
                 getscr1(item){
