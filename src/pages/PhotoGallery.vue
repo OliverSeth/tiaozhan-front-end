@@ -164,44 +164,6 @@
 
 
                             }
-                            // switch (that.photoTable[i].type) {
-                            //     case "0":{
-                            //         that.photoTable[i].type="无";
-                            //         break;
-                            //     }
-                            //     case 1:{
-                            //         that.photoTable[i].type="横疵";
-                            //         break;
-                            //     }
-                            //     case 2:{
-                            //         that.photoTable[i].type="纵疵";
-                            //         break;
-                            //     }
-                            //     case 3:{
-                            //         that.photoTable[i].type="横纵疵";
-                            //         break;
-                            //     }
-                            //     case -1:{
-                            //         that.photoTable[i].type="未检测";
-                            //         break;
-                            //     }
-                            //     default:that.photoTable[i].type="错误";
-                            // }
-                            // console.log(that.photoTable[i].type);
-
-
-
-
-                            // that.photoTable[i].picId="/../assets/1.jpg";
-                            // that.photoTable[i].href='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
-                            // console.log("that.photoTable[i].href=");
-                            //
-                            // console.log(that.photoTable[i].href);
-                            // console.log("i=");
-                            //
-                            // console.log(i);
-                            // console.log(that.photoTable[i]);12
-
                             that.photoTable[i].createTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].createTime);
                             that.photoTable[i].updateTime = utils.getDateFormat('yyyy-MM-dd', that.photoTable[i].updateTime);
                         }

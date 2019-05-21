@@ -72,7 +72,7 @@
 
                     <el-button type="primary" icon="el-icon-search" @click="getPhoto()">进行筛选</el-button>
                     <el-button type="primary" icon="el-icon-download" @click="downImage()" :loading="loading">下载全部图片</el-button>
-                    <el-button type="primary">迁移训练</el-button>
+                    <el-button type="primary" @click="$router.push('/algorithm-migration')">迁移训练</el-button>
                 </div>
                 <div v-else>
                     <el-button type="primary"  icon="el-icon-search" @click="getPhoto()">进行筛选</el-button>
@@ -607,11 +607,16 @@
                         that.dialogFormVisible=false;
                         // if(data.)
                         that.photoTable=data.data.list;
+                        for(let i=0;i<6;i++){
+                            localStorage.setItem('photo'+i.toString(),that.photoTable[i].href);
+                        }
+                        localStorage.setItem('photoTable',that.photoTable);
+                        console.log(localStorage.getItem('photoTable'));
                         that.total=data.data.total;
                         // console.log(response);
                         // console.log(response.data);
                         // console.log(response);
-                        console.log(that.photoTable);
+                        // console.log(that.photoTable);
                         that.downButton=true;
 
                         for(let i=0;i<that.photoTable.length;i++){
