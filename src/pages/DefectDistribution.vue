@@ -20,25 +20,27 @@
             <!--<img v-for="(pictures,index) in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
             <!--<span>疵点类型：{{infoArr[index]}}</span>-->
         </div>
-        <div id="info" style="width: 30%;height: 100%;position: absolute;right: 0">
-            <div style="width: 100%;height: 100%;position: absolute">
-                <img src="../assets/device.jpg" style="width: 100%;height: 30%;position: absolute">
+        <el-aside>
+            <div id="info" style="width: 30%;height: 100%;position: absolute;right: 0">
+                <div style="width: 100%;height: 100%;position: absolute">
+                    <img src="../assets/device.jpg" style="width: 100%;height: 30%;position: absolute">
+                </div>
+                <div id="word" style="width: 100%;height: 70%;position: absolute;bottom: 0" >
+                    <el-row>
+                        <el-col span="24">
+                            <br><el-row :gutter="20"><span style="font-size: 24px" >PLC状态：{{plc}}</span></el-row><br>
+                            <el-row :gutter="20"><span style="font-size: 24px">工控机状态：{{state}}</span></el-row><br>
+                            <el-row :gutter="20"><span style="font-size: 24px">转向：{{turn}}</span></el-row><br>
+                            <el-row :gutter="20"><span style="font-size: 24px">转速：{{speed}}</span></el-row><br>
+                            <el-row :gutter="20"><span style="font-size: 24px">光源：{{light}}</span></el-row><br>
+                            <el-row :gutter="20"><span style="font-size: 42px;color: red;font-weight: bold">{{alarm}}</span></el-row>
+                        </el-col>
+                    </el-row>
+                    <br>
+                </div>
             </div>
-            <div id="word" style="width: 100%;height: 70%;position: absolute;bottom: 0" >
-                <el-row>
-                    <el-col span="24">
-                        <br><el-row :gutter="20"><span style="font-size: 24px" >PLC状态：{{plc}}</span></el-row><br>
-                        <el-row :gutter="20"><span style="font-size: 24px">工控机状态：{{state}}</span></el-row><br>
-                        <el-row :gutter="20"><span style="font-size: 24px">转向：{{turn}}</span></el-row><br>
-                        <el-row :gutter="20"><span style="font-size: 24px">转速：{{speed}}</span></el-row><br>
-                        <el-row :gutter="20"><span style="font-size: 24px">光源：{{light}}</span></el-row><br>
-                        <el-row :gutter="20"><span style="font-size: 42px;color: red;font-weight: bold">{{alarm}}</span></el-row>
-                    </el-col>
+        </el-aside>
 
-                </el-row>
-                <br>
-            </div>
-        </div>
     </div>
 </template>
 
