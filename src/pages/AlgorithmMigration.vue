@@ -105,7 +105,7 @@
                             d1.appendChild(img);
                             clearInterval(interval);
                         }
-                    }, 100);
+                    }, 300);
 
                     // while(this.percent!==100){
                     //     // let that=this;
