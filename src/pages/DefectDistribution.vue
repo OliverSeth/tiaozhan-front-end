@@ -8,7 +8,7 @@
                 <!--<span>{{infoArr[index]}}</span>-->
             <!--</div>-->
              <div v-for="(pictures,index) in picArr"
-             style="float:left;width: 30%;height: 25%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">
+             style="float:left;width: 8%;height: 8%;margin-top: 0.6%;margin-bottom: 1%">
 
                  <div style="position:relative;">
                      　　<img :src="pictures" style="float:left;width: 100%;height: 100%;margin-top: 1%;"/>
@@ -20,8 +20,8 @@
             <!--<img v-for="(pictures,index) in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
             <!--<span>疵点类型：{{infoArr[index]}}</span>-->
         </div>
-        <el-aside>
-            <div id="info" style="width: 30%;height: 100%;position: absolute;right: 0">
+        <!--<el-aside>-->
+            <div id="info" style="width: 30%;height: 100%;position: fixed;right: 0">
                 <div style="width: 100%;height: 100%;position: absolute">
                     <img src="../assets/device.jpg" style="width: 100%;height: 30%;position: absolute">
                 </div>
@@ -39,7 +39,7 @@
                     <br>
                 </div>
             </div>
-        </el-aside>
+        <!--</el-aside>-->
 
     </div>
 </template>
@@ -171,23 +171,23 @@
                 //console.log(this.segcnt[head[0]]);
                 if (head[1] === '0') {
                     console.log(part[1]);
-                    switch (part[1]) {
-                        case 'heng':
-                            this.infoArr.push('横疵点');
-                            break;
-                        case 'zong':
-                            this.infoArr.push('纵疵点');
-                            break;
-                        case 'dong':
-                            this.infoArr.push('破洞疵点');
-                            break;
-                        case 'none':
-                            this.infoArr.push('无');
-                            break;
-                        default:
-                            this.infoArr.push('');
-                            break;
-                    }
+                    // switch (part[1]) {
+                    //     case 'heng':
+                    //         this.infoArr.push('横疵点');
+                    //         break;
+                    //     case 'zong':
+                    //         this.infoArr.push('纵疵点');
+                    //         break;
+                    //     case 'dong':
+                    //         this.infoArr.push('破洞疵点');
+                    //         break;
+                    //     case 'none':
+                    //         this.infoArr.push('无');
+                    //         break;
+                    //     default:
+                    //         this.infoArr.push('');
+                    //         break;
+                    // }
                     // this.infoArr.push(part[1]);
                     return;
                 }
