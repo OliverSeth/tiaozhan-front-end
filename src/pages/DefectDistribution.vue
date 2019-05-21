@@ -11,7 +11,7 @@
              style="float:left;width: 12%;height: 12%;margin-left:0.1%;margin-top: 0%;margin-bottom: 0%">
 
                  <div style="position:relative;">
-                     　　<img :src="pictures" style="float:left;width: 100%;height: 100%;margin-top: 1%;"/>
+                     　　<img :src="pictures" @click="handlePictureCardPreview(index)" style="float:left;width: 100%;height: 100%;margin-top: 1%;"/>
                      　　<div style="position:absolute;color:black; z-index:2; left:10px;">{{infoArr[index]}}</div>
                  </div>
                  <!--<img :src="pictures" style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
@@ -40,7 +40,11 @@
                 </div>
             </div>
         <!--</el-aside>-->
-
+        <div>
+            <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="picArr[index]" alt="">
+            </el-dialog>
+        </div>
     </div>
 </template>
 
@@ -90,7 +94,11 @@
             Switch () {
                 this.$emit('switch', event.target.checked);
             },
-
+            handlePictureCardPreview(index) {
+                // this.dialogImageUrl = file.url;
+                this.index=index;
+                this.dialogVisible = true;
+            },
 
             parseSegment(seg) {
                 // console.log(this.picArr);
@@ -235,6 +243,9 @@
         },
         data() {
             return {
+                dialogImageUrl:'',
+                index:'',
+                dialogVisible:false,
                 value4: '',
                 plc: '未连接',
                 state: '未启动',
