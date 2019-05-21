@@ -226,7 +226,7 @@
                     // let newImg=document.createElement("img");
                     // newImg.src=imgdata;
                     // document.getElementById("msg").appendChild(newImg);
-                    this.picArr.push(imgdata);
+                    this.picArr.push('data:image/jpeg;base64,'+imgdata);
                     // console.log(this.picArr);
                 }
             },
