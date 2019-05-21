@@ -70,14 +70,12 @@
                         pageSize: 6
                     }
                 }).then(response => {
-                    // console.log(response);
-                    // console.log(response.data);
-                    // console.log(response.data.list.Type);
-
                     let data = response.data;
                     // console.log(data);
                     if (data.code === 0) {
-                        this.photoTable = data.data.list;
+                        for(let i=0;i<6;i++){
+                            this.photoTable.push(this.getscr1(response.data.data.list[i].href));
+                        }
                     }
                 })
             }else if(this.photoTable.length>6){

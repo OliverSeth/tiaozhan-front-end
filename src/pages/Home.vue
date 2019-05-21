@@ -98,6 +98,7 @@
                         });
                         this.$cookies.remove("token");
                         this.$router.push('/login');
+                        localStorage.clear();
                     }
                     else{
                         this.$message({
