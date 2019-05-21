@@ -1,17 +1,17 @@
 <template>
     <div style="width: 84%;height: 88%;position: absolute">
         <!--<div style="position:absolute;margin-top: -60px">{{msg1}}</div>-->
-        <div id="msg" style="float:left;width: 74%;height: 100%;">
+        <div id="msg" style="float:left;width: 65%;height: 100%;">
             <!--<div v-for="(pictures,index) in picArr"-->
                  <!--style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
                 <!--<img :src="pictures" style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
                 <!--<span>{{infoArr[index]}}</span>-->
             <!--</div>-->
              <div v-for="(pictures,index) in picArr"
-             style="float:left;width: 30%;height: 25%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">
+             style="float:left;width: 12%;height: 12%;margin-left:0.1%;margin-top: 0%;margin-bottom: 0%">
 
                  <div style="position:relative;">
-                     　　<img :src="pictures" style="float:left;width: 100%;height: 100%;margin-top: 1%;"/>
+                     　　<img :src="pictures" @click="handlePictureCardPreview(index)" style="float:left;width: 100%;height: 100%;margin-top: 1%;"/>
                      　　<div style="position:absolute;color:black; z-index:2; left:10px;">{{infoArr[index]}}</div>
                  </div>
                  <!--<img :src="pictures" style="float:left;width: 50%;height: 50%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
@@ -20,27 +20,31 @@
             <!--<img v-for="(pictures,index) in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
             <!--<span>疵点类型：{{infoArr[index]}}</span>-->
         </div>
-        <el-aside>
-            <div id="info" style="width: 30%;height: 100%;position: absolute;right: 0">
+        <!--<el-aside>-->
+            <div id="info" style="width: 30%;height: 100%;position: fixed;right: 0">
                 <div style="width: 100%;height: 100%;position: absolute">
                     <img src="../assets/device.jpg" style="width: 100%;height: 30%;position: absolute">
                 </div>
-                <div id="word" style="width: 100%;height: 70%;position: absolute;bottom: 0" >
-                    <el-row>
+                <div id="word" style="width: 80%;height: 70%;position: absolute;bottom: 0" >
+                    <!--<el-row>-->
                         <el-col span="24">
-                            <br><el-row :gutter="20"><span style="font-size: 24px" >PLC状态：{{plc}}</span></el-row><br>
-                            <el-row :gutter="20"><span style="font-size: 24px">工控机状态：{{state}}</span></el-row><br>
-                            <el-row :gutter="20"><span style="font-size: 24px">转向：{{turn}}</span></el-row><br>
-                            <el-row :gutter="20"><span style="font-size: 24px">转速：{{speed}}</span></el-row><br>
-                            <el-row :gutter="20"><span style="font-size: 24px">光源：{{light}}</span></el-row><br>
-                            <el-row :gutter="20"><span style="font-size: 42px;color: red;font-weight: bold">{{alarm}}</span></el-row>
+                            <br><el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px" >PLC状态：{{plc}}</span></el-row><br>
+                            <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px">工控机状态：{{state}}</span></el-row><br>
+                            <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px">转向：{{turn}}</span></el-row><br>
+                            <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px">转速：{{speed}}</span></el-row><br>
+                            <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px">光源：{{light}}</span></el-row><br>
+                            <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 42px;color: red;font-weight: bold">{{alarm}}</span></el-row>
                         </el-col>
-                    </el-row>
+                    <!--</el-row>-->
                     <br>
                 </div>
             </div>
-        </el-aside>
-
+        <!--</el-aside>-->
+        <div>
+            <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="picArr[index]" alt="">
+            </el-dialog>
+        </div>
     </div>
 </template>
 
@@ -90,7 +94,11 @@
             Switch () {
                 this.$emit('switch', event.target.checked);
             },
-
+            handlePictureCardPreview(index) {
+                // this.dialogImageUrl = file.url;
+                this.index=index;
+                this.dialogVisible = true;
+            },
 
             parseSegment(seg) {
                 // console.log(this.picArr);
@@ -113,10 +121,16 @@
                             }
                             if (info[0] === '0') {
                                 this.plc = '未连接';
+                                this.state = '未启动';
+                                this.speed='无';
+                                this.turn='无';
+                                this.light='关';
                             } else if (info[0] === '1') {
                                 this.plc = '已连接';
                                 if (info[1] === '-1') {
                                     this.state = '未启动';
+                                    this.speed='无';
+                                    this.turn='无';
                                 } else {
                                     this.state = '已启动';
                                     if (info[2] === '0') {
@@ -171,23 +185,23 @@
                 //console.log(this.segcnt[head[0]]);
                 if (head[1] === '0') {
                     console.log(part[1]);
-                    switch (part[1]) {
-                        case 'heng':
-                            this.infoArr.push('横疵点');
-                            break;
-                        case 'zong':
-                            this.infoArr.push('纵疵点');
-                            break;
-                        case 'dong':
-                            this.infoArr.push('破洞疵点');
-                            break;
-                        case 'none':
-                            this.infoArr.push('无');
-                            break;
-                        default:
-                            this.infoArr.push('');
-                            break;
-                    }
+                    // switch (part[1]) {
+                    //     case 'heng':
+                    //         this.infoArr.push('横疵点');
+                    //         break;
+                    //     case 'zong':
+                    //         this.infoArr.push('纵疵点');
+                    //         break;
+                    //     case 'dong':
+                    //         this.infoArr.push('破洞疵点');
+                    //         break;
+                    //     case 'none':
+                    //         this.infoArr.push('无');
+                    //         break;
+                    //     default:
+                    //         this.infoArr.push('');
+                    //         break;
+                    // }
                     // this.infoArr.push(part[1]);
                     return;
                 }
@@ -235,6 +249,9 @@
         },
         data() {
             return {
+                dialogImageUrl:'',
+                index:'',
+                dialogVisible:false,
                 value4: '',
                 plc: '未连接',
                 state: '未启动',
@@ -378,23 +395,23 @@
 
         align-self: center}
 
-    input[type="checkbox"] {
+    /*input[type="checkbox"] {*/
 
-        display: none;
+        /*display: none;*/
 
-    }
+    /*}*/
 
-    input[type="checkbox"]:checked + .checkbox {
+    /*input[type="checkbox"]:checked + .checkbox {*/
 
-        background: #4cd964;
+        /*background: #4cd964;*/
 
-    }
+    /*}*/
 
-    input[type="checkbox"]:checked + .checkbox:after {
+    /*input[type="checkbox"]:checked + .checkbox:after {*/
 
-        transform: translateX(1.1rem);
+        /*transform: translateX(1.1rem);*/
 
-    }
+    /*}*/
 
     .checkbox {/* 容器的大小*/
 
