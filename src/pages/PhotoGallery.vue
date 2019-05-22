@@ -88,7 +88,6 @@
         </div>
         <div class="top">
             <span style="font-size: 18px;color: #06050e">共{{total}}张图片</span>
-
         </div>
     </div>
 </template>

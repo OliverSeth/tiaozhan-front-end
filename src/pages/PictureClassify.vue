@@ -652,18 +652,29 @@
 
             handleCurrentChange: function(currentPage){
                 this.currentPage = currentPage;
+                // this. getAllphoto();
+                this.photoTable=[];
+                let that =this;
+                // let dataStr=item4;//原始字符串
+                // let arryy = [];
+                // item4 = item4.replace(/"([^"]*)"/g, "'$1'");
+                // let array = eval('(' + item4 + ')');//封装成数
+                // console.log(array);
+                // arryy=item4;
                 let dataStrArr=this.checkList.toString().split(",");//分割成字符串数组
+                // let dataInArr=this.checkList.toString().split(",");//分割成字符串数组
+                // console.log(dataInArr);
                 let dataIntArr=[];//保存转换后的整型字符串
-                // dataStrArr.forEach(function(data,index,arr){
-                //     dataIntArr.push(+data);
-                // });
-                // // console.log(this.value7);
-                // console.log(dataStrArr);
+                // console.log(that.checkList);
+
                 for(let i=0;i<this.checkList.length;i++)
                 {
+
                     if(dataStrArr[i]==="横")
                     {
                         dataIntArr[i]=1;
+                        // console.log("dayin");
+
                     }
                     if(dataStrArr[i]==="纵")
                     {
@@ -680,6 +691,7 @@
                 }
                 let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
                 let dataIntArr1=[];//保存转换后的整型字符串
+
                 // dataStrArr.forEach(function(data,index,arr){
                 //     dataIntArr.push(+data);
                 // });
@@ -690,16 +702,28 @@
                 {
                     if(dataStrArr1[i]==="人工")
                     {
+
                         dataIntArr1[i]=0;
+                        // console.log(dataIntArr1[i]);
                     }
                     if(dataStrArr1[i]==="机器")
                     {
                         dataIntArr1[i]=1;
+                        // console.log(dataIntArr1[i]);
                     }
-
                 }
-                let that =this;
-                let url='http://10.199.172.62:8081/api/v1/pictures/search/do-user';
+                // console.log(dataIntArr);
+                // if(dataIntArr==="1")
+                // {
+                //     console.log("good");
+                // }
+                // console.log();
+                console.log(dataIntArr1);
+                let photoClass=[];
+                this.getDeviceid();
+                this.getModelid();
+                // console.log(item1);
+                let url='http://10.199.172.62:8081/api/v1/pictures/do-user';
                 that.axios(url,{
                     params:{
                         pageNum: currentPage,
@@ -710,26 +734,43 @@
                         deviceId:this.value9,
                         modelId:this.value10,
                         identifyType:dataIntArr1.toString()
-                        // createTime:item1,
                     }
                 }).then(function (response) {
-                    // console.log(response);
-                    // console.log("ok");
-
+                    console.log(response);
                     let data=response.data;
 
                     if(data.code===0){
+                        that.dialogFormVisible=false;
                         // if(data.)
-                        that.photoTable=data.data.list;
+                        for(let i=0;i<response.data.data.list.length;i++){
+                            that.photoTable.push(that.getscr1(response.data.data.list[i].href));
+                        }
+                        console.log(that.photoTable[0].href);
+                        for(let i=0;i<6;i++){
+                            localStorage.setItem('photo'+i.toString(),that.photoTable[i]);
+                        }
+                        // localStorage.setItem('photoTable',that.photoTable);
+                        // console.log(localStorage.getItem('photoTable'));
                         that.total=data.data.total;
+                        // console.log(response);
                         // console.log(response.data);
+                        // console.log(response);
+                        console.log(that.photoTable);
+                        that.downButton=true;
+
                         for(let i=0;i<that.photoTable.length;i++){
                             that.photoTable[i]['checked'] = true;
-
+                            // console.log(that.photoTable[i]);
                         }
-                        console.log(that.photoTable);
+
                     }
-                })
+                    else{
+                        console.log("无查询结果");
+                        that.photoTable=[];
+                        that.dialogVisible=true;
+                    }
+
+                });
                 // console.log(this.currentPage)  //点击第几页
             },
             // getitem4Num(item4)
