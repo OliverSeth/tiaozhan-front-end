@@ -45,7 +45,7 @@
             </el-form>
         </el-dialog>
 
-        <div style="margin-top: 30px">
+        <div style="margin-top: 25px">
             <el-dialog :visible.sync="dialogVisible">
                 <img width="100%" :src="dialogImageUrl" alt="">
             </el-dialog>

@@ -599,7 +599,7 @@
                 this.getDeviceid();
                 this.getModelid();
                 // console.log(item1);
-                let url='http://10.199.172.62:8081/api/v1/pictures/do-user';
+                let url='http://10.199.172.62:8081/api/v1/pictures/search/do-user';
                 that.axios(url,{
                     params:{
                         pageNum: 1,
@@ -740,7 +740,7 @@
                 this.getDeviceid();
                 this.getModelid();
                 // console.log(item1);
-                let url='http://10.199.172.62:8081/api/v1/pictures/do-user';
+                let url='http://10.199.172.62:8081/api/v1/pictures/search/do-user';
                 that.axios(url,{
                     params:{
                         pageNum: currentPage,
