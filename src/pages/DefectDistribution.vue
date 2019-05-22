@@ -99,7 +99,6 @@
                 this.index=index;
                 this.dialogVisible = true;
             },
-
             parseSegment(seg) {
                 this.segArr.unshift(seg);
                 // console.log(this.picArr);
