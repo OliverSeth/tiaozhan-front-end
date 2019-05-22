@@ -570,8 +570,8 @@
                         dataIntArr[i]=4
                     }
                 }
-                // console.log("dataInrArr");
-                // console.log(dataIntArr);
+                console.log("dataInrArr");
+                console.log(dataIntArr);
                 let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
                 let dataIntArr1=[];//保存转换后的整型字符串
 
@@ -689,12 +689,6 @@
                 for(let i=0;i<this.checkList.length;i++)
                 {
 
-                    if(dataStrArr[i]==="横")
-                    {
-                        dataIntArr[i]=1;
-                        // console.log("dayin");
-
-                    }
                     if(dataStrArr[i]==="缺纬")
                     {
                         dataIntArr[i]=1;
