@@ -127,11 +127,18 @@
             <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
-                    :current-page="currentPage4"
+                    :current-page="currentPage"
+                    layout="total,prev, pager, next"
+                    :total="total"
+                    :page-size="36">
 
-                    :page-size="10"
-                    layout=" prev, pager, next, jumper"
-                    :total="total">
+                    <!--@size-change="handleSizeChange"-->
+                    <!--@current-change="handleCurrentChange"-->
+                    <!--:current-page="currentPage4"-->
+
+                    <!--:page-size="10"-->
+                    <!--layout=" prev, pager, next, jumper"-->
+                    <!--:total="total">-->
             </el-pagination>
         </div>
     </div>
@@ -597,7 +604,7 @@
                 that.axios(url,{
                     params:{
                         pageNum: 1,
-                        pageSize: 10,
+                        pageSize: 36,
                         types:dataIntArr.toString(),
                         startTime:this.value7 ? this.value7[0] : null,
                         endTime:this.value7 ? this.value7[1] : null,
@@ -646,8 +653,9 @@
             },
             handleSizeChange: function (size) {
                 this.pagesize = size;
+                // this.pagesize = size;
                 // console.log(`每页    条`);
-                // console.log(this.pagesize)  //每页下拉显示数据
+                console.log(this.pagesize)  //每页下拉显示数据
             },
             // getImgPath(path){
             //     let path="";
@@ -737,7 +745,7 @@
                 that.axios(url,{
                     params:{
                         pageNum: currentPage,
-                        pageSize: 10,
+                        pageSize: 36,
                         types:dataIntArr.toString(),
                         startTime:this.value7 ? this.value7[0] : null,
                         endTime:this.value7 ? this.value7[1] : null,
@@ -884,7 +892,7 @@
 
                 photoTable:[],
                 currentPage:1,
-                pageSize:10,
+                pageSize:36,
                 // currentDate: new Date(),
                 // bg1:{
                 //     background:'url(http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN)',
