@@ -20,7 +20,7 @@
                             prop="href"
                             label="图片"
                             sortable
-                            width="180">
+                            width="240">
                         <!--插入图片链接的代码-->
                         <template slot-scope="scope">
                             <img  :src="getscr1(scope.row.href)"    style="width: 90px;height: 90px">
@@ -32,12 +32,12 @@
                             prop="type"
                             model="123123"
                             label="疵点种类"
-                            width="180">
+                            width="240">
                     </el-table-column>
-                    <el-table-column
-                            prop="defectPosition"
-                            label="疵点位置">
-                    </el-table-column>
+                    <!--<el-table-column-->
+                            <!--prop="defectPosition"-->
+                            <!--label="疵点位置">-->
+                    <!--</el-table-column>-->
                     <el-table-column
                             prop="updateTime"
                             label="检测时间">
@@ -52,29 +52,28 @@
                             <el-button type="danger" size="small" @click="removePhoto(scope2.row)">
                                 删除
                             </el-button>
-                            <el-dialog :visible="dialogFormVisible2">
-                                <el-upload
-                                        class="upload-demo"
-                                        ref="upload"
-                                        action="http://10.199.172.62:8081/api/v1/pictures/upload/xml/do-admin"
-                                        :on-preview="handlePreview"
-                                        :on-remove="handleRemove"
-                                        :before-upload="handleBefore"
-                                        multiple
-                                        :on-exceed="handleExceed">
-                                    <i class="el-icon-plus"></i>
-                                </el-upload>
-                                <el-button size="small" type="primary" @click="uploadXML" style="margin-top: 20px">上传XML文件
-                                </el-button>
-                                <el-button size="small" @click="dialogFormVisible2=false">取消</el-button>
-                            </el-dialog>
                         </template>
                     </el-table-column>
                 </el-table>
             </el-col>
         </el-row>
         </div>
-
+        <el-dialog :visible.sync="dialogFormVisible2" width="30%">
+            <el-upload
+                    class="upload-demo"
+                    ref="upload"
+                    action="http://10.199.172.62:8081/api/v1/pictures/upload/xml/do-admin"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :before-upload="handleBefore"
+                    multiple
+                    :on-exceed="handleExceed">
+                <i class="el-icon-plus">点击选择文件</i>
+            </el-upload>
+            <el-button size="small" type="primary" @click="uploadXML" style="margin-top: 20px">上传XML文件
+            </el-button>
+            <el-button size="small" @click="dialogFormVisible2=false">取消</el-button>
+        </el-dialog>
         <div class="block">
             <span class="pages"></span>
             <el-pagination
@@ -139,7 +138,6 @@
                             {
                                 // console.log("12333333333333333");
                                 that.photoTable[i].type="无";
-
 
                             }
                             if(that.photoTable[i].type===1)
