@@ -215,7 +215,6 @@
                         this.segs[head[0]][pos]='';
                         this.segs[head[0]][pos] = seg.substr(n,seg.length-n+1);
                     }
-
                     // console.log(this.segs[head[0]][pos]);
                     this.segcnt[head[0]]++;
                     // console.log(this.segcnt[head[0]]);
@@ -233,7 +232,7 @@
                     // }
                 }
                 if (this.segcnt[head[0]] === len) {
-                    let imgdata = '';
+                    // let imgdata = 'data:image/jpeg;base64,';
                     for (let i = 0; i < len; i++) {
                         if(this.segs[head[0]][i]===undefined) {
                             console.log('len:'+len);
