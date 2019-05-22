@@ -937,6 +937,7 @@
                 checkAll: false,
             };
         },
+
     }
 </script>
 <style scoped>
