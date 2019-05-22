@@ -233,7 +233,7 @@
                     // }
                 }
                 if (this.segcnt[head[0]] === len) {
-                    let imgdata = '';
+                    // let imgdata = 'data:image/jpeg;base64,';
                     for (let i = 0; i < len; i++) {
                         if(this.segs[head[0]][i]===undefined) {
                             console.log('len:'+len);
