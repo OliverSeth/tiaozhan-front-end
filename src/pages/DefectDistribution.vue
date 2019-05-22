@@ -241,6 +241,7 @@
                         }
                         imgdata += this.segs[head[0]][i];
                     }
+                    this.segs[head[0]]=null;
                     // console.log(head[0]);
                     // try{
                     //     document.getElementById("msg").append('<p><img src="' + imgdata + '"/></p>');
