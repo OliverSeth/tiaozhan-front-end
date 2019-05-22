@@ -125,8 +125,6 @@
                     if(data.code===0){
                         that.photoTable=data.data.list;
                         // console.log(that.photoTable[1].type);
-
-
                         that.total=data.data.total;
                         // console.log(response);
                         for(let i=0;i<that.photoTable.length;i++){

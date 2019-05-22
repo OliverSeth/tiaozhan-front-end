@@ -18,6 +18,7 @@
                 <span class="demonstration"></span>
                 <el-date-picker
                         v-model="value7"
+                        default-value="start.getTime()"
                         type="daterange"
                         align="right"
                         format="yyyy 年 MM 月 dd 日"
