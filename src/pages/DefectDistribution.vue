@@ -215,7 +215,6 @@
                         this.segs[head[0]][pos]='';
                         this.segs[head[0]][pos] = seg.substr(n,seg.length-n+1);
                     }
-
                     // console.log(this.segs[head[0]][pos]);
                     this.segcnt[head[0]]++;
                     // console.log(this.segcnt[head[0]]);
