@@ -123,10 +123,11 @@
         <div style="width: 100%;height:10%;float: left;" class="block">
             <!--<span class="demonstration">完整功能</span>-->
             <el-pagination
+                    background
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="currentPage"
-                    layout="total,prev, pager, next"
+                    layout="total,prev, pager, next,jumper"
                     :total="total"
                     :page-size="60">
 

@@ -77,10 +77,11 @@
         <div class="block">
             <span class="pages"></span>
             <el-pagination
+                    background
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="currentPage"
-                    layout="total,prev, pager, next"
+                    layout="total,prev, pager, next,jumper"
                     :total="total"
                     :page-size="4">
             </el-pagination>
