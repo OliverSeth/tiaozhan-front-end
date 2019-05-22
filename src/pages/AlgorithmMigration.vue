@@ -3,11 +3,11 @@
         <el-col :span="8">
             <el-row :gutter="30">
                 <el-col>
-                    <el-card style="position: relative;width: 100%;height: 280px" shadow="hover">
+                    <el-card style="position: relative;width: 100%;height: 190px" shadow="hover">
                         <div slot="header">
                             <span>现有模型</span>
                         </div>
-                        <img style="width: 50%;height: 50%" src="../assets/old.png">
+                        <img style="width: 50%;height: 30%" src="../assets/old.png">
                     </el-card>
                 </el-col>
             </el-row>
@@ -34,7 +34,7 @@
                          status="success"></el-progress>
         </el-col>
         <el-col :span="8">
-            <el-card style="margin-top: 100px;height: 300px" shadow="hover">
+            <el-card style="position: relative;width: 100%;height: 190px" shadow="hover">
                 <div slot="header">
                     <span>新模型</span>
                 </div>
