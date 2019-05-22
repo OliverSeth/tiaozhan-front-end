@@ -23,7 +23,7 @@
                             width="240">
                         <!--插入图片链接的代码-->
                         <template slot-scope="scope">
-                            <img  :src="getscr1(scope.row.href)"    style="width: 90px;height: 90px">
+                            <img  :src="getscr1(scope.row.href)"  @click="handlePictureCardPreview(scope.row.href)"  style="width: 90px;height: 90px">
                         </template>
                     </el-table-column>
 
@@ -89,6 +89,9 @@
         <div class="top">
             <span style="font-size: 18px;color: #06050e">共{{total}}张图片</span>
         </div>
+        <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="getscr1(href)" alt="">
+        </el-dialog>
     </div>
 </template>
 
@@ -103,6 +106,11 @@
 
         },
         methods: {
+            handlePictureCardPreview(href) {
+                // this.dialogImageUrl = file.url;
+                this.href=href;
+                this.dialogVisible = true;
+            },
             showPage()
             {
                 // let api=this.$api.userApi.getPhotos;
@@ -414,6 +422,8 @@
         },
         data() {
             return {
+                dialogVisible:false,
+                href:'',
                 currentPage:1,
                 pageSize:4,
                 photoTable:[],
