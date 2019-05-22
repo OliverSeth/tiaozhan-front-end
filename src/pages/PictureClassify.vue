@@ -146,6 +146,7 @@
 </template>
 
 <script>
+
     //main引入或者是组件内引入
     let JSZip = require('jszip');
     export default {
