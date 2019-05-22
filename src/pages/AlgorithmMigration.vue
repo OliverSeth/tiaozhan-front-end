@@ -30,7 +30,7 @@
             </el-row>
         </el-col>
         <el-col :span="8">
-            <el-progress style="margin-top: 290px" :text-inside="true" :stroke-width="20" :percentage="percent"
+            <el-progress style="margin-top: 120px" :text-inside="true" :stroke-width="20" :percentage="percent"
                          status="success"></el-progress>
         </el-col>
         <el-col :span="8">
@@ -132,7 +132,7 @@
             ,
                 download()
                 {
-                    let url = '/webhdfs/v1/upload/model-py/19-05/11/3eb9b142-a9b3-4174-9ec0-53a12a6e1250-newModel.h5?op=OPEN';
+                    let url = '/webhdfs/v1/upload/model-py/19-05/22/50d65dbe-1a26-44b0-b69b-6618a1526b36-newModel.h5?op=OPEN';
                     if (this.percent === 100) {
                         window.location.href = 'http://10.199.172.62:5555' + url;
                     }
