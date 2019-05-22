@@ -3,7 +3,7 @@
         <el-col :span="8">
             <el-row :gutter="30">
                 <el-col>
-                    <el-card style="position: relative;width: 100%;height: 300px" shadow="hover">
+                    <el-card style="position: relative;width: 100%;height: 280px" shadow="hover">
                         <div slot="header">
                             <span>现有模型</span>
                         </div>
@@ -14,7 +14,7 @@
             <br/><br/>
             <el-row :gutter="30">
                 <el-col>
-                    <el-card style="position: relative;width: 100%;height: 300px" shadow="hover">
+                    <el-card style="position: relative;width: 100%;height: 320px" shadow="hover">
                         <div slot="header">
                             <span>疵点图片</span>
                         </div>
@@ -30,7 +30,7 @@
             </el-row>
         </el-col>
         <el-col :span="8">
-            <el-progress style="margin-top: 310px" :text-inside="true" :stroke-width="20" :percentage="percent"
+            <el-progress style="margin-top: 290px" :text-inside="true" :stroke-width="20" :percentage="percent"
                          status="success"></el-progress>
         </el-col>
         <el-col :span="8">
@@ -107,7 +107,7 @@
                             d1.appendChild(img);
                             clearInterval(interval);
                         }
-                    }, 300);
+                    }, 200);
 
                     // while(this.percent!==100){
                     //     // let that=this;

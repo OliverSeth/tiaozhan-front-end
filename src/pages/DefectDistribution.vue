@@ -27,7 +27,7 @@
                 </div>
                 <div id="word" style="width: 80%;height: 70%;position: absolute;bottom: 0" >
                     <!--<el-row>-->
-                        <el-col span="24">
+                        <el-col :span="24">
                             <br><el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px" >PLC状态：{{plc}}</span></el-row><br>
                             <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px">工控机状态：{{state}}</span></el-row><br>
                             <el-row :gutter="20" style="margin-left: 20px"><span style="font-size: 24px">转向：{{turn}}</span></el-row><br>
@@ -101,6 +101,7 @@
             },
 
             parseSegment(seg) {
+                this.segArr.unshift(seg);
                 // console.log(this.picArr);
                 // console.log(this.infoArr);
                 // console.log(this.infoArr[this.index]);
@@ -208,25 +209,40 @@
                 }
                 if (head[0] in this.segs) {
                     this.segs[head[0]][pos] = part[1];
-                    if(part[1]===undefined){
-                        let n=seg.indexOf('@');
-                        part[1]=seg.substr(n,seg.length-n+1);
-                        this.segs[head[0]][pos] = part[1];
+                    if(this.segs[head[0]][pos]===undefined){
+                        console.log(part);
                         console.log(seg);
+                        let n=seg.indexOf('@');
+                        this.segs[head[0]][pos]='';
+                        this.segs[head[0]][pos] = seg.substr(n,seg.length-n+1);
                     }
 
                     // console.log(this.segs[head[0]][pos]);
                     this.segcnt[head[0]]++;
                     // console.log(this.segcnt[head[0]]);
                 } else {
-                    this.segs[head[0]] = new Array(len);
+                    this.segs[head[0]] = new Array(len+100);
                     this.segs[head[0]][pos] = part[1];
                     // console.log(this.segs[head[0]][pos]);
                     this.segcnt[head[0]] = 1;
+                    // if(this.segs[head[0]][pos]===undefined){
+                    //     console.log(part);
+                    //     console.log(seg);
+                    //     let n=seg.indexOf('@');
+                    //     this.segs[head[0]][pos]='';
+                    //     this.segs[head[0]][pos] = seg.substr(n,seg.length-n+1);
+                    // }
                 }
                 if (this.segcnt[head[0]] === len) {
                     let imgdata = '';
-                    for (let i = 0; i < len; i++) imgdata += this.segs[head[0]][i];
+                    for (let i = 0; i < len; i++) {
+                        if(this.segs[head[0]][i]===undefined) {
+                            console.log('len:'+len);
+                            console.log(i);
+                            continue;
+                        }
+                        imgdata += this.segs[head[0]][i];
+                    }
                     // console.log(head[0]);
                     // try{
                     //     document.getElementById("msg").append('<p><img src="' + imgdata + '"/></p>');
@@ -277,37 +293,38 @@
                 pictures: "",
                 picArr: [],
                 infoArr: [],
+                segArr:[]
                 // checked1: false,
-                bg1: {
-                    background: 'url(' + require('../assets/1.jpg') + ')',
-                    backgroundRepeat: "no-repeat"
-                },
-                bg2: {
-                    background: 'url(' + require('../assets/2.jpg') + ')',
-                    backgroundRepeat: "no-repeat"
-                },
-                bg3: {
-                    background: 'url(' + require('../assets/3.jpg') + ')',
-                    backgroundRepeat: "no-repeat"
-                },
-                bg4: {
-                    background: 'url(' + require('../assets/4.jpg') + ')',
-                    backgroundRepeat: "no-repeat"
-                },
-                bg5: {
-                    background: 'url(' + require('../assets/5.jpg') + ')',
-                    backgroundRepeat: "no-repeat"
-                },
-                bg6: {
-                    background: 'url(' + require('../assets/6.jpg') + ')',
-                    backgroundRepeat: "no-repeat"
-                },
-                bg7: {
-                    background: 'url(' + require('../assets/7.jpg') + ')',
-                    backgroundRepeat: "no-repeat"
-                },
-                checked1: false,
-                checked: false
+                // bg1: {
+                //     background: 'url(' + require('../assets/1.jpg') + ')',
+                //     backgroundRepeat: "no-repeat"
+                // },
+                // bg2: {
+                //     background: 'url(' + require('../assets/2.jpg') + ')',
+                //     backgroundRepeat: "no-repeat"
+                // },
+                // bg3: {
+                //     background: 'url(' + require('../assets/3.jpg') + ')',
+                //     backgroundRepeat: "no-repeat"
+                // },
+                // bg4: {
+                //     background: 'url(' + require('../assets/4.jpg') + ')',
+                //     backgroundRepeat: "no-repeat"
+                // },
+                // bg5: {
+                //     background: 'url(' + require('../assets/5.jpg') + ')',
+                //     backgroundRepeat: "no-repeat"
+                // },
+                // bg6: {
+                //     background: 'url(' + require('../assets/6.jpg') + ')',
+                //     backgroundRepeat: "no-repeat"
+                // },
+                // bg7: {
+                //     background: 'url(' + require('../assets/7.jpg') + ')',
+                //     backgroundRepeat: "no-repeat"
+                // },
+                // checked1: false,
+                // checked: false
             }
         }
         ,
