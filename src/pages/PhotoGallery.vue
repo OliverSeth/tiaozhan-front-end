@@ -1,6 +1,6 @@
 <template>
 
-    <div id="clothExamine" style="width: 80%;height: 88%;position: absolute">
+    <div id="clothExamine" style="width: 80%;height: 85%;position: absolute">
         <div style="margin-top: -75px;margin-left:350px">
             <el-button type="primary" @click="uploadPhoto">上传图片</el-button>
         </div>
