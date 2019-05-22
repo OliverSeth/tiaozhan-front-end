@@ -346,86 +346,6 @@
             },
 
             addModels(){
-                // let flag=false;
-                // let that=this;
-                // let arr=[];
-                // let newStr=String();
-                // this.$prompt('请选择想要添加的模型',  {
-                //     confirmButtonText: '确定',
-                //     cancelButtonText: '取消',
-                // }).then(({ value }) => {
-                //     if(value===null){
-                //         this.$message({
-                //             type: 'info',
-                //             message: '取消添加'
-                //         });
-                //     }
-                //     else{
-                //         let string=row.models;
-                //         if(string==="null"){
-                //             string=null;
-                //         }
-                //         // console.log(string);
-                //         string=string.substr(1,string.length-2);
-                //         // console.log(string);
-                //         arr=string.split(',');
-                //         // console.log(arr);
-                //         let hf=false;
-                //         for(let i=0;i<arr.length;i++){
-                //             if(arr[i]===value){
-                //                 hf=true;
-                //                 const h = this.$createElement;
-                //                 this.$message({
-                //                     message: h('p', null, [
-                //                         h('span', null, '模型 '),
-                //                         h('i', { style: 'color: teal' }, value),
-                //                         h('span', null, '已存在 '),
-                //                     ])
-                //                 });
-                //             }
-                //         }
-                //         if(hf===false){
-                //             arr.push(value);
-                //             newStr=arr.join(',');
-                //             console.log(newStr);
-                //             // row.models=newStr;
-                //             row.models='['+ newStr +']';
-                //             flag=true;
-                //         }
-                //         else{
-                //             arr=row.models;
-                //         }
-                //         // console.log(row.models);
-                //     }
-                //
-                //     // console.log(this.getDeviceid());
-                //     this.$message({
-                //         type: 'success',
-                //         message: '添加成功'
-                //     });
-                // }).catch(() => {
-                //     this.$message({
-                //         type: 'info',
-                //         message: '取消更换'
-                //     });
-                // }).then(()=>{
-                //     if(flag===true){
-                //         // console.log(that.deviceTable);
-                //         let api={
-                //             url:'http://10.199.172.62:8081/api/v1/devices/'+row.deviceId+'/models/do-admin',
-                //             method:'put'
-                //         };
-                //         console.log(row.models);
-                //         // console.log(arr);
-                //         api.data={
-                //             models:row.models,
-                //         };
-                //         // console.log(arr);
-                //         that.axios(api).then(function (response) {
-                //             console.log(response);
-                //         })
-                //     }
-                // })
                 console.log(this.row);
                 let api = {
                     url: 'http://10.199.172.62:8081/api/v1/devices/' + this.row.deviceId + '/models/do-admin',
@@ -460,32 +380,7 @@
 
             deleteModels(){
                 let flag=false;
-                this.$prompt('请输入想要删除的模型',  {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                }).then(({ value }) => {
-                    this.$confirm('此操作将删除模型'+value+', 是否继续?', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(() => {
-                        flag=true;
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功!'
-                        });
-                    }).catch(() => {
-                        this.$message({
-                            type: 'info',
-                            message: '已取消删除'
-                        });
-                    });
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '取消删除'
-                    });
-                });
+
 
             },
 
