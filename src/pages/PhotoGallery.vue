@@ -22,6 +22,9 @@
                             sortable
                             width="240">
                         <!--插入图片链接的代码-->
+                        <!--<viewer :images="images">-->
+                            <!--<img v-for="src in images" :src="src" :key="src" width="300" alt="12">-->
+                        <!--</viewer>-->
                         <template slot-scope="scope">
                             <img  :src="getscr1(scope.row.href)"  @click="handlePictureCardPreview(scope.row.href)"  style="width: 90px;height: 90px">
                         </template>
@@ -87,7 +90,7 @@
             </el-pagination>
         </div>
         <div class="top">
-            <span style="font-size: 18px;color: #06050e">共{{total}}张图片</span>
+            <span style="font-size: 18px;color: #06050e">当前共{{total}}张图片</span>
         </div>
         <el-dialog :visible.sync="dialogVisible">
             <img width="100%" :src="getscr1(href)" alt="">
@@ -109,6 +112,7 @@
             handlePictureCardPreview(href) {
                 // this.dialogImageUrl = file.url;
                 this.href=href;
+                // var imgW = 100
                 this.dialogVisible = true;
             },
             showPage()

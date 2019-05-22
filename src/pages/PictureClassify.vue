@@ -31,7 +31,7 @@
                 </el-date-picker>
             </div>
         </div>
-        <div style="width: 15%;height:20%;float: left" >
+        <div style="width: 12%;height:20%;float: left" >
             <p class="optionmenu" ><el-tag>检测模型</el-tag></p>
             <el-select v-model=" value10" clearable placeholder="请选择">
                 <el-option
@@ -112,7 +112,7 @@
 
                     <!--<el-checkbox :checked="true">备选项</el-checkbox>-->
                     <el-card  :body-style="{ padding: '0px' }">
-                        <img   :src="photo" name= 'img' style="width: 90px;height: 90px">
+                        <img   :src="photo" name= 'img' @click="handlePictureCardPreview(photo)"   style="width: 90px;height: 90px">
                         <!--<el-checkbox  :checked="photo.checked"  ></el-checkbox>-->
                     </el-card>
 
@@ -156,6 +156,11 @@
           that.getModelid();
         },
         methods:{
+            handlePictureCardPreview(href) {
+                // this.dialogImageUrl = file.url;
+                this.photo=href;
+                this.dialogVisible = true;
+            },
 
     //    getBase64Image(img,width,height) {
     //     var canvas = document.createElement("canvas");
@@ -544,13 +549,11 @@
                 for(let i=0;i<this.checkList.length;i++)
                 {
 
-                    if(dataStrArr[i]==="横")
+                    if(dataStrArr[i]==="缺纬")
                     {
                         dataIntArr[i]=1;
-                        // console.log("dayin");
-
                     }
-                    if(dataStrArr[i]==="纵")
+                    if(dataStrArr[i]==="缺经")
                     {
                         dataIntArr[i]=2;
                     }
@@ -567,6 +570,8 @@
                         dataIntArr[i]=4
                     }
                 }
+                // console.log("dataInrArr");
+                // console.log(dataIntArr);
                 let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
                 let dataIntArr1=[];//保存转换后的整型字符串
 
@@ -690,7 +695,11 @@
                         // console.log("dayin");
 
                     }
-                    if(dataStrArr[i]==="纵")
+                    if(dataStrArr[i]==="缺纬")
+                    {
+                        dataIntArr[i]=1;
+                    }
+                    if(dataStrArr[i]==="缺经")
                     {
                         dataIntArr[i]=2;
                     }
@@ -704,9 +713,8 @@
                     }
                     if(dataStrArr[i]==="污渍")
                     {
-                        dataIntArr[i]=4;
+                        dataIntArr[i]=4
                     }
-
                 }
                 let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
                 let dataIntArr1=[];//保存转换后的整型字符串
