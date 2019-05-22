@@ -104,12 +104,13 @@
                 // console.log(this.picArr);
                 // console.log(this.infoArr);
                 // console.log(this.infoArr[this.index]);
-                //console.log(seg);
-                let part = seg.split("@");
+                // console.log(seg);
+                let imgdata='';
+                let part = seg.split('@');
                 if (part.length === 1) {
-                    console.log(part[0]);
+                    // console.log(part[0]);
                     if (part[0] === 'test_connection') {
-                        console.log('连接成功！');
+                        // console.log('连接成功！');
                     } else {
                         let msg = part[0].split(':');
                         if (msg[0] === 'PlcWorkState') {
@@ -165,7 +166,7 @@
                                     }
                                 }
                             }
-                            console.log(msg[1]);
+                            // console.log(msg[1]);
                             // console.log(this.plc);
                         } else {
                             // this.plc = '没有PLC状态';
@@ -184,7 +185,7 @@
                 //console.log(head);
                 //console.log(this.segcnt[head[0]]);
                 if (head[1] === '0') {
-                    console.log(part[1]);
+                    // console.log(part[1]);
                     // switch (part[1]) {
                     //     case 'heng':
                     //         this.infoArr.push('横疵点');
@@ -207,16 +208,26 @@
                 }
                 if (head[0] in this.segs) {
                     this.segs[head[0]][pos] = part[1];
+                    if(part[1]===undefined){
+                        let n=seg.indexOf('@');
+                        part[1]=seg.substr(n,seg.length-n+1);
+                        this.segs[head[0]][pos] = part[1];
+                        console.log(seg);
+                    }
+
+                    // console.log(this.segs[head[0]][pos]);
                     this.segcnt[head[0]]++;
+                    // console.log(this.segcnt[head[0]]);
                 } else {
                     this.segs[head[0]] = new Array(len);
                     this.segs[head[0]][pos] = part[1];
+                    // console.log(this.segs[head[0]][pos]);
                     this.segcnt[head[0]] = 1;
                 }
                 if (this.segcnt[head[0]] === len) {
-                    let imgdata = this.segs[head[0]][0];
-                    for (let i = 1; i < len; i++) imgdata += this.segs[head[0]][i];
-                    console.log(head[0]);
+                    let imgdata = '';
+                    for (let i = 0; i < len; i++) imgdata += this.segs[head[0]][i];
+                    // console.log(head[0]);
                     // try{
                     //     document.getElementById("msg").append('<p><img src="' + imgdata + '"/></p>');
                     // }catch(e){
@@ -301,7 +312,7 @@
         }
         ,
         mounted() {
-            console.log(this.picArr);
+            // console.log(this.picArr);
             this.setBgSize();
             let cnt = -1;
             let segs = "";
