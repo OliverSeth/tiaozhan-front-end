@@ -12,7 +12,7 @@
                 </el-option>
             </el-select>
         </div>
-        <div style="width: 30%;height:20%;float: left">
+        <div style="width: 29%;height:20%;float: left">
             <p class="optionmenu" ><el-tag>检测时间</el-tag></p>
             <div class="block">
                 <span class="demonstration"></span>
@@ -43,7 +43,7 @@
                 </el-option>
             </el-select>
         </div>
-        <div style="width: 25%;height:20%;float: left;">
+        <div style="width: 31%;height:20%;float: left;">
             <p class="optionmenu" > <el-tag>疵点类型</el-tag></p>
             <el-checkbox-group v-model="checkList">
                 <!--<el-checkbox label="横疵" v-model="checked1"></el-checkbox>-->
@@ -53,6 +53,7 @@
                 <el-checkbox label="缺纬"></el-checkbox>
                 <el-checkbox label="缺经"></el-checkbox>
                 <el-checkbox label="破洞"></el-checkbox>
+                <el-checkbox label="污渍"></el-checkbox>
                 <el-checkbox label="无"></el-checkbox>
             </el-checkbox-group>
         </div>
@@ -553,6 +554,10 @@
                     {
                         dataIntArr[i]=3;
                     }
+                    if(dataStrArr[i]==="污渍")
+                    {
+                        dataIntArr[i]=4
+                    }
                 }
                 let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
                 let dataIntArr1=[];//保存转换后的整型字符串
@@ -688,6 +693,11 @@
                     {
                         dataIntArr[i]=3;
                     }
+                    if(dataStrArr[i]==="污渍")
+                    {
+                        dataIntArr[i]=4;
+                    }
+
                 }
                 let dataStrArr1=this.checkList2.toString().split(",");//分割成字符串数组
                 let dataIntArr1=[];//保存转换后的整型字符串
