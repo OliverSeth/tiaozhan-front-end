@@ -49,7 +49,8 @@
                 path: 'http://10.199.172.62:8081/api/v1/users/login/',
                 bg:{
                     backgroundImage:'url('+require('../assets/bg.jpg')+')',
-                    backgroundRepeat:'no-repeat'
+                    backgroundRepeat:'no-repeat',
+                    backgroundSize:'100%'
                 }
             }
         },
