@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 80%;height:60%;position: absolute"  :data="photoTable" >
+    <div style="width: 80%;height:50%;position: absolute"  :data="photoTable" >
 
         <div style="width: 10%;height:20%;float: left" >
             <p class="optionmenu" ><el-tag>检测设备</el-tag></p>
@@ -29,8 +29,6 @@
                         :picker-options="pickerOptions2">
                 </el-date-picker>
             </div>
-
-
         </div>
         <div style="width: 15%;height:20%;float: left" >
             <p class="optionmenu" ><el-tag>检测模型</el-tag></p>
@@ -62,10 +60,9 @@
             <el-checkbox-group v-model="checkList2" :max="1">
                 <el-checkbox label="人工"></el-checkbox>
                 <el-checkbox label="机器"></el-checkbox>
-
             </el-checkbox-group>
         </div>
-        <div style="width: 50%;height:20%;float: left;" >
+        <div style="width: 50%;height:15%;float: left;" >
             <el-row>
                 <!--<el-badge :value="total" :max="99" class="item">-->
 
@@ -97,7 +94,7 @@
                 <!---->
             <!--</div>-->
         <!--</div>-->
-        <div style="width: 100%;height:85%;float: left;" id="photo">
+        <div style="width: 100%;height:120%;float: left;" id="photo">
             <el-row >
                 <el-dialog
                         title="提示"
@@ -115,14 +112,14 @@
                     <!--<el-checkbox :checked="true">备选项</el-checkbox>-->
                     <el-card  :body-style="{ padding: '0px' }">
                         <img   :src="photo" name= 'img' style="width: 90px;height: 90px">
-                        <el-checkbox  :checked="photo.checked"  ></el-checkbox>
+                        <!--<el-checkbox  :checked="photo.checked"  ></el-checkbox>-->
                     </el-card>
 
                 </el-col>
 
             </el-row>
         </div>
-        <div style="width: 100%;height:65%;float: left;" class="block">
+        <div style="width: 100%;height:10%;float: left;" class="block">
             <!--<span class="demonstration">完整功能</span>-->
             <el-pagination
                     @size-change="handleSizeChange"
@@ -130,7 +127,7 @@
                     :current-page="currentPage"
                     layout="total,prev, pager, next"
                     :total="total"
-                    :page-size="36">
+                    :page-size="60">
 
                     <!--@size-change="handleSizeChange"-->
                     <!--@current-change="handleCurrentChange"-->
@@ -296,9 +293,9 @@
                 let img = zip.folder("images");
                 // console.log(img);
                 let baseList = [];
-                // let src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN';
+                // let src='http://160.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN';
 
-                let arr = ['http://10.199.172.62/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN','http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN'];
+                let arr = ['http://10.199.172.62/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN','http://160.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/beb5250a-31df-4627-9165-82b191e02b7b-945400997.jpg?op=OPEN'];
                 for (let i = 0; i < arr.length; i++) {
                     let image = new Image();
                     image.setAttribute('crossOrigin', 'anonymous');
@@ -606,7 +603,7 @@
                 that.axios(url,{
                     params:{
                         pageNum: 1,
-                        pageSize: 36,
+                        pageSize: 60,
                         types:dataIntArr.toString(),
                         startTime:this.value7 ? this.value7[0] : null,
                         endTime:this.value7 ? this.value7[1] : null,
@@ -747,7 +744,7 @@
                 that.axios(url,{
                     params:{
                         pageNum: currentPage,
-                        pageSize: 36,
+                        pageSize: 60,
                         types:dataIntArr.toString(),
                         startTime:this.value7 ? this.value7[0] : null,
                         endTime:this.value7 ? this.value7[1] : null,
@@ -845,8 +842,8 @@
 
             //获取图片路径
             getscr1(item){
-                // document.images.imgInit.src='http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN';
-                // return ('http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/ef941f06-7d1f-43ab-b6a0-28275be153e7-153314543.jpg?op=OPEN');
+                // document.images.imgInit.src='http://160.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-806000665.jpg?op=OPEN';
+                // return ('http://160.70.63.35:50070/webhdfs/v1/upload/picture/19-02/20/ef941f06-7d1f-43ab-b6a0-28275be153e7-153314543.jpg?op=OPEN');
                 return ('http://10.199.172.62:5555'+item);
             },
             // getflage(item){
@@ -894,10 +891,10 @@
 
                 photoTable:[],
                 currentPage:1,
-                pageSize:36,
+                pageSize:60,
                 // currentDate: new Date(),
                 // bg1:{
-                //     background:'url(http://148.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-803600665.jpg?op=OPEN)',
+                //     background:'url(http://160.70.63.35:50070/webhdfs/v1/upload/picture/19-02/19/5fa52131-d668-4ec4-99b6-b6fb71ba24fc-806000665.jpg?op=OPEN)',
                 //     backgroundRepeat:"no-repeat",
                 // },
                 url:'',
@@ -913,7 +910,7 @@
                         onClick(picker) {
                             const end = new Date();
                             const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                            start.setTime(start.getTime() - 6000 * 1000 * 24 * 7);
                             picker.$emit('pick', [start, end]);
                         }
                     }, {
@@ -921,7 +918,7 @@
                         onClick(picker) {
                             const end = new Date();
                             const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                            start.setTime(start.getTime() - 6000 * 1000 * 24 * 30);
                             picker.$emit('pick', [start, end]);
                         }
                     }, {
@@ -929,7 +926,7 @@
                         onClick(picker) {
                             const end = new Date();
                             const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                            start.setTime(start.getTime() - 6000 * 1000 * 24 * 90);
                             picker.$emit('pick', [start, end]);
                         }
                     }]
