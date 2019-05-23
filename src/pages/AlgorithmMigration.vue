@@ -64,11 +64,15 @@
             // }
             // console.log(this.photoTable);
             // if (this.photoTable.length === 0) {
-                let url = 'http://10.199.172.62:8081/api/v1/pictures/do-user';
+                let url = 'http://10.199.172.62:8081/api/v1/pictures//search/do-user';
                 this.axios(url, {
                     params: {
                         pageNum: 1,
-                        pageSize: 6
+                        pageSize: 6,
+                        types:"1,2",
+                        // deviceId:this.value9,
+                        // modelId:this.value10,
+                        // identifyType:dataIntArr1.toString(),
                     }
                 }).then(response => {
                     let data = response.data;
