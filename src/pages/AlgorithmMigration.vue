@@ -69,7 +69,7 @@
                     params: {
                         pageNum: 1,
                         pageSize: 6,
-                        types:"1,2",
+                        types:"3,2",
                         // deviceId:this.value9,
                         // modelId:this.value10,
                         // identifyType:dataIntArr1.toString(),
