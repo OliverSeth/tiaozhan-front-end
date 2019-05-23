@@ -141,6 +141,9 @@
 
             </el-pagination>
         </div>
+        <el-dialog :visible.sync="dialogVisible2">
+            <img width="100%" :src="photo" alt="">
+        </el-dialog>
     </div>
 </template>
 
@@ -156,10 +159,10 @@
           that.getModelid();
         },
         methods:{
-            handlePictureCardPreview(href) {
+            handlePictureCardPreview(photo) {
                 // this.dialogImageUrl = file.url;
-                this.photo=href.substr(25);
-                console.log(href.substr(25));
+                this.photo=photo;
+                this.dialogVisible2=true;
                 // this.dialogVisible = true;
             },
 
@@ -878,6 +881,7 @@
         },
         data() {
             return {
+                dialogVisible2:false,
                 photo:'',
                 downButton:false,
                 loading:false,
