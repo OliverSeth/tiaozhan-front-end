@@ -96,7 +96,7 @@
                     let that = this;
                     let interval = setInterval(function () {
                         if (that.percent !== 100) {
-                            that.percent++;
+                            that.percent=that.percent+4;
                             console.log(that.percent);
                         } else {
                             let d1 = document.getElementById('d1');
@@ -124,7 +124,7 @@
                 percentAdd()
                 {
                     if (this.percent !== 100) {
-                        this.percent++;
+                        this.percent=this.percent+50;
                     } else {
                         clearInterval(this.interval);
                     }

@@ -112,7 +112,7 @@
 
                     <!--<el-checkbox :checked="true">备选项</el-checkbox>-->
                     <el-card  :body-style="{ padding: '0px' }">
-                        <img   :src="photo" name= 'img' @click="handlePictureCardPreview(photo)"   style="width: 90px;height: 90px">
+                        <img   :src="photo"  @click="handlePictureCardPreview(photo)"  style="width: 90px;height: 90px">
                         <!--<el-checkbox  :checked="photo.checked"  ></el-checkbox>-->
                     </el-card>
 
@@ -158,8 +158,9 @@
         methods:{
             handlePictureCardPreview(href) {
                 // this.dialogImageUrl = file.url;
-                this.photo=href;
-                this.dialogVisible = true;
+                this.photo=href.substr(25);
+                console.log(href.substr(25));
+                // this.dialogVisible = true;
             },
 
     //    getBase64Image(img,width,height) {
@@ -877,6 +878,7 @@
         },
         data() {
             return {
+                photo:'',
                 downButton:false,
                 loading:false,
                 deviceTable:[],
