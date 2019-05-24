@@ -8,7 +8,7 @@
                 <!--<span>{{infoArr[index]}}</span>-->
             <!--</div>-->
              <div v-for="(pictures,index) in picArr"
-             style="float:left;width: 12%;height: 12%;margin-left:0%;margin-top: 2%;margin-bottom: 2%">
+             style="float:left;width: 12%;height: 12%;margin-left:0%;margin-top: 1%;margin-bottom: 1%">
 
                  <div style="position:relative;">
                      　　<img :src="pictures" @click="handlePictureCardPreview(index)" style="float:left;width: 100%;height: 100%;margin-top: 1%;"/>
