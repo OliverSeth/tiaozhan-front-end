@@ -8,7 +8,7 @@
                 <!--<span>{{infoArr[index]}}</span>-->
             <!--</div>-->
              <div v-for="(pictures,index) in picArr"
-             style="float:left;width: 12%;height: 12%;margin-left:0.1%;margin-top: 0%;margin-bottom: 0%">
+             style="float:left;width: 12%;height: 12%;margin-left:0%;margin-top: 2%;margin-bottom: 2%">
 
                  <div style="position:relative;">
                      　　<img :src="pictures" @click="handlePictureCardPreview(index)" style="float:left;width: 100%;height: 100%;margin-top: 1%;"/>
@@ -241,7 +241,7 @@
                         }
                         imgdata += this.segs[head[0]][i];
                     }
-                    this.segs[head[0]]=null;
+
                     // console.log(head[0]);
                     // try{
                     //     document.getElementById("msg").append('<p><img src="' + imgdata + '"/></p>');
@@ -253,6 +253,7 @@
                     // newImg.src=imgdata;
                     // document.getElementById("msg").appendChild(newImg);
                     this.picArr.push('data:image/jpeg;base64,'+imgdata);
+                    this.segs[head[0]]=null;
                     // console.log(this.picArr);
                 }
             },
