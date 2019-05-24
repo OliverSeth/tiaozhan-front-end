@@ -20,7 +20,6 @@
             <!--<img v-for="(pictures,index) in picArr" :src="pictures" alt="no" style="float:left;width: 30%;height: 30%;margin-left: 1%;margin-top: 1%;margin-bottom: 1%">-->
             <!--<span>疵点类型：{{infoArr[index]}}</span>-->
         </div>
-        <!--<el-aside>-->
             <div id="info" style="width: 30%;height: 100%;position: fixed;right: 0">
                 <div style="width: 100%;height: 100%;position: absolute">
                     <img src="../assets/device.jpg" style="width: 100%;height: 30%;position: absolute">
