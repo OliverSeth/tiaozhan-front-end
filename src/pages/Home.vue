@@ -15,9 +15,13 @@
                         <i class="el-icon-document"></i>
                         <span slot="title">布料检测</span>
                     </el-menu-item>
+                    <el-menu-item index="defect-log">
+                        <i class="el-icon-document"></i>
+                        <span slot="title">疵点面板</span>
+                    </el-menu-item>
                     <el-menu-item index="classify">
                         <i class="el-icon-document"></i>
-                        <span slot="title">分类</span>
+                        <span slot="title">图片分类</span>
                     </el-menu-item>
                     <el-menu-item index="algorithm-migration">
                         <i class="el-icon-copy-document"></i>

@@ -12,6 +12,7 @@ import PictureClassify from './pages/PictureClassify'
 import UploadImage from './pages/UploadImage'
 import UploadPy from './pages/UploadPy'
 import DownloadPy from './pages/DownloadPy'
+import DefectLog from './pages/DefectLog'
 import AlgorithmMigration from './pages/AlgorithmMigration'
 
 Vue.use(Router);
@@ -61,6 +62,12 @@ let router = new Router({
                     component: PhotoGallery,
                     meta: {
                         title: '图片库'
+                    }
+                }, {
+                    path: '/defect-log',
+                    component: DefectLog,
+                    meta: {
+                        title: '疵点面板    '
                     }
                 }, {
                     path: '/examine-report',
