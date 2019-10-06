@@ -14,7 +14,7 @@
                                 width="180">
                         </el-table-column>
                         <el-table-column
-                                prop="detectMechine"
+                                prop="deviceId"
                                 label="检测机器"
                                 sortable
                                 width="240">
