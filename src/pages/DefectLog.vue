@@ -87,6 +87,7 @@
                 }
             })
         },
+
         methods: {
             showPic(row) {
                 this.dialogVisible = true;
