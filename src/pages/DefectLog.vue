@@ -5,19 +5,18 @@
                 <el-col>
                     <el-table
                             :data="defectList"
-                            style="width: 100%;text-align: center"
-                            :row-class-name="tableRowClassName">
+                            style="width: 100%;text-align: center">
                         <el-table-column
                                 prop="createTime"
                                 label="检测时间"
                                 sortable
-                                width="180">
+                                width="300">
                         </el-table-column>
                         <el-table-column
                                 prop="deviceId"
                                 label="检测机器"
                                 sortable
-                                width="240">
+                                width="300">
                         </el-table-column>
                         <el-table-column
                                 prop="identifyType"
@@ -53,7 +52,7 @@
             </el-pagination>
         </div>
         <div class="top">
-            <span style="font-size: 18px;color: #06050e">当前共{{total}}个疵点</span>
+            <span style="font-size: 18px;color: #06050e"></span>
         </div>
         <el-dialog :visible.sync="dialogVisible">
             <img width="100%" :src="getscr1(href)" alt="">
@@ -62,6 +61,7 @@
 </template>
 
 <script>
+    import utils from '../utils/index'
     export default {
         name: "DefectLog",
         data() {
@@ -74,16 +74,19 @@
             }
         },
         mounted() {
-            let url = 'http://10.199.172.62:8081/api/v1';
+            let url = 'http://10.199.172.62:8081/api/v1/defects/do-user';
             this.axios(url, {
                 params: {
                     pageSize: 8,
                     pageNum: 1
                 }
             }).then(res=>{
-                if(res.data.code==0){
+                if(res.data.code===0){
                     this.total=res.data.data.total;
                     this.defectList=res.data.data.list;
+                    for(let i=0;i<this.defectList.length;i++){
+                        this.defectList[i].createTime=utils.getDateFormat('yyyy-MM-dd hh:mm:ss',this.defectList[i].createTime);
+                    }
                 }
             })
         },
@@ -97,7 +100,7 @@
                         picId: row.picId
                     }
                 }).then(response => {
-                    if (response.data.code == 0) {
+                    if (response.data.code === 0) {
                         this.href = response.data.data.href;
                     }
                 });
@@ -115,7 +118,7 @@
                         pageNum: currentPage
                     }
                 }).then(res=>{
-                    if(res.data.code==0){
+                    if(res.data.code===0){
                         this.total=res.data.data.total;
                         this.defectList=res.data.data.list;
                     }
